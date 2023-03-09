@@ -8,41 +8,76 @@ import {
   Paper,
   TextField,
   Box,
-  MenuItem,
-  Select,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import LoginIcon from "@mui/icons-material/Login";
 import Avatar from "@mui/material/Avatar";
-import GirlIcon from "@mui/icons-material/Girl";
+import SchoolIcon from "@mui/icons-material/School";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
-function TeacherLogin() {
-  const [values, setValues] = useState({
+function Signup() {
+  const history =useNavigate()
+  const [inputs, setInputs] = useState({
+    name:"",
     email: "",
     pass: "",
     showPass: false,
   });
-  const [qualification, setQualification] = useState("");
 
-  const handlePassVisibility = () => {
-    setValues({
-      ...values,
-      showPass: !values.showPass,
-    });
-  };
+const sendReguest=async (e)=>{
+  try {
+    console.log(inputs)
+    const res = await axios.post('http://localhost:5000/api/signup',{
+      name:inputs.name,
+      email:inputs.email,
+      password:inputs.password
+  })
+  console.log(res)
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
+
+
+
+  const handleChange =(e)=>{
+    setInputs(prev=>({
+      ...prev,
+      [e.target.name]:e.target.value
+
+    }))
+    console.log(e.target.name,"value",e.target.value)
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email: values.email, pass: values.pass, qualification });
+    // Perform validation on the form data here
+    // console.log(inputs);
+    // Send the form data to the server here using AJAX or navigate to a new page
+  
+    sendReguest().then(()=>history("/"))
   };
-
+  const handlePassVisibility = () => {
+    setInputs({
+      ...inputs,
+      showPass: !inputs.showPass,
+    });
+  };
+  
+ 
+ 
   return (
+   
+   
     <div
       style={{
-        backgroundImage:
-          "url(https://ecommerce-platforms.com/wp-content/uploads/2020/04/online-learning-platforms-social.png)",
+        //   backgroundImage: 'url(https://ecommerce-platforms.com/wp-content/uploads/2020/04/online-learning-platforms-social.png)',
 
-        backgroundImage: "url(8600.jpg)",
+        backgroundImage:
+          "url(https://cdndatastatic.myclassboard.com/Live_Classes/Assets/img/hero/heroimage.svg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -69,34 +104,39 @@ function TeacherLogin() {
             >
               {/* Content goes here */}
 
-              <Grid
-                container
-                direction={"column"}
-                spacing={2}
-                style={{ color: "#fff" }}
-              >
-                <Box display="flex" justifyContent="center" alignItems="center">
-                  <Avatar
-                    style={{
-                      height: "100px",
-                      width: "100px",
-                      backgroundColor: "rgba(255, 255, 255, 0.5)",
-                    }}
-                  >
-                    <GirlIcon
+              <form onSubmit={handleSubmit}>
+                <Grid
+                  container
+                  direction={"column"}
+                  spacing={2}
+                  style={{ color: "#fff" }}
+                >
+                  <Box display="flex" justifyContent="center" alignItems="center">
+                    <Avatar
                       style={{
-                        fontSize: "5rem",
-                        color: "rgba(255, 95, 31, 0.5)",
+                        height: "100px",
+                        width: "100px",
+                        backgroundColor: "rgba(255, 255, 255, 0.5)",
                       }}
-                    />
-                  </Avatar>
-                </Box>
+                    >
+                      <SchoolIcon
+                        style={{
+                          fontSize: "5rem",
+                          color: "rgba(255, 95, 31, 0.5)",
+                        }}
+                      />
+                    </Avatar>
+                  </Box>
+                 
                 <Grid item style={{ color: "red" }}>
                   <TextField
-                    type="name"
+                  name="name"
+                    type={"name"}
+                    value={inputs.name}
+                    onChange={handleChange}
                     fullWidth
                     label="enter your name"
-                    placeholder="name"
+                    placeholder="Enter your name"
                     variant="outlined"
                     inputProps={{
                       style: {
@@ -111,7 +151,10 @@ function TeacherLogin() {
                 </Grid>
                 <Grid item style={{ color: "red" }}>
                   <TextField
-                    type="email"
+                   name="email"
+                   type={"email"}
+                    value={inputs.email}
+                    onChange={handleChange}
                     fullWidth
                     label="enter your email"
                     placeholder="Email Address"
@@ -130,6 +173,10 @@ function TeacherLogin() {
                 <Grid item>
                   <TextField
                     fullWidth
+                    type='password'
+                    name="password"
+                    value={inputs.password}
+                    onChange={handleChange}
                     label="Password"
                     placeholder="Password"
                     variant="outlined"
@@ -146,7 +193,7 @@ function TeacherLogin() {
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton onClick={handlePassVisibility} edge="end">
-                            {values.showPass ? (
+                            {inputs.showPass ? (
                               <VisibilityOffIcon />
                             ) : (
                               <VisibilityIcon />
@@ -154,17 +201,16 @@ function TeacherLogin() {
                           </IconButton>
                         </InputAdornment>
                       ),
-                      type: values.showPass ? "text" : "password",
+                      type:inputs.showPass ? "text" : "password",
                     }}
                   />
                 </Grid>
-                <Grid item>
-              
-                  <Select
+                {/* <Grid item style={{ color: "red" }}>
+                  <TextField
+                    type="cnfmPassword"
                     fullWidth
-                    value={qualification}
-                    onChange={(e) => setQualification(e.target.value)}
-                    label="Qualification"
+                    label="CnfmPassword"
+                    placeholder="cnfmPassword"
                     variant="outlined"
                     inputProps={{
                       style: {
@@ -175,20 +221,12 @@ function TeacherLogin() {
                     InputLabelProps={{
                       style: { color: "rgba(0, 0, 0, 0.5)" },
                     }}
-                  >
-                   
-                    <MenuItem value=" " disabled>
-                      Select a qualification
-                    </MenuItem>
-                    <MenuItem value="highschool">High School</MenuItem>
-                    <MenuItem value="undergrad">Undergraduate</MenuItem>
-                    <MenuItem value="graduate">Graduate</MenuItem>
-                  </Select>
-                </Grid>
-
+                  />
+                </Grid> */}
                 <Grid item>
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Button
+                    <Button 
+                    type="submit"
                       variant="contained"
                       style={{
                         backgroundColor: " rgba(255, 95, 31, 0.5)",
@@ -197,17 +235,22 @@ function TeacherLogin() {
                       }}
                       endIcon={<LoginIcon />}
                     >
-                      Login
+                     Signup
                     </Button>
                   </div>
                 </Grid>
               </Grid>
+              </form>
             </Paper>
+            
+          
           </Box>
+         
         </Grid>
       </Container>
     </div>
+    
   );
 }
 
-export default TeacherLogin;
+export default Signup;

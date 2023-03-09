@@ -7,23 +7,11 @@ let firstRender=true
 function WelcomePage() {
   const [user, setUser] = useState(null);
 
-
-  //refresh token
-  const refreshToken =async () => {
-    const res = await axios.get("http://localhost:5000/api/refresh",{
-      withCredentials:true
-    }).catch(err=>console.log(err))
-
-    const data = await res.data;
-    return data
-  }
   const sendRequest = async () => {
     try {
       const res = await axios.get('http://localhost:5000/api/user', {
         withCredentials: true,
       });
-      console.log("hello")
-      console.log(res)
       const data = res.data;
       return data;
     } catch (err) {
@@ -32,22 +20,29 @@ function WelcomePage() {
     }
   };
 
-  useEffect(() => {
+  const refreshToken = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/refresh', {
+        withCredentials: true,
+      });
+      const data = res.data;
+      setUser(data.user);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  useEffect(() => {
     if(firstRender){
       firstRender=false
     }
     sendRequest().then((data) => {
       if (data && data.user) {
-        console.log(data)
         setUser(data.user);
       }
-      let interval = setInterval(()=>{
-        refreshToken().then(data=>setUser(data))
-      },1000*28)
-
-      return ()=>clearInterval(interval)//after 28 seconds theinterval will exprires
     });
+    let interval = setInterval(refreshToken, 1000*28);
+    return () => clearInterval(interval);
   }, []);
 
   return (

@@ -6,7 +6,7 @@ import {
   TextField,
 } from "@mui/material";
 
-function OTPPage() {
+function OTP() {
   const [otp, setOTP] = useState("");
 
   const handleOTPChange = (event) => {
@@ -88,4 +88,4 @@ function OTPPage() {
   );
 }
 
-export default OTPPage;
+export default OTP;
