@@ -1,12 +1,15 @@
 import React from "react";
 
-// import Layout from "./components/Layout";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";// import Layout from "./components/Layout";
+
 // import HomeScreen from "./Screens/User/HomeScreen";
 import UserRouter from "./Route/UserRouter";
 // import CourseDetailsScreen from "./Screens/User/CourseDetailsScreen";
 // import FeaturedCoursesScreen from "./Screens/User/FeaturedCoursesScreen";
-import Login from "./Screens/User/Login";
+// import Login from "./Screens/User/Login";
+import AdminRouter from '../src/Route/AdminRouter'
+
+
 // import Signup from "./Screens/User/Signup";
 // import OTP from "./Screens/User/OTP";
 // import { ThemeProvider } from '@mui/material'
@@ -18,15 +21,20 @@ import Login from "./Screens/User/Login";
 const App = () => {
   return (
     <div className="App">
+      
       <BrowserRouter>
         <Routes>
           {/* <Route path="/" exact element={<HomeScreen />} /> */}
          
 
-          <Route path="/user/login" element={<Login />} />
+          {/* <Route path="/user/login" element={<Login />} /> */}
           <Route
             path="/user/*"
             element={ <UserRouter />}
+          />
+          <Route
+            path="/admin/*"
+            element={ <AdminRouter/>}
           />
           
         </Routes>
