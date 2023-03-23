@@ -19,7 +19,11 @@ const teacherSchema = new mongoose.Schema({
     type: String,
     required: true,
     MenuItem: ['High School', 'Graduate', 'Undergraduate'] 
-  }
+  },
+  status: {
+    type: String,
+    default: "pending",
+  },
 });
 
 module.exports = mongoose.model('Teacher', teacherSchema);

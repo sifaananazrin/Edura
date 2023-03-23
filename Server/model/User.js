@@ -12,7 +12,11 @@ const userSchema = new mongoose.Schema({
     type: String, 
     required: true,
     minlength:6 
-}
+},
+status: {
+  type: String,
+  default: "Active",
+},
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -36,9 +36,32 @@ const adminLogin = async (req, res) => {
 
 // exports.adminLogin=adminLogin
 
+const blockUnblockUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let value;
+    const check = await User.findById(id);
+    if (check) {
+      if (check.status === "Active") {
+        value = 'Blocked';
+      } else {
+        value = 'Active';
+      }
+    } else {
+      throw new Error('Something went wrong');
+    }
+    await User.findByIdAndUpdate(id, {
+      status: value,
+    });
+    res.send({ success: true, message: 'user status updated' });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
+
 
 module.exports = {
   adminLogin,
   getAllusers,
-  // blockUnblockCompany,
+  blockUnblockUser,
 };

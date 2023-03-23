@@ -5,6 +5,7 @@ import Sidebar from "../Pages/Admin/global/Sidebar";
 import Dashboard from "../Pages/Admin/dashboard";
 import ManageUser from '../Pages/Admin/ManageUser';
 import Course from "../Pages/Admin/Course";
+import ApproveTeacher from "../Pages/Admin/ApproveTeacher";
 
 
 import Form from "../Pages/Admin/form";
@@ -30,7 +31,7 @@ function AdminRouter() {
             <Route path="/home" element={ token ? <Dashboard /> :<Navigate to="/admin/login"/>}/>
             
               <Route path="/manageuser" element={ token ? <ManageUser /> : <Navigate to="/admin/login"/> } />
-              {/* <Route path="/approveteacher" element={<ApproveTeacher />}  /> */}
+              <Route path="/approveteacher" element={<ApproveTeacher />}  />
               <Route path="/course" element={ token ?  <Course /> : <Navigate to="/admin/login"/>} />
               <Route path="/form" element={ token ?  <Form / >  : <Navigate to="/admin/login"/>} />
               

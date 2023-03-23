@@ -3,7 +3,8 @@ const requests={
     login:"/api/login",
     Otp:"/api/verify-otp",
     adminlogin:"/admin/login",
-    getAllUsers:"/admin/users"
+    getAllUsers:"/admin/users",
+    
    
  }
  export default requests;
