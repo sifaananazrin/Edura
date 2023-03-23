@@ -212,11 +212,15 @@
 // export default Login;
 
 import React from "react";
+import axios from "../../api/axios";
+import request from "../../api/request"
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+  
 import {
   Button,
   FormControl,
   FormGroup,
-
   FormLabel,
   InputAdornment,
   TextField,
@@ -228,6 +232,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 
 const labelStyle = { mt: 1, mb: 1 };
 
@@ -245,9 +250,23 @@ function Login() {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      // Your form submission logic here
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post(request.login, values);
+        if (response.data.message === "Login successful") {
+          window.location = "/user/home";
+        } else {
+          toast.error(response.data.message);
+        }
+        
+      } catch (error) {
+        console.error(error);
+        toast.error("An error occurred, please try again later.");
+      }
     },
+    
+    
+    
   });
 
   const handleClickShowPassword = () => {
@@ -257,8 +276,8 @@ function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
   return (
+
     <div
       style={{
         display: "flex",
@@ -267,7 +286,8 @@ function Login() {
         height: "100vh",
       }}
     >
-      <FormControl>
+       <ToastContainer />
+      <FormControl   component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
             padding={6}

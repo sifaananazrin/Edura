@@ -3,6 +3,7 @@ import AdminRouter from "../src/Route/AdminRouter";
 import UserRouter from "../src/Route/UserRouter"
 // import AdminLogin from '../Pages/Admin/Login/AdminLogin';
 import AdminLogin from "./Pages/Login/AdminLogin";
+import TeacherRouter from "./Pages/Teacher/TeacherSignup"
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route path="admin/login" element={<AdminLogin />} />
         <Route path="/admin/*" element={<AdminRouter />} />
         <Route path="/user/*" element={<UserRouter />} />
+        <Route path="/teacher/*" element={<TeacherRouter />} />
       </Routes>
     </Router>
   );

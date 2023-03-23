@@ -1,15 +1,11 @@
 const express = require('express');
-const { 
-    adminUsersRender,
-    
-     } = require('../Controllers/Admin-controller');
-
+const controller = require('../Controllers/Admin-controller');
+const validateAdminToken = require('../Middleware/adminToken');
+// const tokenMiddleware = require('../Middleware/token');
 const router = express.Router();
 
-// router.get('/',(req,res,next)=>{
-//     res.send("hello world")
-// })
-router.get("/getusers",adminUsersRender)
+router.post('/login', controller.adminLogin);
+router.get('/users', validateAdminToken, controller.getAllusers);
+// router.get('/change/company/status/:id', controller.blockUnblockCompany);
 
-
-module.exports=router
+module.exports = router;

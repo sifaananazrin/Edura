@@ -12,7 +12,7 @@ const pages = [
   { title: 'Home', arrow: false },
   { title: 'About', arrow: false },
   { title: 'Course', arrow: true },
-  // { title: 'Page', arrow: true },
+  // { title: 'Logout', arrow: true },
   // { title: 'Blog', arrow: true },
   { title: 'Contact', arrow: false },
 ]

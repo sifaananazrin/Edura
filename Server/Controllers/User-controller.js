@@ -34,8 +34,42 @@ const nodemailer=require('nodemailer')
 
 //user login
 
+// const login = async (req, res, next) => {
+//   const { email, password } = req.body;
+//   console.log(email)
+//   let existingUser;
+//   try {
+//     existingUser = await User.findOne({ email: email });
+//   } catch (err) {
+//     return new Error(err);
+//   }
+//   if (!existingUser) {
+//     return res.status(400).json({ user:true });
+//   }
+
+//   const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
+//   if (!isPasswordCorrect) {
+//     return res.status(400).json({ pass: true });
+//   }
+
+//   const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, {
+//     expiresIn: "35s",
+//   });
+
+//   res.cookie(String(existingUser.id), token, {
+//     path: "/",
+//     expires: new Date(Date.now() + 1000 * 30),
+//     httpOnly: true,
+//     sameSite: "lax",
+//   });
+//   res
+//     .status(200)
+//     .json({ log: true, user: existingUser, token });
+// };
+
 const login = async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(email)
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -43,12 +77,12 @@ const login = async (req, res, next) => {
     return new Error(err);
   }
   if (!existingUser) {
-    return res.status(400).json({ message: "User not found .Signup please" });
+    return res.status(401).json({ message: "User not found" });
   }
 
   const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
   if (!isPasswordCorrect) {
-    return res.status(400).json({ message: "invalid Eamil/Password" });
+    return res.status(401).json({ message: "Invalid email or password" });
   }
 
   const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, {
@@ -63,8 +97,11 @@ const login = async (req, res, next) => {
   });
   res
     .status(200)
-    .json({ message: "successfully Logged In", user: existingUser, token });
+    .json({ message: "Login successful", user: existingUser, token });
 };
+
+
+
 
 //verify token
 const verifyTocken = (req, res, next) => {
@@ -251,6 +288,27 @@ const PostOtp = async (req, res) => {
 
 
 
+  const logout  = (req,res,next)=>{
+    const cookies = req.headers.cookie;
+    const token = cookies.split("=")[1];
+    console.log(token);
+    if (!token) {
+      res.status(404).json({ message: "No tocken found" });
+    }
+    jwt.verify(String(prevToken), process.env.JWT_SECRET_KEY, (err, user) => {
+      if (err) {
+        console.log(err);
+        return res.status(403).json({ message: "Authentication is failed" });
+      }
+      res.clearCookie(`${user.id}`);
+      req.cookies[`${user.id}`] = " ";
+      // it will clean prev token from cookie then generate new tocken
+  return res.status(200).json({message:"successfiully Logged Out"})
+     
+     
+    });
+  }
+
 
 
 exports.signup = signup;
@@ -259,3 +317,4 @@ exports.verifyTocken = verifyTocken;
 exports.getUser = getUser;
 exports.refreshToken = refreshToken;
 exports.PostOtp=PostOtp;
+exports.logout=logout

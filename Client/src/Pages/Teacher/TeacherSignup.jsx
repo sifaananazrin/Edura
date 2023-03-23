@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-
-import axios from "../../api/axios";
-import requests from "../../api/request";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -16,21 +13,20 @@ import {
   Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
   email: Yup.string().email("Invalid email address").required("Required"),
+
+  password: Yup.string().required("Required"),
   password: Yup.string().required("Required"),
   cPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Required"),
 });
 
-const SignUp = () => {
-  // const history = useNavigation();
-
+const TeacherSignup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -46,25 +42,26 @@ const SignUp = () => {
     initialValues: {
       name: "",
       email: "",
+      //   qualification: "",
+      qualification: "",
       password: "",
       cPassword: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await axios.post(requests.Signup, values);
-        console.log(response);
-        if (response.data.user) {
-          window.location = "/user/login";
-        } else if (response.data.email) {
-          window.location = "/user/otp";
-        }
+        // const response = await axios.post(requests.Signup, values);
+        console.log(values);
+        // if(response.data.user){
+        //   window.location="/user/login"
+        // }else if(response.data.email){
+        //   window.location="/user/otp"
+        //  }
       } catch (error) {
         console.error(error);
       }
     },
   });
-
   return (
     <div
       style={{
@@ -92,7 +89,7 @@ const SignUp = () => {
             }}
           >
             <Typography variant="h4" textAlign={"center"} sx={{ mb: 4 }}>
-              Sign up
+              Welcome Teacher...
             </Typography>
             <FormLabel sx={{ mt: 2 }}>Name</FormLabel>
             <TextField
@@ -141,6 +138,28 @@ const SignUp = () => {
                 ),
               }}
             />
+
+            <TextField
+              id="qualification"
+              name="qualification"
+              label="Qualification"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              autoComplete="qualification"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.qualification}
+              error={
+                formik.touched.qualification &&
+                Boolean(formik.errors.qualification)
+              }
+              helperText={
+                formik.touched.qualification && formik.errors.qualification
+              }
+            />
+
             <FormLabel sx={{ mt: 2 }}>Confirm Password</FormLabel>
             <TextField
               fullWidth
@@ -174,10 +193,10 @@ const SignUp = () => {
               sx={{
                 mt: 4,
                 borderRadius: 10,
-                bgcolor: "#673F86",
+                bgcolor: "red",
                 color: "#fff",
                 "&:hover": {
-                  bgcolor: "#1d1f33",
+                  bgcolor: "red",
                 },
               }}
               type="submit"
@@ -197,4 +216,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default TeacherSignup;

@@ -134,21 +134,21 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Manage user"
-              to="/manageuser" //team
+              to="/admin/manageuser" //team
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Approve teacher"
-              to="/approveteacher" //contact
+              to="/admin/approveteacher" //contact
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Courses"
-              to="/course"
+              to="/admin/course"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

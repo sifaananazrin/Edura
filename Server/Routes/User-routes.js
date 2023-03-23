@@ -5,7 +5,8 @@ const {
      verifyTocken,
      getUser,
      refreshToken,
-     PostOtp
+     PostOtp,
+     logout
      } = require('../Controllers/User-controller');
 
 const router = express.Router();
@@ -18,6 +19,7 @@ router.post("/login",login)
 router.get("/user",verifyTocken,getUser)
 router.get("/refresh",refreshToken,verifyTocken,getUser)
 router.post("/verify-otp",PostOtp)
+router.post("/logout",verifyTocken,logout)
 
 
 
