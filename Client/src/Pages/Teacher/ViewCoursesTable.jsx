@@ -14,11 +14,23 @@ import {
 import AddCourseTable from './AddCourseFrom';
 
 import {Link } from "react-router-dom"
+// const useStyles = makeStyles({
+//   table: {
+//     minWidth: 650,
+//   },
+// });
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+    "& th": {
+      borderBottom: "none",
+    },
+    "& td": {
+      borderBottom: "none",
+    },
   },
 });
+
 
 function ViewCoursesTable() {
   const classes = useStyles();
@@ -36,6 +48,10 @@ function ViewCoursesTable() {
           <TableRow>
             <TableCell>Course Name</TableCell>
             <TableCell>Course des</TableCell>
+            <TableCell>Course Name</TableCell>
+            <TableCell>Course des</TableCell>
+            <TableCell>Course Name</TableCell>
+            {/* <TableCell>Course des</TableCell> */}
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -43,14 +59,35 @@ function ViewCoursesTable() {
           <TableRow>
             <TableCell>
               <TextField
-                label="Enter Course Name"
+                
                 value={courseName}
                 onChange={(e) => setCourseName(e.target.value)}
               />
             </TableCell>
             <TableCell>
               <TextField
-                label="Enter Course Code"
+             
+                value={courseCode}
+                onChange={(e) => setCourseCode(e.target.value)}
+              />
+            </TableCell>
+            <TableCell>
+              <TextField
+             
+                value={courseCode}
+                onChange={(e) => setCourseCode(e.target.value)}
+              />
+            </TableCell>
+            <TableCell>
+              <TextField
+             
+                value={courseCode}
+                onChange={(e) => setCourseCode(e.target.value)}
+              />
+            </TableCell>
+            <TableCell>
+              <TextField
+             
                 value={courseCode}
                 onChange={(e) => setCourseCode(e.target.value)}
               />
