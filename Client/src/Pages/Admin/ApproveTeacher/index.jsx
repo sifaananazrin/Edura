@@ -1,49 +1,107 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper
-} from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@material-ui/core';
+import axios from '../../../api/axios';
+import requests from '../../../api/request';
+import swal from 'sweetalert';
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+function Teacher() {
+  const config = {
+    headers: {
+      Authorization: `${localStorage.getItem("token")}`,
+    },
+  };
 
-function TeacherTable(props) {
-  const classes = useStyles();
-  const { teachers } = props;
+  const [teacher, setTeacher] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+
+      
+
+
+        const response = await axios.get(requests.getAllTeacher, config);
+       
+        setTeacher(response.data.teacher);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, [config]);
+
+  const handleBlock =  (id) => {
+    swal({
+      title: "Are you sure?",
+      text: "You want to approve the teacher ",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("The teacher is teacher!", {
+          icon: "success",
+        });
+        block(id);
+      } else {
+        swal("The teacher not approve");
+      }
+    });
+  };
+
+  const block=async(id)=>{
+    try {
+
+
+      
+      const response = await axios.get(`/admin/approve/${id}`, config);
+      console.log(response)
+    
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="teachers table">
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="center">Email</TableCell>
-            <TableCell align="center">Department</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {teachers.map((teacher) => (
-            <TableRow key={teacher.id}>
-              <TableCell component="th" scope="row">
-                {teacher.name}
-              </TableCell>
-              <TableCell align="center">{teacher.email}</TableCell>
-              <TableCell align="center">{teacher.department}</TableCell>
-            </TableRow>
-          ))}
+          {teacher &&
+            teacher.map((teachers) => (
+              <TableRow key={teachers.id}>
+                <TableCell>{teachers.name}</TableCell>
+                <TableCell>{teachers.email}</TableCell>
+                <TableCell>{teachers.status}</TableCell>
+                <TableCell>
+                 
+                <Button
+  variant="contained"
+  color={teachers.status=="pending"? "primary" : "secondary"}
+  onClick={() => handleBlock(teachers._id)}
+>
+  {teachers.status==="pending"? "approve" : "reject"}
+</Button>
+
+                  
+                 
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
 }
 
-export default TeacherTable;
+export default Teacher;

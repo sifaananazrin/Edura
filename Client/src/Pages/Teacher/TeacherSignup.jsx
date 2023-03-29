@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import axios from "../../api/axios";
+import requests from "../../api/request";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
@@ -50,18 +52,16 @@ const TeacherSignup = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        // const response = await axios.post(requests.Signup, values);
-        console.log(values);
-        // if(response.data.user){
-        //   window.location="/user/login"
-        // }else if(response.data.email){
-        //   window.location="/user/otp"
-        //  }
+        const response = await axios.post(requests.teachersignup, values);
+        console.log(response);
+        if (response.status === 201) {
+          window.location = "/teacher/login";
+        } 
       } catch (error) {
         console.error(error);
       }
     },
-  });
+  });    
   return (
     <div
       style={{
@@ -207,7 +207,7 @@ const TeacherSignup = () => {
             </Button>
             <p style={{ textAlign: "center", marginTop: "10px" }}>
               {"Don't have an account yet? "}
-              <Link to="/user/login">Login</Link>
+              <Link to="/teacher/login">Login</Link>
             </p>
           </Box>
         </FormGroup>

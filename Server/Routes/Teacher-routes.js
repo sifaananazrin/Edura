@@ -8,7 +8,7 @@ const router = express.Router();
 const { signup, login } = require('../Controllers/Teacher-controller');
 
 // Use the functions in your application
-router.post('/TeachSignup', signup);
-router.post('/TeachLogin', login);
+router.post('/signup', signup);
+router.post('/login', login);
 
 module.exports = router;

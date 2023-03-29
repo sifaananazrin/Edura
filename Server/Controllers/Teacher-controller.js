@@ -38,51 +38,36 @@ const signup = async (req, res, next) => {
 
   
   //login
-  const login = async (req, res, next) => {
-    const { email, password } = req.body;
-  
-    let existingTeacher;
+  const login = async (req, res) => {
     try {
-      existingTeacher = await Teacher.findOne({ email: email });
-    } catch (err) {
-      return new Error(err);
-    }
+      const { email, password } = req.body;
   
-    if (!existingTeacher) {
-      return res
-        .status(400)
-        .json({ message: 'Teacher not found. Signup please' });
-    }
+      // Find teacher with matching email
+      const found = await Teacher.findOne({ email });
   
-    const isPasswordCorrect = bcrypt.compareSync(
-      password,
-      existingTeacher.password
-    );
+      // Check if teacher exists and is approved
+      if (found && found.status === 'Approve') {
+        // Compare passwords
+        const isPasswordValid = await bcrypt.compare(password, found.password);
   
-    if (!isPasswordCorrect) {
-      return res.status(400).json({ message: 'Invalid Email/Password' });
-    }
-  
-    const token = jwt.sign(
-      { id: existingTeacher._id },
-      process.env.JWT_SECRET_KEY,
-      {
-        expiresIn: '35s',
+        if (isPasswordValid) {
+          // Create JWT token
+          const token = jwt.sign(
+            { email: found.email, teacherId: found._id, accountType: 'teacher' },
+            process.env.JWT_SECRET_KEY
+          );
+          res.send({ success: true, message: 'Login successful', token });
+        } else {
+          res.send({ success: false, message: 'Invalid email or password' });
+        }
+      } else {
+        res.send({ success: false, message: 'Teacher not approved or does not exist' });
       }
-    );
-  
-  
-    res.cookie(String(existingTeacher._id), token, {
-      path: '/',
-      expires: new Date(Date.now() + 1000 * 30),
-      httpOnly: true,
-      sameSite: 'lax',
-    });
-  
-    res
-      .status(200)
-      .json({ message: 'Successfully Logged In', teacher: existingTeacher, token });
+    } catch (error) {
+      res.send({ success: false, message: error.message });
+    }
   };
+  
 
   
 

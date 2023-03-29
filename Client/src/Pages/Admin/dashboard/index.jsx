@@ -38,7 +38,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="12,361"
+            title="12"
             subtitle="Total Student"
             progress="0.75"
             increase="+14%"
@@ -57,7 +57,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="431,225"
+            title="56"
             subtitle="Total courses"
             progress="0.50"
             increase="+21%"
@@ -76,7 +76,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
+            title="32"
             subtitle="Total instructures"
             progress="0.30"
             increase="+5%"

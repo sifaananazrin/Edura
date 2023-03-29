@@ -4,7 +4,9 @@ const requests={
     Otp:"/api/verify-otp",
     adminlogin:"/admin/login",
     getAllUsers:"/admin/users",
-    
+    getAllTeacher:"/admin/getteacher",
+    teacherlogin:"/teacher/login",
+    teachersignup:"/teacher/signup"
    
  }
  export default requests;

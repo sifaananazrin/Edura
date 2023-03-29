@@ -1,62 +1,35 @@
-
-
-import React from "react";
-import axios from "../../api/axios";
-import request from "../../api/request"
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
-  
+import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import {
-  Button,
   FormControl,
   FormGroup,
   FormLabel,
-  InputAdornment,
   TextField,
+  Box,
   Typography,
-  IconButton
+  InputAdornment,
+  IconButton,
+  Button,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import axios from "../../api/axios"
+import request from "../../api/request"
+import { ToastContainer, toast } from 'react-toastify';
+
+const validationSchema = Yup.object().shape({
+ 
+  email: Yup.string().email("Invalid email address").required("Required"),
+
+  password: Yup.string().required("Required"),
+  password: Yup.string().required("Required"),
+})
 
 
-const labelStyle = { mt: 1, mb: 1 };
-
-const validationSchema = yup.object({
-  email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup.string().required("Password is required"),
-});
-
-function Login() {
-  const [showPassword, setShowPassword] = React.useState(false);
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      try {
-        const response = await axios.post(request.login, values);
-        if (response.data.message === "Login successful") {
-          window.location = "/user/home";
-        } else {
-          toast.error(response.data.message);
-        }
-        
-      } catch (error) {
-        console.error(error);
-        toast.error("An error occurred, please try again later.");
-      }
-    },
-    
-    
-    
-  });
+const TeacherSignup = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -65,8 +38,34 @@ function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  return (
 
+  const formik = useFormik({
+    initialValues: {
+     
+      email: "",
+      //   qualification: "",
+      
+      password: "",
+      
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post(request.teacherlogin, values);
+        console.log(response);
+        if (response.data.message === "Login successful") {
+          window.location = "/teacher/home";
+        } else {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("An error occurred, please try again later.");
+      }
+    },
+    
+  });     
+  return (
     <div
       style={{
         display: "flex",
@@ -75,8 +74,7 @@ function Login() {
         height: "100vh",
       }}
     >
-       <ToastContainer />
-      <FormControl   component="form" onSubmit={formik.handleSubmit}>
+      <FormControl component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
             padding={6}
@@ -94,43 +92,31 @@ function Login() {
             }}
           >
             <Typography variant="h4" textAlign={"center"} sx={{ mb: 4 }}>
-              Login
+              Welcome Teacher...
             </Typography>
-            <FormLabel sx={labelStyle}>Email</FormLabel>
+            
+
+            <FormLabel sx={{ mt: 2 }}>Email</FormLabel>
             <TextField
+              fullWidth
               margin="normal"
               variant="standard"
-              type="email"
               name="email"
               value={formik.values.email}
               onChange={formik.handleChange}
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {formik.touched.email &&
-                      !formik.errors.email &&
-                      showPassword && <Visibility />}
-                    {formik.touched.email &&
-                      !formik.errors.email &&
-                      !showPassword && <VisibilityOff />}
-                  </InputAdornment>
-                ),
-              }}
-              sx={{ bgcolor: "#f9f9f9" }}
             />
-            <FormLabel sx={labelStyle}>Password</FormLabel>
+            <FormLabel sx={{ mt: 2 }}>Password</FormLabel>
             <TextField
+              fullWidth
               margin="normal"
               variant="standard"
-              type={showPassword ? "text" : "password"}
               name="password"
+              type={showPassword ? "text" : "password"}
               value={formik.values.password}
               onChange={formik.handleChange}
-              error={
-                formik.touched.password && Boolean(formik.errors.password)
-              }
+              error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
               InputProps={{
                 endAdornment: (
@@ -146,33 +132,35 @@ function Login() {
               }}
             />
 
-            <Button
-  sx={{
-    mt: 4,
-    borderRadius: 10,
-    bgcolor: "#673F86",
-    color: '#fff',
-    '&:hover': {
-      bgcolor: "#1d1f33",
-    },
-  }}
-  type='submit'
-  fullWidth
-  variant='contained'
->
-  SignUp
-</Button>
-<p style={{ textAlign: 'center', marginTop: '10px' }}>
-  {"Don't have an account yet? "}
-  <Link to="/user/signup">SignUp</Link>
-</p>
-          </Box>
-          </FormGroup>
-          </FormControl>
-          </div>
           
-  )
-          }
 
-          export default Login
+           
 
+            <Button
+              sx={{
+                mt: 4,
+                borderRadius: 10,
+                bgcolor: "blue",
+                color: "#fff",
+                "&:hover": {
+                  bgcolor: "blue",
+                },
+              }}
+              type="submit"
+              fullWidth
+              variant="contained"
+            >
+              Login
+            </Button>
+            <p style={{ textAlign: "center", marginTop: "10px" }}>
+              {"Don't have an account yet? "}
+              <Link to="/teacher/signup">signup</Link>
+            </p>
+          </Box>
+        </FormGroup>
+      </FormControl>
+    </div>
+  );
+};
+
+export default TeacherSignup;

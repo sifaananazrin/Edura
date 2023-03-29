@@ -7,5 +7,7 @@ const router = express.Router();
 router.post('/login', controller.adminLogin);
 router.get('/users', validateAdminToken, controller.getAllusers);
 router.get('/status/:id', controller.blockUnblockUser);
+router.get('/getteacher', validateAdminToken, controller.getAllTeacher);
+router.get('/approve/:id', validateAdminToken, controller.approveTeacher);
 
 module.exports = router;

@@ -1,8 +1,9 @@
 const Admin = require("../model/Admin");
 const jwt =require('jsonwebtoken')
 const User = require("../model/User");
+const Teacher=require("../model/Teacher")
 
-// rest of your code
+
 
 
 const adminLogin = async (req, res) => {
@@ -60,8 +61,44 @@ const blockUnblockUser = async (req, res) => {
 };
 
 
+const getAllTeacher = async (req, res) => {
+  try {
+    const teacher = await Teacher.find();
+    res.send({ success: true, teacher });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
+
+const approveTeacher = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let value;
+    const check = await Teacher.findById(id);
+    if (check) {
+      if (check.status === "pending") {
+        value = 'Approve';
+      } else {
+        value = 'pending';
+      }
+    } else {
+      throw new Error('Something went wrong');
+    }
+    await Teacher.findByIdAndUpdate(id, {
+      status: value,
+    });
+    res.send({ success: true, message: 'Teacher status updated' });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
+
+
+
 module.exports = {
   adminLogin,
   getAllusers,
   blockUnblockUser,
+  getAllTeacher,
+  approveTeacher
 };
