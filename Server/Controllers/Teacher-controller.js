@@ -1,6 +1,12 @@
 const Teacher = require('../model/Teacher');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Category = require("../model/Category")
+const Course = require("../model/Course")
+
+
+
+
 const signup = async (req, res, next) => {
     const { name, email, password, qualification } = req.body;
   

@@ -16,6 +16,7 @@ import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 // import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 // import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import AdminRouter from "../../../Route/AdminRouter";
 // import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -148,8 +149,8 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Courses"
-              to="/admin/course"
+              title="Category"
+              to="/admin/category"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -162,20 +163,20 @@ const Sidebar = () => {
             >
               Pages
             </Typography>
-            <Item
+            {/* <Item
               title="Add User"
               to="/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
-             <Item
+            /> */}
+             {/* <Item
               title="View Category"
               to="/admin/category" //team
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
               <Item
               title="Logout"
               // to="/admin/category" //team

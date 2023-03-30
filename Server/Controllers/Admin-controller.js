@@ -126,10 +126,6 @@ const getAllCourse = async (req, res) => {
 };
 
 
-exports.getAllCourse=getAllCourse;
-exports.addCourse=addCourse;
-exports.signup = signup;
-exports.login = login;
 const postAddCategory = async (req, res) => {
 
 try {
