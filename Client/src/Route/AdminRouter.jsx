@@ -5,8 +5,13 @@ import Sidebar from "../Pages/Admin/global/Sidebar";
 import Dashboard from "../Pages/Admin/dashboard";
 import ManageUser from "../Pages/Admin/ManageUser";
 import Course from "../Pages/Admin/Course";
+import Category from "../Pages/Admin/Category";
 // import ApproveTeacher from "../Pages/Admin/ApproveTeacher";
+// import CourseCategoryTable from "../Pages/Admin/Category/";
+import AddCategoryForm from "../Pages/Admin/Category/AddCategoryForm";
+
 import AdminLogin from "../Pages/Login/AdminLogin";
+
 
 import Form from "../Pages/Admin/form";
 
@@ -27,10 +32,10 @@ function AdminRouter() {
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <div className="app">
-              {/* <Sidebar isSidebar={false} /> */}
+              <Sidebar isSidebar={false} />
               <main className="content">
 
-                {/* <Topbar setIsSidebar={false} /> */}
+                <Topbar setIsSidebar={false} />
                
                 <Routes>
                 <Route path="/login" element={<AdminLogin />} />
@@ -47,7 +52,8 @@ function AdminRouter() {
                     token ? <ManageUser /> : <Navigate to="/admin/login" />
                   }
                 />
-                {/* <Route path="/approveteacher" element={<ApproveTeacher />}  /> */}
+                <Route path="/category" element={<Category />}  />
+                <Route path="/add-category" element={<AddCategoryForm />}  />
                 <Route
                   path="/course"
                   element={token ? <Course /> : <Navigate to="/admin/login" />}

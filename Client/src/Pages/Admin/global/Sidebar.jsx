@@ -9,6 +9,7 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 // import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 // import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 // import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
@@ -168,20 +169,34 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            {/* <Item
-              title="Calendar"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
+             <Item
+              title="View Category"
+              to="/admin/category" //team
+              icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+              <Item
+              title="Logout"
+              // to="/admin/category" //team
+              icon={<ExitToAppOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+         {/* <Item
+              title="Course Category"
+              to="/course-category"
+              icon={<CalendarTodayOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+             />  */}
+            {/* <Item
               title="FAQ Page"
               to="/faq"
               icon={<HelpOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            /> */}
+            /> */} 
 
             {/* <Typography
               variant="h6"

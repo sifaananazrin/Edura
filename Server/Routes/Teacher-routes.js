@@ -11,4 +11,7 @@ const { signup, login } = require('../Controllers/Teacher-controller');
 router.post('/signup', signup);
 router.post('/login', login);
 
+router.post('/addcourse',addCourse);
+router.get('/courses',getAllCourse);
+
 module.exports = router;

@@ -70,9 +70,42 @@ const signup = async (req, res, next) => {
   
 
   
+  const addCourse= (req, res) => {
+    const { name, description, image, link } = req.body;
+    const chapters = [];
+  
+    const newCourse = new Course({
+      name,
+      description,
+      image,
+      link,
+      chapters
+    });
+  
+    newCourse.save()
+      .then(course => {
+        res.json(course);
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to create course.' });
+      });
+  };
+
+  const getAllCourse = async (req, res) => {
+    try {
+      const course = await Course.find();
+      res.send({ success: true, course });
+    } catch (error) {
+      res.send({ success: false, message: error.message });
+    }
+  };
+
 
 
 
   
+  exports.getAllCourse=getAllCourse;
+  exports.addCourse=addCourse;
   exports.signup = signup;
 exports.login = login;

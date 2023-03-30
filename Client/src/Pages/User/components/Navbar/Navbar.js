@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from '@mui/material/Link'
+import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 
 //IMPORTING SVG'S
@@ -12,29 +12,36 @@ const pages = [
   { title: 'Home', arrow: false },
   { title: 'About', arrow: false },
   { title: 'Course', arrow: true },
-  // { title: 'Logout', arrow: true },
-  // { title: 'Blog', arrow: true },
-  { title: 'Contact', arrow: false },
+  // { title: 'Logout', arrow: false },
+  // { title: 'Contact', arrow: false },
 ]
 
 const Navbar = ({ white }) => {
+  const filteredPages = pages.filter(page => page.title !== 'Logout')
+
   return (
     <Box sx={styles.navbar}>
-      {pages.map((page) => (
-        <Link
-          key={page}
+      {filteredPages.map((page) => (
+        <Button
+          key={page.title}
+          variant="text"
           sx={{ ...styles.link, color: white ? '#fff' : '#000' }}
         >
           {page.title}
-          {page.arrow && (
-            <Box
-              component='img'
-              src={white ? whiteArrow : arrow}
-              sx={styles.arrow}
-            />
-          )}
-        </Link>
+        </Button>
       ))}
+      <Box sx={{ flexGrow: 1 }} />
+      <Button
+        key='Logout'
+        variant="contained"
+        sx={{
+          ...styles.link,
+          color: white ? '#fff' : '#000',
+          marginLeft: 'auto',
+        }}
+      >
+        Logout
+      </Button>
     </Box>
   )
 }

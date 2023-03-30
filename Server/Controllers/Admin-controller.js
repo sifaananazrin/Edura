@@ -94,11 +94,116 @@ const approveTeacher = async (req, res) => {
 };
 
 
+const addCourse= (req, res) => {
+  const { name, description, image, link } = req.body;
+  const chapters = [];
 
-module.exports = {
-  adminLogin,
-  getAllusers,
-  blockUnblockUser,
-  getAllTeacher,
-  approveTeacher
+  const newCourse = new Course({
+    name,
+    description,
+    image,
+    link,
+    chapters
+  });
+
+  newCourse.save()
+    .then(course => {
+      res.json(course);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to create course.' });
+    });
 };
+
+const getAllCourse = async (req, res) => {
+  try {
+    const course = await Course.find();
+    res.send({ success: true, course });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
+
+
+exports.getAllCourse=getAllCourse;
+exports.addCourse=addCourse;
+exports.signup = signup;
+exports.login = login;
+const postAddCategory = async (req, res) => {
+
+try {
+  const { cat, des } = req.body;
+ console.log(req.body)
+  const categories = new Categories({
+    name: cat,
+    description: des,
+   
+  });
+  const Data = await categories.save();
+  if (Data){
+    res.send({ success: true });
+  } else {
+    res.send({ success: false});
+  }
+} catch (error) {
+  console.log(error.message);
+}
+};
+
+
+const getAdminCategory = async (req, res) => {
+
+  try {
+    const categories = await Categories.find();
+    res.send({ categories });
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+const postEditCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(req.params.id);
+    const categoriesData = await Categories.updateOne({ _id: id }, {
+      name: req.body.cat,
+      description: req.body.des,
+    });
+    if (categoriesData) {
+      res.send({message: ' updated'});
+    } else {
+      res.send({success:false});
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const getDeleteCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    await Categories.deleteOne({ _id: id }).then(() => {
+      res.send({message: ' data delected'});
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+
+
+
+
+  module.exports = {
+    adminLogin,
+    getAllusers,
+    blockUnblockUser,
+    getAllTeacher,
+    approveTeacher,
+    postAddCategory,
+    getAdminCategory,
+    postEditCategory,
+    getDeleteCategory
+  };
