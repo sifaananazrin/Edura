@@ -14,21 +14,20 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import axios from "../../api/axios";
-import requests from "../../api/request";
+import axios from "../../api/axios"
+import request from "../../api/request"
+import { ToastContainer, toast } from 'react-toastify';
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Required"),
+ 
   email: Yup.string().email("Invalid email address").required("Required"),
 
   password: Yup.string().required("Required"),
   password: Yup.string().required("Required"),
-  cPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Required"),
-});
+})
 
-const TeacherSignup = () => {
+
+const TeacherLogin= () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -42,26 +41,30 @@ const TeacherSignup = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
+     
       email: "",
       //   qualification: "",
-      qualification: "",
+      
       password: "",
-      cPassword: "",
+      
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await axios.post(requests.teachersignup, values);
+        const response = await axios.post(request.teacherlogin, values);
         console.log(response);
-        if (response.status === 201) {
-          window.location = "/teacher/login";
-        } 
+        if (response.data.message === "Login successful") {
+          window.location = "/teacher/home";
+        } else {
+          toast.error(response.data.message);
+        }
       } catch (error) {
         console.error(error);
+        toast.error("An error occurred, please try again later.");
       }
     },
-  });    
+    
+  });     
   return (
     <div
       style={{
@@ -91,17 +94,7 @@ const TeacherSignup = () => {
             <Typography variant="h4" textAlign={"center"} sx={{ mb: 4 }}>
               Welcome Teacher...
             </Typography>
-            <FormLabel sx={{ mt: 2 }}>Name</FormLabel>
-            <TextField
-              fullWidth
-              margin="normal"
-              variant="standard"
-              name="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              error={formik.touched.name && Boolean(formik.errors.name)}
-              helperText={formik.touched.name && formik.errors.name}
-            />
+            
 
             <FormLabel sx={{ mt: 2 }}>Email</FormLabel>
             <TextField
@@ -139,75 +132,29 @@ const TeacherSignup = () => {
               }}
             />
 
-            <TextField
-              id="qualification"
-              name="qualification"
-              label="Qualification"
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              autoComplete="qualification"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.qualification}
-              error={
-                formik.touched.qualification &&
-                Boolean(formik.errors.qualification)
-              }
-              helperText={
-                formik.touched.qualification && formik.errors.qualification
-              }
-            />
+          
 
-            <FormLabel sx={{ mt: 2 }}>Confirm Password</FormLabel>
-            <TextField
-              fullWidth
-              margin="normal"
-              variant="standard"
-              name="cPassword"
-              type={showConfirmPassword ? "text" : "password"}
-              value={formik.values.cPassword}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.cPassword && Boolean(formik.errors.cPassword)
-              }
-              helperText={formik.touched.cPassword && formik.errors.cPassword}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
+           
 
             <Button
               sx={{
                 mt: 4,
                 borderRadius: 10,
-                bgcolor: "red",
+                bgcolor: "blue",
                 color: "#fff",
                 "&:hover": {
-                  bgcolor: "red",
+                  bgcolor: "blue",
                 },
               }}
               type="submit"
               fullWidth
               variant="contained"
             >
-              SignUp
+              Login
             </Button>
             <p style={{ textAlign: "center", marginTop: "10px" }}>
               {"Don't have an account yet? "}
-              <Link to="/teacher/login">Login</Link>
+              <Link to="/teacher/signup">signup</Link>
             </p>
           </Box>
         </FormGroup>
@@ -216,4 +163,4 @@ const TeacherSignup = () => {
   );
 };
 
-export default TeacherSignup;
+export default TeacherLogin;

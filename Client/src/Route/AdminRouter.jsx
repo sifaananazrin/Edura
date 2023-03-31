@@ -6,13 +6,14 @@ import Dashboard from "../Pages/Admin/dashboard";
 import ManageUser from '../Pages/Admin/ManageUser';
 import Course from "../Pages/Admin/Course";
 import Category from "../Pages/Admin/Category";
+import EditCategory from "../Pages/Admin/Category/EditCategory"
 import ApproveTeacher from "../Pages/Admin/ApproveTeacher";
 
 
 import Form from "../Pages/Admin/form";
-import AddCourseForm from '../Pages/Teacher/AddCourseFrom';
+
 import AddCategoryForm from '../Pages/Admin/Category/AddCategoryForm';
-import ViewCoursesTable from "../Pages/Teacher/ViewCoursesTable"
+
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../Pages/Admin/theme";
@@ -32,8 +33,9 @@ function AdminRouter() {
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
-            <Route path="/category" element={<Category />} />
-      <Route path="/add-category" element={<AddCategoryForm />} />
+            <Route path="/category" element={token ? <Category /> :<Navigate to="/admin/login"/>} />
+            <Route path="/editcategory" element={token ?<EditCategory /> :<Navigate to="/admin/login"/>} />
+      <Route path="/add-category" element={token ? <AddCategoryForm/> :<Navigate to="/admin/login"/> } />
             <Route path="/home" element={ token ? <Dashboard /> :<Navigate to="/admin/login"/>}/>
             
               <Route path="/manageuser" element={ token ? <ManageUser /> : <Navigate to="/admin/login"/> } />

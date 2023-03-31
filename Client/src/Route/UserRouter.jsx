@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes ,Navigate} from "react-router-dom";
 import SignUp from '../Pages/User/SignUp'
 import Login from '../Pages/User/Login';
 import OTP from "../Pages/User/OTP";
@@ -10,22 +10,26 @@ import Layout from "../Pages/User/components/Layout";
 import { ThemeProvider } from '@mui/material'
  import theme from '../Pages/User/theme'
  import CssBaseline from '@mui/material/CssBaseline'
+ import Profile from '../Pages/User/components/Profile/ProfilePage.js';
 
 function UserRouter() {
+
+  const token=localStorage.getItem("token");
     return (
       
          <ThemeProvider theme={theme}>
           <CssBaseline />
           <Layout>
             <Routes>
-              <Route path="/Signup" element={<SignUp />} />
+              <Route path="/Signup" element={<SignUp /> } />
               <Route path="/otp" element={<OTP/>}></Route>
-               <Route path="/login" element={<Login />} /> 
-              <Route path="/home" element={<HomeScreen />} />
-              <Route path={"/course-details"} element={<CourseDetailsScreen />} />
+              <Route path="/profile" element={<Profile/>}></Route>
+               <Route path="/login" element={!token ? <Login /> : <Navigate to="/user/home"/>} /> 
+              <Route path="/home" element={ token ?<HomeScreen /> :<Navigate to="/user/login"/>} />
+              <Route path={"/course-details"} element={ token ? <CourseDetailsScreen /> :<Navigate to="/user/login"/>} />
               <Route
                 path={"/currently-featured"}
-                element={<FeaturedCoursesScreen />}
+                element={token ? <FeaturedCoursesScreen /> :<Navigate to="/user/login"/>}
               />
             </Routes>
           </Layout>

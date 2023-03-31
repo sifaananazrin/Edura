@@ -1,17 +1,30 @@
 import { useState } from 'react';
 import { TextField, Button, Box } from '@material-ui/core';
-
+import axios from '../../../api/axios';
+import requests from '../../../api/request';
 function AddCategoryForm({ onAddCategory }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Add category using onAddCategory prop
-    onAddCategory({ name, description });
-    // Clear form inputs
-    setName('');
-    setDescription('');
+    
+    try {
+      // Send a POST request to the server's API endpoint with the new category data
+      const response = await axios.post(requests.addCatory, { name, description });
+      if(response.data.success){
+        window.location="/admin/category"
+      }
+
+      // Call the `onAddCategory` callback function with the new category data returned from the server
+      onAddCategory(response.data);
+
+      // Clear the form input fields
+      setName('');
+      setDescription('');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

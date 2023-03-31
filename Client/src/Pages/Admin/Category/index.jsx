@@ -11,7 +11,10 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-import AdminRouter from '../../../Route/AdminRouter';
+import axios from '../../../api/axios';
+import requests from '../../../api/request';
+
+
 
 const useStyles = makeStyles({
   addButton: {
@@ -26,26 +29,59 @@ const useStyles = makeStyles({
 
 function Category() {
   const [categories, setCategories] = useState([]);
+  const [selected, setSelected] = useState(null);
   const navigate = useNavigate(); // initialize useHistory
   const classes = useStyles();
+ 
 
   useEffect(() => {
-    // Fetch your table data from your API or data source
-    const fetchCategories = async () => {
-      const response = await fetch('/categories');
-      const data = await response.json();
-      setCategories(data);
-    };
-    fetchCategories();
-  }, []);
+    async function fetchData() {
+      try {
 
-  const handleEdit = (category) => {
-    console.log('Editing category:', category);
+      
+
+
+        const response = await axios.get(requests.getAllCatory);
+       
+        setCategories(response.data.categories);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, [setCategories]);
+
+  const handleEdit =async (id) => {
+    try {
+
+
+      
+      const response = await axios.get(`/admin/editecategory/${id}`);
+      setSelected(response.data);
+      console.log(response)
+      navigate('/admin/editcategory', { state: { selected: response.data } });
+    
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleRemove = (category) => {
-    console.log('Removing category:', category);
-  };
+  const handleRemove=async(id)=>{
+    try {
+
+
+      
+      const response = await axios.get(`/admin/delectcategory/${id}`);
+      if(response){
+        window.location="/admin/category"
+      }
+      console.log(response)
+    
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleAdd = () => {
     navigate('/admin/add-category'); // navigate to add-category route
@@ -67,30 +103,31 @@ function Category() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
+              {/* <TableCell>ID</TableCell> */}
               <TableCell>Name</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {categories.map((category) => (
+          
+            {categories && categories.map((category) => (
               <TableRow key={category.id}>
-                <TableCell>{category.id}</TableCell>
+                {/* <TableCell>{category.id}</TableCell> */}
                 <TableCell>{category.name}</TableCell>
                 <TableCell>{category.description}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => handleEdit(category)}
+                    onClick={() => handleEdit(category._id)}
                   >
                     Edit
                   </Button>
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => handleRemove(category)}
+                    onClick={() => handleRemove(category._id)}
                   >
                     Remove
                   </Button>

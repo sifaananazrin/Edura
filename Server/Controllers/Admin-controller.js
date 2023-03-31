@@ -2,6 +2,7 @@ const Admin = require("../model/Admin");
 const jwt =require('jsonwebtoken')
 const User = require("../model/User");
 const Teacher=require("../model/Teacher")
+const Categories=require("../model/Category")
 
 
 
@@ -94,46 +95,17 @@ const approveTeacher = async (req, res) => {
 };
 
 
-const addCourse= (req, res) => {
-  const { name, description, image, link } = req.body;
-  const chapters = [];
 
-  const newCourse = new Course({
-    name,
-    description,
-    image,
-    link,
-    chapters
-  });
-
-  newCourse.save()
-    .then(course => {
-      res.json(course);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ error: 'Failed to create course.' });
-    });
-};
-
-const getAllCourse = async (req, res) => {
-  try {
-    const course = await Course.find();
-    res.send({ success: true, course });
-  } catch (error) {
-    res.send({ success: false, message: error.message });
-  }
-};
 
 
 const postAddCategory = async (req, res) => {
 
 try {
-  const { cat, des } = req.body;
+  const { name, description } = req.body;
  console.log(req.body)
   const categories = new Categories({
-    name: cat,
-    description: des,
+    name: name,
+    description: description,
    
   });
   const Data = await categories.save();
@@ -158,13 +130,25 @@ const getAdminCategory = async (req, res) => {
   }
 }
 
+const getEditCategory = async (req, res) => {
+  
+    const { id } = req.params;
+    console.log(id);
+    const categories = await Categories.findOne({ _id: id });
+    res.send({  categories });
+  } 
+  
+
+
+
+
 const postEditCategory = async (req, res) => {
   try {
     const { id } = req.params;
     console.log(req.params.id);
     const categoriesData = await Categories.updateOne({ _id: id }, {
-      name: req.body.cat,
-      description: req.body.des,
+      name: req.body.name,
+      description: req.body.description,
     });
     if (categoriesData) {
       res.send({message: ' updated'});
@@ -201,5 +185,6 @@ const getDeleteCategory = async (req, res) => {
     postAddCategory,
     getAdminCategory,
     postEditCategory,
-    getDeleteCategory
+    getDeleteCategory,
+    getEditCategory
   };

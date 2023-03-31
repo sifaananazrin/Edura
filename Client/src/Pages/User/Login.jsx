@@ -44,6 +44,9 @@ function Login() {
         const response = await axios.post(request.login, values);
         if (response.data.message === "Login successful") {
           window.location = "/user/home";
+          localStorage.setItem("token",response.data.token)
+          localStorage.setItem("user",response.data.name)
+          localStorage.setItem("email",response.data.email)
         } else {
           toast.error(response.data.message);
         }

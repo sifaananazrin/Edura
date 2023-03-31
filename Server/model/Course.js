@@ -3,10 +3,22 @@ const mongoose = require('mongoose');
 const courseSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
-  image: { type: String },
+  category: {
+    type: String,
+    ref: 'categories',
+    required: true,
+  },
+  image:[{
+    url:{
+      type:String
+    },
+    filename:{
+      type:String
+    }
+  }],
   link: { type: String },
   chapters: [{
-    name: { type: String, required: true },
+    name: { type: String, required: true }, 
     description: { type: String },
     content: { type: String }
   }]

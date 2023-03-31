@@ -97,7 +97,7 @@ const login = async (req, res, next) => {
   });
   res
     .status(200)
-    .json({ message: "Login successful", user: existingUser, token });
+    .json({ message: "Login successful", name: existingUser.name, token,email:existingUser.email });
 };
 
 

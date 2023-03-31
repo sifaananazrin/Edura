@@ -20,6 +20,10 @@ import AdminRouter from "../../../Route/AdminRouter";
 // import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = '/admin/login'; // redirect to login page after logout
+  };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -36,8 +40,21 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     </MenuItem>
   );
 };
+const LogoutButton = ({ handleLogout }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  return (
+    <MenuItem onClick={handleLogout} icon={<ExitToAppOutlinedIcon />}>
+      <Typography style={{ color: colors.grey[100] }}>Logout</Typography>
+    </MenuItem>
+  );
+};
 
 const Sidebar = () => {
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = '/admin/login'; // redirect to login page after logout
+  };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -121,7 +138,7 @@ const Sidebar = () => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/"
+              to="/admin/home"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -177,13 +194,10 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             /> */}
-              <Item
-              title="Logout"
-              // to="/admin/category" //team
-              icon={<ExitToAppOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+
+{/* <a  onClick={handleLogout}> */}
+<LogoutButton handleLogout={handleLogout} />
+            {/* </a> */}
          {/* <Item
               title="Course Category"
               to="/course-category"

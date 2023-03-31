@@ -9,10 +9,10 @@ router.get('/users', validateAdminToken, controller.getAllusers);
 router.get('/status/:id', controller.blockUnblockUser);
 router.get('/getteacher', validateAdminToken, controller.getAllTeacher);
 router.get('/approve/:id', validateAdminToken, controller.approveTeacher);
-
+router.get('/editecategory/:id', controller.getEditCategory);
 router.post('/addcategory', controller.postAddCategory);
 router.get('/category', controller.getAdminCategory);
-router.get('/editcategory/:id', controller.postEditCategory);
+router.put('/editcategory/:id', controller.postEditCategory);
 router.get('/delectcategory/:id', controller.getDeleteCategory)
 
 module.exports = router;

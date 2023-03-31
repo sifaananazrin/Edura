@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -118,8 +119,10 @@ const Header = () => {
               <Box component='img' src={shopping_cart} />
             </IconButton>
             <IconButton sx={{ display: { xs: 'none', lg: 'block' } }}>
-              <Box component='img' src={user_info} />
-            </IconButton>
+  <Link to='/user/profile'>
+    <Box component='img' src={user_info} />
+  </Link>
+</IconButton>
             {/* {isLoggedIn && (
       <Button variant="contained" color="secondary" onClick={handleLogout}>
         Logout

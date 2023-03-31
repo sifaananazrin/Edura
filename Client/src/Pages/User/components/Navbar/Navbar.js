@@ -17,7 +17,12 @@ const pages = [
 ]
 
 const Navbar = ({ white }) => {
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = '/user/login'; // redirect to login page after logout
+  };
   const filteredPages = pages.filter(page => page.title !== 'Logout')
+  const token = localStorage.getItem('token');
 
   return (
     <Box sx={styles.navbar}>
@@ -30,18 +35,20 @@ const Navbar = ({ white }) => {
           {page.title}
         </Button>
       ))}
-      <Box sx={{ flexGrow: 1 }} />
-      <Button
-        key='Logout'
-        variant="contained"
-        sx={{
-          ...styles.link,
-          color: white ? '#fff' : '#000',
-          marginLeft: 'auto',
-        }}
-      >
-        Logout
-      </Button>
+      {token && (
+        <Button
+          key='Logout'
+          onClick={handleLogout}
+          variant="contained"
+          sx={{
+            ...styles.link,
+            color: white ? '#fff' : '#000',
+            marginLeft: 'auto',
+          }}
+        >
+          Logout
+        </Button>
+      )}
     </Box>
   )
 }

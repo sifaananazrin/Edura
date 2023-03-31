@@ -6,7 +6,9 @@ const requests={
     getAllUsers:"/admin/users",
     getAllTeacher:"/admin/getteacher",
     teacherlogin:"/teacher/login",
-    teachersignup:"/teacher/signup"
+    teachersignup:"/teacher/signup",
+    getAllCatory:"/admin/category",
+    addCatory:"/admin/addcategory",
    
  }
  export default requests;

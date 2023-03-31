@@ -74,20 +74,35 @@ const signup = async (req, res, next) => {
     }
   };
   
-
+  const getAllCategories = async (req, res) => {
+    try {
+      const categories = await Category.find();
+      res.send({ success: true, categories });
+    } catch (error) {
+      res.send({ success: false, message: error.message });
+    }
+  };
+  
   
   const addCourse= (req, res) => {
-    const { name, description, image, link } = req.body;
+    const { name, category,description, link } = req.body;
     const chapters = [];
-  
+    // const categories =  Category.find();
     const newCourse = new Course({
       name,
+      category,
       description,
-      image,
+      
       link,
       chapters
     });
-  
+    if (req.files && req.files.length > 0) {
+      newCourse.image = req.files.map((f) => ({
+        url: f.path,
+        filename: f.filename,
+      }));
+    }
+    
     newCourse.save()
       .then(course => {
         res.json(course);
@@ -107,7 +122,54 @@ const signup = async (req, res, next) => {
     }
   };
 
+  const getEditCourse = async (req, res) => {
+  
+    const { id } = req.params;
+    console.log(id);
+    const course = await Course.findOne({ _id: id });
+    res.send({  course });
+  } 
+  
 
+
+
+
+const postEditCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    
+    const { name, category,description, link } = req.body;
+    const chapters = [];
+    const course = await Course.updateOne({ _id: id }, {
+      name,
+      category,
+      description,
+      
+      link,
+      chapters
+    });
+    if (course) {
+      res.send({message: ' updated'});
+    } else {
+      res.send({success:false});
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const getDeleteCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    await Course.deleteOne({ _id: id }).then(() => {
+      res.send({message: ' data delected'});
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 
   
@@ -115,3 +177,7 @@ const signup = async (req, res, next) => {
   exports.addCourse=addCourse;
   exports.signup = signup;
 exports.login = login;
+exports.getAllCategories=getAllCategories
+exports.getEditCourse=getEditCourse
+exports.postEditCourse=postEditCourse
+exports.getDeleteCourse=getDeleteCourse
