@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import {Routes,  Route, Link } from 'react-router-dom';
 
 
 import { styled, useTheme } from '@mui/material/styles';
@@ -26,6 +27,8 @@ import Shorts from "./Components/Shorts"
 import { AiFillHome } from 'react-icons/ai';
 import { SiCoursera } from 'react-icons/si';
 import { BsBookHalf } from 'react-icons/bs';
+import { useNavigate } from "react-router";
+import Menu from '@mui/material/Menu';
 
 
 const drawerWidth = 240;
@@ -98,6 +101,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function Sidenav() {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
+
   const[menudata,setMenudata]= useState("Home")
 
   const handleDrawerOpen = () => {
@@ -106,6 +110,16 @@ export default function Sidenav() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const navigate = useNavigate();
+
+  const handleMenuClick = (menuName) => {
+    console.log("Menu clicked: ", menuName);
+    if (menuName === "Shorts") {
+      navigate("/teacher/shorts");
+    }
+    setMenudata(menuName);
   };
 
   return (
@@ -187,10 +201,12 @@ export default function Sidenav() {
        
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }} >
-      {menudata == "Home" && <Home/>}
-      {menudata == "Shorts" && <Shorts/>}
-      </Box>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Menu onClick={handleMenuClick} />
+      {menudata === "Home" && <Home />}
+      {menudata === "Shorts" && <Shorts />}
+      {/* add more menu item cases as needed */}
+    </Box>
     </Box>
   );
 }

@@ -17,6 +17,7 @@ const AddCourse = () => {
   const [category, setCategory] = useState("");
   const [link, setLink] = useState("");
   const [image, setImage] = useState("");
+  const [price, setPrice] = useState("");
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -46,11 +47,15 @@ const AddCourse = () => {
     setLink(event.target.value);
   };
 
+  const handlePriceChange = (event) => {
+    setPrice(event.target.value);
+  };
+
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
   };
 
-const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     const formData = new FormData();
@@ -58,26 +63,29 @@ const handleSubmit = (event) => {
     formData.append("description", description);
     formData.append("category", category);
     formData.append("link", link);
+    formData.append("price", price);
     formData.append("image", image);
 
-    axios.post("http://localhost:5000/teacher/addcourse", formData, {
+    axios
+      .post("http://localhost:5000/teacher/addcourse", formData, {
         headers: {
-            "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data",
         },
-    })
-    .then((response) => {
+      })
+      .then((response) => {
         console.log(response);
         // Reset the form state
         setCourseName("");
         setDescription("");
         setCategory("");
         setLink("");
+        setPrice("");
         setImage("");
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.log(error);
-    });
-};
+      });
+  };
 
 
   return (
@@ -130,6 +138,13 @@ const handleSubmit = (event) => {
         value={link}
         onChange={handleLinkChange}
       />
+      <TextField
+  label="Price"
+  variant="outlined"
+  value={price}
+  onChange={handlePriceChange}
+/>
+
 
       <FormControl sx={{ mt: 1, mb: 1 }}>
         <input

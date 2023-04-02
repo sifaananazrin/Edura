@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 import {
   Table,
   TableBody,
@@ -24,6 +25,9 @@ const useStyles = makeStyles({
   },
   addCategoryButton: {
     marginRight: '0.5rem',
+  },
+  removeCategoryButton: {
+    marginLeft: '0.5rem',
   },
 });
 
@@ -128,6 +132,7 @@ function Category() {
                     variant="contained"
                     color="secondary"
                     onClick={() => handleRemove(category._id)}
+                    className={classes.removeCategoryButton}
                   >
                     Remove
                   </Button>

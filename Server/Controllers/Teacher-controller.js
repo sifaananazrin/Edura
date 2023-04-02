@@ -85,17 +85,17 @@ const signup = async (req, res, next) => {
   
   
   const addCourse= (req, res) => {
-    const { name, category,description, link } = req.body;
-    const chapters = [];
-    // const categories =  Category.find();
-    const newCourse = new Course({
-      name,
-      category,
-      description,
-      
-      link,
-      chapters
-    });
+    
+      const { name, category, description, link, price } = req.body;
+      const chapters = [];
+      const newCourse = new Course({
+        name,
+        category,
+        description,
+        link,
+        price,
+        chapters
+      });
     if (req.files && req.files.length > 0) {
       newCourse.image = req.files.map((f) => ({
         url: f.path,
@@ -139,13 +139,13 @@ const postEditCourse = async (req, res) => {
     const { id } = req.params;
     
     
-    const { name, category,description, link } = req.body;
+    const { name, category,description, link,price } = req.body;
     const chapters = [];
     const course = await Course.updateOne({ _id: id }, {
       name,
       category,
       description,
-      
+      price,
       link,
       chapters
     });

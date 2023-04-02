@@ -2,7 +2,7 @@ const User = require("../model/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer=require('nodemailer')
-
+const Course = require("../model/Course")
 // const signup = async (req, res, next) => {
 //   const { name, email, password } = req.body;
 //   let existingUser;
@@ -288,27 +288,15 @@ const PostOtp = async (req, res) => {
 
 
 
-  const logout  = (req,res,next)=>{
-    const cookies = req.headers.cookie;
-    const token = cookies.split("=")[1];
-    console.log(token);
-    if (!token) {
-      res.status(404).json({ message: "No tocken found" });
+  
+  const getAllCourse = async (req, res) => {
+    try {
+      const course = await Course.find();
+      res.send({ success: true, course });
+    } catch (error) {
+      res.send({ success: false, message: error.message });
     }
-    jwt.verify(String(prevToken), process.env.JWT_SECRET_KEY, (err, user) => {
-      if (err) {
-        console.log(err);
-        return res.status(403).json({ message: "Authentication is failed" });
-      }
-      res.clearCookie(`${user.id}`);
-      req.cookies[`${user.id}`] = " ";
-      // it will clean prev token from cookie then generate new tocken
-  return res.status(200).json({message:"successfiully Logged Out"})
-     
-     
-    });
-  }
-
+  };
 
 
 exports.signup = signup;
@@ -317,4 +305,5 @@ exports.verifyTocken = verifyTocken;
 exports.getUser = getUser;
 exports.refreshToken = refreshToken;
 exports.PostOtp=PostOtp;
-exports.logout=logout
+
+exports.getAllCourse=getAllCourse

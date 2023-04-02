@@ -67,9 +67,9 @@ function AddCourseForm({ onAddCourse, categories }) {
         type="number"
         inputProps={{ min: 0 }}
       />
-      <Button type="submit" variant="contained" color="primary">
-        Add Course
-      </Button>
+      <Button type="submit" variant="contained" color="primary" style={{ marginBottom: '16px' }}>
+  Add Course
+</Button>
     </Box>
   );
 }
