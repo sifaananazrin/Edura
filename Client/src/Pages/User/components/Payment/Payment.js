@@ -111,7 +111,7 @@ const Payment = () => {
       })
       .then((response) => {
         if (response.data.success) {
-          navigate("/success");
+          navigate("/teacher/success");
         } else {
           console.log("payment failed");
         }
