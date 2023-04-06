@@ -7,6 +7,7 @@ import CourseForm from '../Pages/Teacher/component/course/CourseForm.js';
 import EditCourse from '../Pages/Teacher/component/course/EditCourse.js';
 import  Login from '../Pages/Login/TeacherLogin';
 import TeacherSignup  from '../Pages/Login/TeacherSignup';
+import ViewStudent from '../Pages/Teacher/component/Student/ViewStudent';
 
 
 function TeacherRouter() {
@@ -14,7 +15,7 @@ function TeacherRouter() {
     <>
       <ButtonAppBar />
       <Routes>
-     
+      <Route path="/student" element={<ViewStudent />} />
       <Route path="/signup" element={<TeacherSignup />} />
       <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />

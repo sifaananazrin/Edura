@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Divider from '@mui/material/Divider';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
+import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import Divider from "@mui/material/Divider";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
 
 //IMPORTING SVG'S AND IMAGES
-import photo_card from '../../../../assets/photo_card.png';
-import plus from '../../../../assets/plus.svg';
-import Wrapper from '../Wrapper';
-import styles from './styles';
+import photo_card from "../../../../assets/photo_card.png";
+import plus from "../../../../assets/plus.svg";
+import Wrapper from "../Wrapper";
+import styles from "./styles";
 
 const FeaturedCards = () => {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     async function fetchCourses() {
-      const response = await fetch('http://localhost:5000/api/course');
+      const response = await fetch("http://localhost:5000/api/course");
       const data = await response.json();
       setCourses(data.course);
-      console.log(data.course)
+      console.log(data.course);
     }
 
     fetchCourses();
@@ -40,28 +40,34 @@ const FeaturedCards = () => {
                 <Card sx={styles.card}>
                   <Box sx={styles.blockPhoto}>
                     <Box
-                      component='img'
-                      src={course.image[0].url}
-                      sx={{ width: '100%' }}
+                      component="div"
+                      sx={{
+                        width: "100%",
+                        height: "0",
+                        paddingBottom: "56.25%", // 16:9 aspect ratio
+                        position: "relative",
+                        background: `url(${course.image[0].url}) no-repeat center center`,
+                        backgroundSize: "cover", // or 'contain'
+                      }}
                     />
                     <Box sx={styles.language}>{course.name}</Box>
                   </Box>
-                  <Box sx={{ textAlign: 'center', m: '24px 0' }}>
+                  <Box sx={{ textAlign: "center", m: "24px 0" }}>
                     {course.title}
                   </Box>
                   <Divider sx={styles.divider} />
                   <Box sx={styles.footerCard}>
                     <Box sx={styles.price}>${course.price}</Box>
                     <Link sx={styles.link}>
-                      <Box component='span' sx={{ mr: '5px' }}>
+                      <Box component="span" sx={{ mr: "5px" }}>
                         enroll now
                       </Box>
-                      <Box component='img' src={plus} />
+                      <Box component="img" src={plus} />
                     </Link>
                   </Box>
                 </Card>
               </Grid>
-            )
+            );
           })}
         </Grid>
       </Wrapper>

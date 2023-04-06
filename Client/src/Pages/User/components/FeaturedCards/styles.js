@@ -12,6 +12,9 @@ const styles = {
   },
   blockPhoto: {
     position: 'relative',
+    height: '200px', // set a fixed height
+    width: '100%', // set a fixed width
+    overflow: 'hidden', // hide overflow
   },
   language: {
     position: 'absolute',

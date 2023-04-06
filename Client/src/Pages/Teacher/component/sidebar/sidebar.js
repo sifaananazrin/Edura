@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -10,6 +9,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ClassIcon from '@mui/icons-material/Class';
+import PersonIcon from '@mui/icons-material/Person';
 
 export default function TemporaryDrawer({state,setState,toggleDrawer}) {
  
@@ -22,14 +22,15 @@ export default function TemporaryDrawer({state,setState,toggleDrawer}) {
     >
       <Divider />
       <List>
-        {['Dashboard', 'Course'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-             <ListItemButton href={`/teacher/course`}>
-
-              <ListItemIcon>
-                {index % 2 === 0 ? <DashboardIcon /> : <ClassIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+        {[
+          { text: 'Dashboard', icon: <DashboardIcon />, link: '/teacher/dashboard' },
+          { text: 'Course', icon: <ClassIcon />, link: '/teacher/course' },
+          { text: 'Student', icon: <PersonIcon />, link: '/teacher/student' },
+        ].map((item) => (
+          <ListItem key={item.text} disablePadding>
+            <ListItemButton href={item.link}>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -41,7 +42,6 @@ export default function TemporaryDrawer({state,setState,toggleDrawer}) {
     <div>
       {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
-         
           <Drawer
             anchor={anchor}
             open={state[anchor]}
