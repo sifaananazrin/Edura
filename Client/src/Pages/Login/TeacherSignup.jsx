@@ -193,10 +193,10 @@ const TeacherSignup = () => {
               sx={{
                 mt: 4,
                 borderRadius: 10,
-                bgcolor: "red",
+                bgcolor: "#930050",
                 color: "#fff",
                 "&:hover": {
-                  bgcolor: "red",
+                  bgcolor: "#930050",
                 },
               }}
               type="submit"

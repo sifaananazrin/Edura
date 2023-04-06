@@ -7,7 +7,11 @@ const {
      refreshToken,
      PostOtp,
     //  logout,
-     getAllCourse
+     getAllCourse,
+     confirmOrder,
+     verifyPayment,
+     paymentFailure,
+     getProductDetail
      } = require('../Controllers/User-controller');
 
 const router = express.Router();
@@ -21,6 +25,11 @@ router.post("/login",login)
 router.get("/refresh",refreshToken,verifyTocken,getUser)
 router.post("/verify-otp",PostOtp)
 router.get("/course",getAllCourse)
+router.post('/orderConfirmed',confirmOrder);
+router.post('/verifyPayment',verifyPayment);
+router.get('/paymentFail',paymentFailure);
+router.get("/product/:id", getProductDetail);
+
 // router.post("/logout",verifyTocken,logout)
 
 

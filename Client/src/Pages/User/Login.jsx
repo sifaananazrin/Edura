@@ -47,6 +47,7 @@ function Login() {
           localStorage.setItem("token",response.data.token)
           localStorage.setItem("user",response.data.name)
           localStorage.setItem("email",response.data.email)
+          localStorage.setItem("uid",response.data.uid)
         } else {
           toast.error(response.data.message);
         }

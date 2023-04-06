@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import Link from '@mui/material/Link'
+import link from '@mui/material/Link'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import Wrapper from '../Wrapper'
@@ -36,7 +37,7 @@ const Hero = () => {
                 {/* <Box component='img' src={ant_design_play} /> */}
                 {/* <Box component='span'>What’s null?</Box> */}
               </Link>
-              <Button sx={styles.viewBtn}>
+              <Button component={Link} to='/user/currently-featured' sx={styles.viewBtn}>
                 <Box component='img' src={eye} />
                 view courses
               </Button>

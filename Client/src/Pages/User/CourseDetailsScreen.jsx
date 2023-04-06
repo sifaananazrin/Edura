@@ -1,6 +1,7 @@
 import React from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import { useLocation } from 'react-router-dom';
 
 import Wrapper from '../User/components/Wrapper'
 import Breadcrumbs from '../User/components/Breadcrumbs'
@@ -35,20 +36,30 @@ const styles = {
   },
 }
 const CourseDetailsScreen = () => {
+  const location = useLocation();
+  console.log(location)
+  const selectedCourses = location.state.selectedCourses;
+  const name = selectedCourses.name;
+  const image = selectedCourses.image;
+  const des = selectedCourses.description;
+  const price = selectedCourses.price;
+console.log(image)
+
+
   return (
     <Box sx={{ pt: '90px' }}>
       <Wrapper>
         <Box>
           <Typography variant='h1' textAlign='center'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+            {name}
           </Typography>
-          <Breadcrumbs />
+          {/* <Breadcrumbs /> */}
         </Box>
         <Box sx={styles.wrapper}>
           <Box sx={styles.wrapperLeftBlock}>
-            <Box component='img' src={imageslearn} sx={styles.img} />
-            <CurrentStatus />
-            <CourseDescription />
+            <Box component='img' src={image[0].url} sx={styles.img} />
+            <CurrentStatus  price={price} name={name} image={image}  />
+            <CourseDescription des={des} />
             <LearnCourse />
             <CourseContent />
           </Box>

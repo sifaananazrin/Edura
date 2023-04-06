@@ -8,8 +8,6 @@ const Layout = ({ children }) => {
     <Box>
       <Header />
       {children}
-      {/* <Subscribe /> */}
-      <Footer />
     </Box>
   )
 }

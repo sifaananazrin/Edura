@@ -4,6 +4,7 @@ const courseSchema = new mongoose.Schema({
   name: { type: String, required: true },
   price: { type: String, required: false },
   description: { type: String, required: true },
+  teachername: { type: String, required: true },
   category: {
     type: String,
     ref: 'categories',

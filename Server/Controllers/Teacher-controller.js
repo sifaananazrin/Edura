@@ -62,7 +62,7 @@ const signup = async (req, res, next) => {
             { email: found.email, teacherId: found._id, accountType: 'teacher' },
             process.env.JWT_SECRET_KEY
           );
-          res.send({ success: true, message: 'Login successful', token });
+          res.send({ success: true, message: 'Login successful', token,tid:found._id ,name:found.name});
         } else {
           res.send({ success: false, message: 'Invalid email or password' });
         }
@@ -84,35 +84,50 @@ const signup = async (req, res, next) => {
   };
   
   
-  const addCourse= (req, res) => {
-    
-      const { name, category, description, link, price } = req.body;
-      const chapters = [];
-      const newCourse = new Course({
-        name,
-        category,
-        description,
-        link,
-        price,
-        chapters
-      });
-    if (req.files && req.files.length > 0) {
-      newCourse.image = req.files.map((f) => ({
-        url: f.path,
-        filename: f.filename,
-      }));
-    }
-    
-    newCourse.save()
-      .then(course => {
-        res.json(course);
+  const addCourse = (req, res) => {
+    const { name, category, description, link, price,teachername } = req.body;
+  
+    Course.findOne({ name: name })
+      .then(existingCourse => {
+        if (existingCourse) {
+          // A course with the same name already exists
+          return res.status(400).json({ error: 'A course with the same name already exists.' });
+        }
+  
+        // Create a new course if one does not already exist
+        const chapters = [];
+        const newCourse = new Course({
+          name,
+          category,
+          teachername,
+          description,
+          link,
+          price,
+          chapters
+        });
+  
+        if (req.files && req.files.length > 0) {
+          newCourse.image = req.files.map((f) => ({
+            url: f.path,
+            filename: f.filename,
+          }));
+        }
+  
+        newCourse.save()
+          .then(course => {
+            res.json(course);
+          })
+          .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to create course.' });
+          });
       })
       .catch(err => {
         console.error(err);
-        res.status(500).json({ error: 'Failed to create course.' });
+        res.status(500).json({ error: 'Failed to check for existing courses.' });
       });
   };
-
+  
   const getAllCourse = async (req, res) => {
     try {
       const course = await Course.find();

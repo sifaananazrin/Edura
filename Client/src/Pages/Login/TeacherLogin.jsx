@@ -54,7 +54,10 @@ const TeacherLogin= () => {
         const response = await axios.post(request.teacherlogin, values);
         console.log(response);
         if (response.data.message === "Login successful") {
-          window.location = "/teacher/home";
+          localStorage.setItem("token",response.data.token)
+          localStorage.setItem("tid",response.data.tid)
+          localStorage.setItem("name",response.data.name)
+          window.location = "/teacher/";
         } else {
           toast.error(response.data.message);
         }
@@ -140,10 +143,10 @@ const TeacherLogin= () => {
               sx={{
                 mt: 4,
                 borderRadius: 10,
-                bgcolor: "blue",
+                bgcolor: "#930050",
                 color: "#fff",
                 "&:hover": {
-                  bgcolor: "blue",
+                  bgcolor: "#930050",
                 },
               }}
               type="submit"

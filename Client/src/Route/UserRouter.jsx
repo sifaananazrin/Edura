@@ -11,6 +11,10 @@ import { ThemeProvider } from '@mui/material'
  import theme from '../Pages/User/theme'
  import CssBaseline from '@mui/material/CssBaseline'
  import Profile from '../Pages/User/components/Profile/ProfilePage.js';
+ import Payment from '../Pages/User/components/Payment/Payment';
+ import OrderViewPage from '../Pages/User/components/Oder/OrderViewPage';
+
+ 
 
 function UserRouter() {
 
@@ -22,6 +26,9 @@ function UserRouter() {
           <Layout>
             <Routes>
               <Route path="/Signup" element={<SignUp /> } />
+              <Route path="/payment" element={<Payment /> } />
+             
+              <Route path="/oders" element={< OrderViewPage/>}></Route>
               <Route path="/otp" element={<OTP/>}></Route>
               <Route path="/profile" element={<Profile/>}></Route>
                <Route path="/login" element={!token ? <Login /> : <Navigate to="/user/home"/>} /> 

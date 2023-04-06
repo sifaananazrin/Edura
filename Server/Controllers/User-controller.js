@@ -1,8 +1,10 @@
 const User = require("../model/User");
 const bcrypt = require("bcryptjs");
+const instance = require("../Middleware/razorpay");
 const jwt = require("jsonwebtoken");
-const nodemailer=require('nodemailer')
-const Course = require("../model/Course")
+const nodemailer = require("nodemailer");
+const Course = require("../model/Course");
+const Booking = require("../model/Booking");
 // const signup = async (req, res, next) => {
 //   const { name, email, password } = req.body;
 //   let existingUser;
@@ -69,7 +71,7 @@ const Course = require("../model/Course")
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email)
+  console.log(email);
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -97,11 +99,14 @@ const login = async (req, res, next) => {
   });
   res
     .status(200)
-    .json({ message: "Login successful", name: existingUser.name, token,email:existingUser.email });
+    .json({
+      message: "Login successful",
+      name: existingUser.name,
+      token,
+      email: existingUser.email,
+      uid: existingUser._id,
+    });
 };
-
-
-
 
 //verify token
 const verifyTocken = (req, res, next) => {
@@ -173,24 +178,19 @@ const refreshToken = (req, res, next) => {
   });
 };
 
-
 //otp
-
-
 
 var email;
 
 const mailTransporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "shifananazrin15@gmail.com",
-      pass: "ynudgxldjsercxjs",
-    },
-  });
+  service: "gmail",
+  auth: {
+    user: "shifananazrin15@gmail.com",
+    pass: "ynudgxldjsercxjs",
+  },
+});
 
 const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
-
-
 
 // const signup = async (req,res,next)=>{
 //     const{name,email,password} =req.body;
@@ -222,88 +222,164 @@ const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 //     return res.status(201).json({message:user})
 // }
 const signup = async (req, res) => {
-    name = req.body.name;
-   email = req.body.email;
-     password = req.body.password
-     cPassword = req.body.cPassword;
+  name = req.body.name;
+  email = req.body.email;
+  password = req.body.password;
+  cPassword = req.body.cPassword;
 
-     console.log(name)
-  
-    try {
-      const user = await User.findOne({ email: email });
-      if (user) {
-        res.send({user :true});
-        return ;
-        // break;
-      }
-  
-    //   const OTP = ${Math.floor(1000 + Math.random() * 9000)};
-      const mailDetails = {
-        from: "Shifananazrin15@gmail.com",
-        to: email,
-        subject: "Learning ACCOUNT REGISTRATION",
-        html: `<p>YOUR OTP FOR REGISTERING IN Leaning platform ${OTP}</p>`,
-      };
-  
-      if (password==cPassword) {
-        await mailTransporter.sendMail(mailDetails);
-        console.log("Email Sent Successfully");
-        res.send({email:true});
-      }
-    } catch (err) {
-      console.log("Error Occurs: ", err);
-      res.status(500).json({ message: "Internal Server Error" });
+  console.log(name);
+
+  try {
+    const user = await User.findOne({ email: email });
+    if (user) {
+      res.send({ user: true });
+      return;
+      // break;
     }
-  };
 
+    //   const OTP = ${Math.floor(1000 + Math.random() * 9000)};
+    const mailDetails = {
+      from: "Shifananazrin15@gmail.com",
+      to: email,
+      subject: "Learning ACCOUNT REGISTRATION",
+      html: `<p>YOUR OTP FOR REGISTERING IN Leaning platform ${OTP}</p>`,
+    };
 
-  
-
-  
-
+    if (password == cPassword) {
+      await mailTransporter.sendMail(mailDetails);
+      console.log("Email Sent Successfully");
+      res.send({ email: true });
+    }
+  } catch (err) {
+    console.log("Error Occurs: ", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
 const PostOtp = async (req, res) => {
-    const {otp} = req.body;
-  
-    console.log(req.body);
-    console.log(OTP);PostOtp
-  
-    if (OTP == otp) {
-      const salt = bcrypt.genSaltSync(10);
-      const hashPassword = bcrypt.hashSync(password, salt);
-      const user = new User({
-        name: name,
-        email: email,
-        password: hashPassword,
-      });
-  
-      user.save().then(() => {
-        res.send({success:true});
-      });
+  const { otp } = req.body;
+
+  console.log(req.body);
+  console.log(OTP);
+  PostOtp;
+
+  if (OTP == otp) {
+    const salt = bcrypt.genSaltSync(10);
+    const hashPassword = bcrypt.hashSync(password, salt);
+    const user = new User({
+      name: name,
+      email: email,
+      password: hashPassword,
+    });
+
+    user.save().then(() => {
+      res.send({ success: true });
+    });
+  } else {
+    console.log("otp error");
+    res.send({ OTP: "OTP ERROR" });
+  }
+};
+
+const getAllCourse = async (req, res) => {
+  try {
+    const course = await Course.find();
+    res.send({ success: true, course });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
+
+const confirmOrder = async (req, res) => {
+  const { name, totalAmount, uid, image } = req.body;
+ console.log(totalAmount)
+  //   const order = new Booking({
+  //   order_id: Date.now(),
+  //   user_id: uid,
+  //   name: name,
+  //   totalAmount: totalAmount,
+  //   image:image,
+  //   // paymentMethod: paymethod,
+  //   order_placed_on: new Date(),
+  // });
+
+  // order.save().then((order) => {
+  //   const oid = order._id;
+
+  // if (paymethod === 'cod') {
+  //   res.json([{ success: true, oid }]);
+
+  const options = {
+    amount: totalAmount * 100,
+    currency: "INR",
+    receipt: `PAY-${Date.now()}`,
+  };
+
+  instance.orders.create(options, (err, orders) => {
+    if (err) {
+      console.log(err);
     } else {
-      console.log("otp error");
-      res.send({OTP:"OTP ERROR"});
+      res.json([{ success: true, orders }]);
     }
-  };
+  });
+};
 
+const verifyPayment = async (req, res) => {
+  console.log("reached verify paymet");
+  const details = req.body;
+  console.log(details);
+  const crypto = require("crypto");
+  let hmac = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
+  hmac.update(details.razorpay_order_id + "|" + details.razorpay_payment_id);
+  hmac = hmac.digest("hex");
 
+  if (hmac == details.razorpay_signature) {
+    console.log("payment verified!");
+    // const objId = new mongoose.Types.ObjectId(details.order.receipt);
+    // console.log(objId);
+    const order = new Booking({
+        order_id: Date.now(),
+        user_id: details.userId,
+        name: details.data.name,
+        totalAmount: details.data.totalAmount,
+        image:details.data.image,
+        // paymentMethod: paymethod,
+        order_placed_on: new Date(),
+      });
+    
+     await order.save()
+     res.json({ success: true, message: "payment success" });
+  } else {
+    res.json({ success: false, err_message: "payment failed" });
+  }
+};
 
-  
-  const getAllCourse = async (req, res) => {
-    try {
-      const course = await Course.find();
-      res.send({ success: true, course });
-    } catch (error) {
-      res.send({ success: false, message: error.message });
-    }
-  };
+const paymentFailure = (req, res) => {
+  const details = req.body;
+  console.log(details);
+  res.send("payment failed");
+};
 
+const getProductDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const found = await Course.findOne({ _id: id });
+    // const discounts = await Products.find();
+
+    res.send({ found });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 exports.signup = signup;
 exports.login = login;
 exports.verifyTocken = verifyTocken;
 exports.getUser = getUser;
 exports.refreshToken = refreshToken;
-exports.PostOtp=PostOtp;
-
-exports.getAllCourse=getAllCourse
+exports.PostOtp = PostOtp;
+exports.getProductDetail = getProductDetail;
+exports.getAllCourse = getAllCourse;
+exports.confirmOrder = confirmOrder;
+exports.paymentFailure = paymentFailure;
+exports.verifyPayment = verifyPayment;

@@ -9,7 +9,7 @@ const { signup, login ,addCourse,getAllCourse,getAllCategories,getEditCourse,pos
 
 
 const { storage } = require('../Middleware/cloudinary');
-
+const validateTeacherToken = require("../Middleware/teacherToken")
 
 const upload = multer({ storage })
 // Use the functions in your application
@@ -24,6 +24,6 @@ router.get('/categories',getAllCategories);
 //coures 
 router.get('/editcoures/:id', getEditCourse);
 router.put('/editcoure/:id', postEditCourse);
-router.get('/delectcoures/:id', getDeleteCourse)
+router.get('/delectcoures/:id',getDeleteCourse)
 
 module.exports = router;

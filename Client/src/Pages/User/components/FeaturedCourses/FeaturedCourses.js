@@ -2,6 +2,7 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
+import { Link } from 'react-router-dom';
 
 //IMPORTING SVG'S
 import eye from '../../../../assets/eye.svg'
@@ -23,10 +24,10 @@ const FeaturedCourses = () => {
             passionate about.
           </Typography>
         </Box>
-        <Button sx={styles.btn}>
-          <Box component='img' src={eye} />
-          view all
-        </Button>
+        <Button component={Link} to='/user/currently-featured' sx={styles.btn}>
+  <Box component='img' src={eye} />
+  view all
+</Button>
       </Box>
     </Box>
   )

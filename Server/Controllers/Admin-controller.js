@@ -98,27 +98,51 @@ const approveTeacher = async (req, res) => {
 
 
 
-const postAddCategory = async (req, res) => {
+// const postAddCategory = async (req, res) => {
 
-try {
-  const { name, description } = req.body;
- console.log(req.body)
-  const categories = new Categories({
-    name: name,
-    description: description,
+// try {
+//   const { name, description } = req.body;
+//  console.log(req.body)
+//   const categories = new Categories({
+//     name: name,
+//     description: description,
    
-  });
-  const Data = await categories.save();
-  if (Data){
-    res.send({ success: true });
-  } else {
-    res.send({ success: false});
-  }
-} catch (error) {
-  console.log(error.message);
-}
-};
+//   });
+//   const Data = await categories.save();
+//   if (Data){
+//     res.send({ success: true });
+//   } else {
+//     res.send({ success: false});
+//   }
+// } catch (error) {
+//   console.log(error.message);
+// }
+// };
 
+const addCategory = async (req, res, next) => {
+  const { name, description } = req.body;
+
+  // Check if category with same name already exists
+  const existingCategory = await Categories.findOne({ name });
+  if (existingCategory) {
+    return res.status(409).json({ message: "Category already exists" });
+  }
+
+  // Create new category if it doesn't exist
+  const category = new Categories({
+    name,
+    description,
+  });
+
+  try {
+    await category.save();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Unable to add category" });
+  }
+
+  return res.status(201).json({ category });
+};
 
 const getAdminCategory = async (req, res) => {
 
@@ -182,7 +206,7 @@ const getDeleteCategory = async (req, res) => {
     blockUnblockUser,
     getAllTeacher,
     approveTeacher,
-    postAddCategory,
+    addCategory,
     getAdminCategory,
     postEditCategory,
     getDeleteCategory,
