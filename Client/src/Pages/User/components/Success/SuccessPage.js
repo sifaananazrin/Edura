@@ -16,7 +16,7 @@ function SuccessPage() {
       <Typography variant="body1" className={classes.message}>
         Thank you for your payment. Your transaction has been processed successfully.
       </Typography>
-      <Link to="/teacher/">
+      <Link to="/user/home">
       <Button variant="contained" color="primary" className={classes.button}>
         Return to Dashboard
       </Button>

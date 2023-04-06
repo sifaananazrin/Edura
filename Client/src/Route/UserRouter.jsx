@@ -13,6 +13,7 @@ import { ThemeProvider } from '@mui/material'
  import Profile from '../Pages/User/components/Profile/ProfilePage.js';
  import Payment from '../Pages/User/components/Payment/Payment';
  import OrderViewPage from '../Pages/User/components/Oder/OrderViewPage';
+ import SuccessPage from '../Pages/User/components/Success/SuccessPage';
 
  
 
@@ -27,6 +28,7 @@ function UserRouter() {
             <Routes>
               <Route path="/Signup" element={<SignUp /> } />
               <Route path="/payment" element={<Payment /> } />
+              <Route path="/success" element={< SuccessPage />} />
              
               <Route path="/oders" element={< OrderViewPage/>}></Route>
               <Route path="/otp" element={<OTP/>}></Route>

@@ -5,29 +5,29 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 
 //IMPORTING ICONS
-import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
+// import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 
 import styles from './styles'
 
 const AllCategories = () => {
   return (
     <Box sx={{ pt: '90px', minWidth: '299px' }}>
-      <Card sx={styles.card}>
+      {/* <Card sx={styles.card}> */}
         <Typography sx={styles.title}>
-          all categories
-          <ExpandCircleDownIcon sx={styles.icon} />
+        
+          {/* <ExpandCircleDownIcon sx={styles.icon} /> */}
         </Typography>
-        <List>
+        {/* <List>
+          <ListItem sx={styles.listItem}></ListItem>
+          <ListItem sx={styles.listItem}></ListItem>
+          <ListItem sx={styles.listItem}></ListItem>
+          <ListItem sx={styles.listItem}></ListItem>
+          <ListItem sx={styles.listItem}></ListItem>
+          <ListItem sx={styles.listItem}></ListItem>
           <ListItem sx={styles.listItem}>Lorem ipsum dolor</ListItem>
           <ListItem sx={styles.listItem}>Lorem ipsum dolor</ListItem>
-          <ListItem sx={styles.listItem}>Lorem ipsum dolor</ListItem>
-          <ListItem sx={styles.listItem}>Lorem ipsum dolor</ListItem>
-          <ListItem sx={styles.listItem}>Lorem ipsum dolor</ListItem>
-          <ListItem sx={styles.listItem}>Lorem ipsum dolor</ListItem>
-          <ListItem sx={styles.listItem}>Lorem ipsum dolor</ListItem>
-          <ListItem sx={styles.listItem}>Lorem ipsum dolor</ListItem>
-        </List>
-      </Card>
+        </List> */}
+      {/* </Card> */}
     </Box>
   )
 }

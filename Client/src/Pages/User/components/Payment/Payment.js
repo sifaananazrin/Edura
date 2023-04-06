@@ -111,7 +111,7 @@ const Payment = () => {
       })
       .then((response) => {
         if (response.data.success) {
-          navigate("/teacher/success");
+          navigate("/user/success");
         } else {
           console.log("payment failed");
         }
@@ -137,7 +137,7 @@ const Payment = () => {
         <Typography variant="h6">Total Amount:{price}</Typography>
         <form onSubmit={handleSubmit} className={classes.centerItems}>
           <RadioGroup value={paymentOption} onChange={handleRadioChange} className={classes.radioGroup}>
-            <FormControlLabel value="online" control={<Radio />} label="Online Payment" />
+            {/* <FormControlLabel value="online" control={<Radio />} label="Online Payment" /> */}
            
           </RadioGroup>
           <Button onClick={handlePayment} type='button' variant="contained" color="primary" className={classes.submitButton}>

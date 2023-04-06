@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Wrapper from '../Wrapper'
+import {Link } from "react-router-dom"
 
 //IMPORTING SVG'S
 import become_an_instructor from '../../../../assets/become_an_instructor.svg'
@@ -31,10 +32,12 @@ const Become = () => {
               diam quis enim lobortis scelerisque fermentum dui faucibus in
               ornare quam viverra orci
             </Typography>
+            <Link to="/teacher/signup">
             <Button sx={styles.btn}>
               <Box component='img' src={plus} sx={{ mr: '14px' }} />{' '}
               <span>Apply now</span>
             </Button>
+            </Link>
           </Box>
           <Box component='img' src={photo_become} sx={{ width: '100%' }} />
         </Box>

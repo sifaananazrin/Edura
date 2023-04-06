@@ -55,7 +55,7 @@ const SelectOrder = () => {
             <Box sx={{ padding: '24px', display: 'flex', width: '100%' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                 <Box component='img' src={course.image[0].url} sx={{ width: '200px', height: '200px', objectFit: 'cover', marginRight: '48px' }} />
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#E1E1E1', fontSize: '24px', width: '200px', height: '200px' }}>{course.price}</Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#E1E1E1', fontSize: '24px', width: '100px', height: '50px' }}>{course.price}</Box>
               </Box>
               <Typography sx={{ ...styles.titleCard, marginLeft: '24px', alignSelf: 'center' }}>{course.name}</Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
