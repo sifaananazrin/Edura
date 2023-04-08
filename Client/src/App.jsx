@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AdminRouter from "../src/Route/AdminRouter";
-import UserRouter from "../src/Route/UserRouter";
+import AdminRouter from "./Route/AdminRouter";
+import UserRouter from "./Route/UserRouter";
 
 import AdminLogin from "./Pages/Login/AdminLogin";
 

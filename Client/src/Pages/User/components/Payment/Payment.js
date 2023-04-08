@@ -36,8 +36,9 @@ const Payment = () => {
   const image = selectedCourses.image;
   const des = selectedCourses.description;
   const price = selectedCourses.totalAmount;
+  const link = selectedCourses.link;
   const data=selectedCourses;
-  console.log(price)
+  console.log(data)
   // const totalAmount = selectedCourses.totalAmount;
 
   const handleRadioChange = (event) => {

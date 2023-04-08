@@ -291,7 +291,7 @@ const getAllCourse = async (req, res) => {
 };
 
 const confirmOrder = async (req, res) => {
-  const { name, totalAmount, uid, image } = req.body;
+  const { name, totalAmount, uid, image,teachername,link } = req.body;
  console.log(totalAmount)
   //   const order = new Booking({
   //   order_id: Date.now(),
@@ -344,6 +344,9 @@ const verifyPayment = async (req, res) => {
         totalAmount: details.data.totalAmount,
         image:details.data.image,
         // paymentMethod: paymethod,
+        link:details.data.link,
+        teachername:details.data.teachername,
+
         order_placed_on: new Date(),
       });
     

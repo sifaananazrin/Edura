@@ -8,6 +8,11 @@ function EditCategory({ onAddCategory }) {
     const selected = location.state.selected;
     const categories = selected.categories;
   
+    const config = {
+      headers: {
+        Authorization: `${localStorage.getItem("token")}`,
+      },
+    };
     // Initialize state with the current category values
     const [name, setName] = useState(categories.name);
     const [description, setDescription] = useState(categories.description);
@@ -20,7 +25,7 @@ function EditCategory({ onAddCategory }) {
           const response = await axios.put(`/admin/editcategory/${id}`, {
             name: name,
             description: description,
-          });
+          },config);
           if (response) {
             window.location="/admin/category"
           }

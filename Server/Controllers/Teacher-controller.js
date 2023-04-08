@@ -1,9 +1,10 @@
 const Teacher = require('../model/Teacher');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const User = require("../model/User");
 const Category = require("../model/Category")
 const Course = require("../model/Course")
-
+const Booking = require("../model/Booking");
 
 
 
@@ -186,6 +187,24 @@ const getDeleteCourse = async (req, res) => {
   }
 };
 
+const getAllStudents = async (req, res) => {
+  try {
+    const { teachername } = req.body;
+
+    // Find all the bookings made by the teacher
+    const bookings = await Booking.find({ teachername });
+
+    // Extract the user IDs from the bookings
+    const userIds = bookings.map((booking) => booking.user_id);
+
+    // Find all the users who made bookings with the teacher
+    const users = await User.find({ _id: { $in: userIds } });
+
+    res.send({ success: true, students: users ,course:bookings});
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
 
   
   exports.getAllCourse=getAllCourse;
@@ -195,4 +214,5 @@ exports.login = login;
 exports.getAllCategories=getAllCategories
 exports.getEditCourse=getEditCourse
 exports.postEditCourse=postEditCourse
+exports.getAllStudents=getAllStudents
 exports.getDeleteCourse=getDeleteCourse

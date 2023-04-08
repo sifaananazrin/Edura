@@ -43,7 +43,9 @@ const CourseDetailsScreen = () => {
   const image = selectedCourses.image;
   const des = selectedCourses.description;
   const price = selectedCourses.price;
-console.log(image)
+  const link = selectedCourses.link;
+  const teachername = selectedCourses.teachername;
+console.log(link)
 
 
   return (
@@ -58,7 +60,7 @@ console.log(image)
         <Box sx={styles.wrapper}>
           <Box sx={styles.wrapperLeftBlock}>
             <Box component='img' src={image[0].url} sx={styles.img} />
-            <CurrentStatus  price={price} name={name} image={image}  />
+            <CurrentStatus  price={price} name={name} image={image} teachername={teachername} link={link}  />
             <CourseDescription des={des} />
             <LearnCourse />
             <CourseContent />

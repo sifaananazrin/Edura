@@ -32,6 +32,11 @@ const useStyles = makeStyles({
 });
 
 function Category() {
+  const config = {
+    headers: {
+      Authorization: `${localStorage.getItem("token")}`,
+    },
+  };
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState(null);
   const navigate = useNavigate(); // initialize useHistory
@@ -45,7 +50,7 @@ function Category() {
       
 
 
-        const response = await axios.get(requests.getAllCatory);
+        const response = await axios.get(requests.getAllCatory,config);
        
         setCategories(response.data.categories);
       } catch (error) {
@@ -61,7 +66,7 @@ function Category() {
 
 
       
-      const response = await axios.get(`/admin/editecategory/${id}`);
+      const response = await axios.get(`/admin/editecategory/${id}`,config);
       setSelected(response.data);
       console.log(response)
       navigate('/admin/editcategory', { state: { selected: response.data } });

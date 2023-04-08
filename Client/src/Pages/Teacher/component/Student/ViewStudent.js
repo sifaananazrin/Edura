@@ -1,56 +1,117 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { useNavigate,Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from "axios"
 
 const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingTop: '20px',
+  },
   table: {
     minWidth: 650,
   },
 });
 
-function createData(name, id, email, grade) {
-  return { name, id, email, grade };
-}
-
-const rows = [
-  createData('John Doe', 123, 'john.doe@example.com', 'A'),
-  createData('Jane Smith', 456, 'jane.smith@example.com', 'B'),
-  createData('Bob Johnson', 789, 'bob.johnson@example.com', 'C'),
-];
-
-export default function ViewStudent() {
+function Course() {
+  const [students, setstudents] = useState([])
+  const [course, setcourse] = useState([])
+  const [showAddCourseForm, setShowAddCourseForm] = useState(false);
   const classes = useStyles();
+ const name= localStorage.getItem("name")
+   console.log(course.name)
+  useEffect(() => {
+    axios.get('http://localhost:5000/teacher/getallusers',)
+      .then(response => {
+        setstudents(response.data.students);
+        setcourse(response.data.course)
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []); 
+
+  // const handleRemove = async (id) => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:5000/teacher/delectcoures/${id}`);
+  //     if (response) {
+  //       window.location.href = window.location.href;
+  //     }
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // const handleEdit = async (id) => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:5000/teacher/editcoure/${id}`);
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const handleAddCourse = () => {
+  //   setShowAddCourseForm(true);
+  // };
+
+  const navigate = useNavigate();
+  
+  // function handleClick() {
+  //   navigate('/teacher/edit-course');
+  // }
+ 
+
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="student table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">ID</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Grade</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.id}</TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">{row.grade}</TableCell>
+    <div className={classes.root}>
+      <div style={{ display: "flex" ,marginLeft:"900px",marginBottom:"20px"}}>
+      {/* <Link to="/teacher/create-course">
+          <Button variant="contained" style={{ backgroundColor: "#930050", color: "#ffffff" }}>
+            Create Course
+          </Button>
+        </Link> */}
+      </div>
+      <TableContainer component={Paper} className={classes.table} style={{width:"80%"}}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              {/* <TableCell>ID</TableCell> */}
+              <TableCell>Name</TableCell>
+              <TableCell>email</TableCell>
+              <TableCell>course name</TableCell>
+              {/* <TableCell>Category</TableCell> */}
+              {/* <TableCell>Link</TableCell> */}
+              {/* <TableCell>Action</TableCell> */}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            
+          {students && students.map((student) => (
+  <TableRow key={student.id}>
+    <TableCell>{student.name}</TableCell>
+    <TableCell>{student.email}</TableCell>
+    <TableCell>
+      {course.map(c => {
+        if (c.user_id === student._id) {
+          return c.name;
+        }
+        return "";
+      })}
+    </TableCell>
+  </TableRow>
+))}
+
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
+
+export default Course;

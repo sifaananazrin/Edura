@@ -5,13 +5,17 @@ import requests from '../../../api/request';
 function AddCategoryForm({ onAddCategory }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-
+  const config = {
+    headers: {
+      Authorization: `${localStorage.getItem("token")}`,
+    },
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     
     try {
       // Send a POST request to the server's API endpoint with the new category data
-      const response = await axios.post(requests.addCatory, { name, description });
+      const response = await axios.post(requests.addCatory, { name, description },config);
       if(response.data.success){
         window.location="/admin/category"
       }

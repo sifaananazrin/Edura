@@ -17,7 +17,14 @@ const bookingSchema = new Schema({
     type: String,
     required: true,
   },
-
+  link: {
+    type: String,
+    required: false,
+  },
+  teachername: {
+    type: String,
+    required: true,
+  },
   totalAmount: {
     type: Number,
     required: true,
