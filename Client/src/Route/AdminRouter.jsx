@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Topbar from "../Pages/Admin/global/Topbar";
 import Sidebar from "../Pages/Admin/global/Sidebar";
-import Dashboard from "../Pages/Admin/dashboard";
+import Dashboard from "../Pages/Admin/dashboard/index";
 import ManageUser from "../Pages/Admin/ManageUser";
 import Course from "../Pages/Admin/Course";
 import Category from "../Pages/Admin/Category";
@@ -14,8 +14,8 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../Pages/Admin/theme";
 import AdminLogin from "../Pages/Login/AdminLogin";
 
-function AdminLayoutRouter() {
-  const token = localStorage.getItem("token");
+const AdminLayoutRoute=()=> {
+
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
 
@@ -40,7 +40,7 @@ function AdminRouter() {
   return (
     <Routes>
       <Route path="/login" element={<AdminLogin />} />
-      <Route element={<AdminLayoutRouter/>} />
+      <Route element={<AdminLayoutRoute/>}>
       <Route
         path="/category"
         element={token ? <Category /> : <Navigate to="/admin/login" />}
@@ -70,7 +70,9 @@ function AdminRouter() {
         path="/form"
         element={token ? <Form /> : <Navigate to="/admin/login" />}
       />
+      </Route>
     </Routes>
+    
   );
 }
 
