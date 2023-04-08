@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminRouter from "./Route/AdminRouter";
 import UserRouter from "./Route/UserRouter";
 
-import AdminLogin from "./Pages/Login/AdminLogin";
 
-import TeacherRouter from "./Route/TeacherRouter";
+
+import TeacherRouter from "./Route/TeacherRouter"; 
 import { BounceLoader } from "react-spinners";
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
         <Router>
           <Routes>
          
-            <Route path="admin/login" element={<AdminLogin />} />
+       
             <Route path="/admin/*" element={<AdminRouter />} />
             <Route path="/user/*" element={<UserRouter />} />
             <Route path="/teacher/*" element={<TeacherRouter />} />

@@ -40,6 +40,7 @@ function AdminRouter() {
   return (
     <Routes>
       <Route path="/login" element={<AdminLogin />} />
+      <Route element={<AdminLayoutRouter/>} />
       <Route
         path="/category"
         element={token ? <Category /> : <Navigate to="/admin/login" />}
