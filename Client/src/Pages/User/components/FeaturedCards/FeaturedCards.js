@@ -46,10 +46,14 @@ const FeaturedCards = () => {
                         height: "0",
                         paddingBottom: "56.25%", // 16:9 aspect ratio
                         position: "relative",
-                        background: `url(${course.image[0].url}) no-repeat center center`,
+                        background:
+                          course.image && course.image.length > 0
+                            ? `url(${course.image[0].url}) no-repeat center center`
+                            : undefined,
                         backgroundSize: "cover", // or 'contain'
                       }}
                     />
+
                     <Box sx={styles.language}>{course.name}</Box>
                   </Box>
                   <Box sx={{ textAlign: "center", m: "24px 0" }}>

@@ -59,7 +59,8 @@ console.log(link)
         </Box>
         <Box sx={styles.wrapper}>
           <Box sx={styles.wrapperLeftBlock}>
-            <Box component='img' src={image[0].url} sx={styles.img} />
+          <Box component='img' src={image?.[0]?.url} sx={styles.img} />
+
             <CurrentStatus  price={price} name={name} image={image} teachername={teachername} link={link}  />
             <CourseDescription des={des} />
             <LearnCourse />

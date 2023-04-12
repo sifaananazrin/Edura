@@ -130,7 +130,8 @@ const Payment = () => {
         </Typography>
       </Grid>
       <Grid item xs={12} md={6} className={classes.centerItems}>
-        <img src={image[0].url} alt={name} className={classes.courseImage} />
+      {image && image[0] && <img src={image[0].url} alt={name} className={classes.courseImage} />}
+
       </Grid>
       <Grid item xs={12} md={6} className={classes.centerItems}>
         <Typography variant="h6">{name}</Typography>
