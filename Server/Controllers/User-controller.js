@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const Course = require("../model/Course");
 const Booking = require("../model/Booking");
+const Teacher=require("../model/Teacher");
+
 // const signup = async (req, res, next) => {
 //   const { name, email, password } = req.body;
 //   let existingUser;
@@ -375,6 +377,18 @@ const getProductDetail = async (req, res) => {
   }
 };
 
+const getAllCount=async(req,res)=>{
+  try{
+    const TotalUsers=await User.find().count()
+    const TotalInstructors= await Teacher.find().count()
+    res.json({TotalUsers,TotalInstructors})
+
+  }catch(error){
+    console.log(error);
+}
+
+}
+
 exports.signup = signup;
 exports.login = login;
 exports.verifyTocken = verifyTocken;
@@ -386,3 +400,5 @@ exports.getAllCourse = getAllCourse;
 exports.confirmOrder = confirmOrder;
 exports.paymentFailure = paymentFailure;
 exports.verifyPayment = verifyPayment;
+exports.getAllCount = getAllCount;
+

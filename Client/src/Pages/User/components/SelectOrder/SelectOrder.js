@@ -50,8 +50,8 @@ const SelectOrder = () => {
       <Typography
         sx={{ ...styles.title, display: "flex", alignItems: "center" }}
       >
-        select order
-        <Box component="img" src={arrow} sx={{ marginLeft: "12px" }} />
+        {/* select order */}
+        {/* <Box component="img" src={arrow} sx={{ marginLeft: "12px" }} /> */}
       </Typography>
       <Box sx={styles.wrapperCard}>
         {courses.map((course, index) => {

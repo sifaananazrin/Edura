@@ -7,10 +7,10 @@ import Wrapper from '../User/components/Wrapper'
 import Breadcrumbs from '../User/components/Breadcrumbs'
 import CurrentStatus from '../User/components/CurrentStatus/CurrentStatus'
 import CourseDescription from '../User/components/CourseDescription'
-import CourseDetails from '../User/components/CourseDetails'
+// import CourseDetails from '../User/components/CourseDetails'
 import Courses from '../User/components/Courses'
-import LearnCourse from '../User/components/LearnCourse'
-import CourseContent from '../User/components/CourseContent'
+// import LearnCourse from '../User/components/LearnCourse'
+// import CourseContent from '../User/components/CourseContent'
 
 //IMPORTING ICONS
 import imageslearn from '../../assets/imageslearn.png'
@@ -63,11 +63,11 @@ console.log(link)
 
             <CurrentStatus  price={price} name={name} image={image} teachername={teachername} link={link}  />
             <CourseDescription des={des} />
-            <LearnCourse />
-            <CourseContent />
+            {/* <LearnCourse /> */}
+            {/* <CourseContent /> */}
           </Box>
           <Box>
-            <CourseDetails />
+            {/* <CourseDetails /> */}
             <Courses />
           </Box>
         </Box>

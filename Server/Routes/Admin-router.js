@@ -14,5 +14,7 @@ router.post('/addcategory',validateAdminToken, controller.addCategory);
 router.get('/category', validateAdminToken, controller.getAdminCategory);
 router.put('/editcategory/:id',validateAdminToken, controller.postEditCategory);
 router.get('/delectcategory/:id',validateAdminToken, controller.getDeleteCategory)
+router.get('/students', controller.getDashboard)
+
 
 module.exports = router;

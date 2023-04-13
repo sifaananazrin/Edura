@@ -11,7 +11,8 @@ const {
      confirmOrder,
      verifyPayment,
      paymentFailure,
-     getProductDetail
+     getProductDetail,
+     getAllCount
      } = require('../Controllers/User-controller');
 
 const router = express.Router();
@@ -29,6 +30,8 @@ router.post('/orderConfirmed',confirmOrder);
 router.post('/verifyPayment',verifyPayment);
 router.get('/paymentFail',paymentFailure);
 router.get("/product/:id", getProductDetail);
+router.get("/totalcounts", getAllCount);
+
 
 // router.post("/logout",verifyTocken,logout)
 

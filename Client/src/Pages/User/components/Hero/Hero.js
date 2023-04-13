@@ -1,4 +1,6 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
+import axios from 'axios'
 import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -18,6 +20,17 @@ import el_group from '../../../../assets/el_group.svg'
 import styles from './styles'
 
 const Hero = () => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/totalcounts')
+      .then(response => {
+        setData(response.data);
+      
+      })
+      .catch(error => {
+      });
+  }, []);
+  
   return (
     <Box sx={styles.hero}>
       <Wrapper>
@@ -47,12 +60,12 @@ const Hero = () => {
         <Box sx={styles.blockCards}>
           <Card sx={styles.card}>
             <Box component='img' src={bx_bxs_time} />
-            <Box sx={styles.content}>60,000+</Box>
-            <Box sx={styles.subContent}>Hours content</Box>
+            <Box sx={styles.content}>{data.TotalInstructors}</Box>
+            <Box sx={styles.subContent}>Instractors</Box>
           </Card>
           <Card sx={styles.card}>
             <Box component='img' src={el_group} />
-            <Box sx={styles.content}>5,000+</Box>
+            <Box sx={styles.content}>{data.TotalUsers}</Box>
             <Box sx={styles.subContent}>Students</Box>
           </Card>
           {/* <Card sx={styles.card}>

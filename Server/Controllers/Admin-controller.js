@@ -3,6 +3,8 @@ const jwt =require('jsonwebtoken')
 const User = require("../model/User");
 const Teacher=require("../model/Teacher")
 const Categories=require("../model/Category")
+const Course = require("../model/Course")
+const Booking=require("../model/Booking")
 
 
 
@@ -198,6 +200,27 @@ const getDeleteCategory = async (req, res) => {
 
 
 
+const getDashboard=async (req,res)=>{
+  try{
+    const student=await User.find().count()
+    const instractor=await Teacher.find().count()
+    const courses=await Course.find().count()
+    const BookingData=await Booking.find()
+    const TotalAmout=BookingData.reduce((total,oder)=>total+oder.totalAmount,0)
+    res.json({student,instractor,courses,TotalAmout})
+    // res.json({instractor})
+    // res.json({courses})
+  
+
+  } catch(err){
+    console.log(err)
+  }
+}
+
+
+
+
+
 
 
   module.exports = {
@@ -210,5 +233,6 @@ const getDeleteCategory = async (req, res) => {
     getAdminCategory,
     postEditCategory,
     getDeleteCategory,
-    getEditCategory
+    getEditCategory,
+    getDashboard
   };

@@ -1,5 +1,9 @@
 import { Box,  useTheme } from "@mui/material";
 import { tokens } from "../theme";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+
 
 import EmailIcon from "@mui/icons-material/Email";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
@@ -11,9 +15,21 @@ import Header from "../Header/Header";
 
 
 const Dashboard = () => {
+  const [data, setData] = useState([]);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  useEffect(() => {
+    axios.get('http://localhost:5000/admin/students')
+      .then(response => {
+        setData(response.data);
+      
+      })
+      .catch(error => {
+      });
+  }, []);
+  
   return (
     <Box m="20px">
       {/* HEADER */}
@@ -38,7 +54,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="12"
+            title={data.student}
             subtitle="Total Student"
             progress="0.75"
             increase="+14%"
@@ -57,7 +73,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="56"
+            title={data.courses}
             subtitle="Total courses"
             progress="0.50"
             increase="+21%"
@@ -76,8 +92,28 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32"
+            title={data.instractor}
             subtitle="Total instructures"
+            progress="0.30"
+            increase="+5%"
+            icon={
+              <PersonAddIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+       
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title={data.TotalAmout}
+            subtitle="Total revinew"
             progress="0.30"
             increase="+5%"
             icon={

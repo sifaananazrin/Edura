@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Typography, Radio, RadioGroup, FormControlLabel, Button, Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { useLocation ,useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useRazorpay from "react-razorpay";
 import axios from 'axios';
+
 const useStyles = makeStyles({
   centerItems: {
     display: 'flex',
@@ -19,6 +20,27 @@ const useStyles = makeStyles({
   courseImage: {
     maxWidth: '100%',
     maxHeight: 400,
+  },
+  pageTitle: {
+    marginBottom: 32,
+  },
+  paymentDetails: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: 32,
+    border: '1px solid #ccc',
+    borderRadius: 8,
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+  },
+  paymentOption: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  paymentButton: {
+    marginTop: 32,
   },
 });
 
@@ -38,8 +60,6 @@ const Payment = () => {
   const price = selectedCourses.totalAmount;
   const link = selectedCourses.link;
   const data=selectedCourses;
-  console.log(data)
-  // const totalAmount = selectedCourses.totalAmount;
 
   const handleRadioChange = (event) => {
     setPaymentOption(event.target.value);
@@ -54,28 +74,27 @@ const Payment = () => {
   const classes = useStyles();
 
   function handlePayment() {
-    console.log("first")
-      axios
-        .post("http://localhost:5000/api/orderConfirmed", {
-          user_id: uid,
-          name: name,
-          totalAmount: price,
-          image:image,
-        })
-        .then((response) => {
-          console.log(response);
-          const order = response.data[0].orders;
-          var options = {
-            key: "rzp_test_XUbZpvWoTVZ2ie", // Enter the Key ID generated from the Dashboard
-            amount: order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            currency: "INR",
-            name: "edura", //your business name
-            description: "Test Transaction",
-            image: "https://example.com/your_logo",
-            order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            handler: function (response) {
-              verifyPayment(response, order);
-            },
+    axios
+      .post("http://localhost:5000/api/orderConfirmed", {
+        user_id: uid,
+        name: name,
+        totalAmount: price,
+        image:image,
+      })
+      .then((response) => {
+        console.log(response);
+        const order = response.data[0].orders;
+        var options = {
+          key: "rzp_test_XUbZpvWoTVZ2ie", // Enter the Key ID generated from the Dashboard
+          amount: order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+          currency: "INR",
+          name: "edura", //your business name
+          description: "Test Transaction",
+          image: "https://example.com/your_logo",
+          order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+          handler: function (response) {
+            verifyPayment(response, order);
+          },
             prefill: {
               name: "rentacar",
               email: "misahlnunu@gmail.com",
@@ -130,7 +149,7 @@ const Payment = () => {
         </Typography>
       </Grid>
       <Grid item xs={12} md={6} className={classes.centerItems}>
-      {image && image[0] && <img src={image[0].url} alt={name} className={classes.courseImage} />}
+       {image && image[0] && <img src={image[0].url} alt={name} className={classes.courseImage} />}
 
       </Grid>
       <Grid item xs={12} md={6} className={classes.centerItems}>
