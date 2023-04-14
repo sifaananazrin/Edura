@@ -8,13 +8,16 @@ import arrow from '../../../../assets/chevron-down.svg'
 
 import styles from './styles'
 
+
+import { Link } from 'react-router-dom';
+
 const pages = [
-  { title: 'Home', arrow: false },
-  { title: 'About', arrow: false },
-  { title: 'Course', arrow: true },
+  { title: 'Home', arrow: false ,link: '/user/oders'},
+  // { title: 'About', arrow: false },
+  { title: 'My Course', arrow: true, link: '/user/oders' },
   // { title: 'Logout', arrow: false },
   // { title: 'Contact', arrow: false },
-]
+];
 
 const Navbar = ({ white }) => {
   const handleLogout = () => {
@@ -32,7 +35,13 @@ const Navbar = ({ white }) => {
           variant="text"
           sx={{ ...styles.link, color: white ? '#fff' : '#000' }}
         >
-          {page.title}
+          {page.link ? (
+            <Link to={page.link} style={{ textDecoration: 'none', color: white ? '#fff' : '#000' }}>
+              {page.title}
+            </Link>
+          ) : (
+            <span>{page.title}</span>
+          )}
         </Button>
       ))}
       {token && (

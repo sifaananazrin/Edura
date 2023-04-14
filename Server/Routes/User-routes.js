@@ -12,7 +12,9 @@ const {
      verifyPayment,
      paymentFailure,
      getProductDetail,
-     getAllCount
+     getAllCount,
+     getOderDetail,
+     getProductDetailData
      } = require('../Controllers/User-controller');
 
 const router = express.Router();
@@ -31,7 +33,8 @@ router.post('/verifyPayment',verifyPayment);
 router.get('/paymentFail',paymentFailure);
 router.get("/product/:id", getProductDetail);
 router.get("/totalcounts", getAllCount);
-
+router.get("/oderhistory", getOderDetail);
+router.get("/productData", getProductDetailData);
 
 // router.post("/logout",verifyTocken,logout)
 

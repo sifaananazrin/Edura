@@ -365,7 +365,7 @@ const paymentFailure = (req, res) => {
   res.send("payment failed");
 };
 
-const getProductDetail = async (req, res) => {
+const getProductDetailData = async (req, res) => {
   try {
     const { id } = req.params;
     const found = await Course.findOne({ _id: id });
@@ -389,6 +389,37 @@ const getAllCount=async(req,res)=>{
 
 }
 
+
+const getOderDetail = async (req, res) => {
+  try {
+    const { uid } = req.query;
+    // console.log(uid)
+    // console.log(carName)
+    const userBooked = await Booking.find({ user_id: uid });
+    console.log(userBooked);
+    console.log(userBooked.to);
+    if (userBooked) {
+      res.send({ userBooked, success: true });
+    }
+  } catch (error) {
+    console.log(error.message);
+    // res.send({ success: false });
+  }
+};
+
+
+const getProductDetail = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const found = await Course.findOne({ name: name });
+    // const discounts = await Products.find();
+
+    res.send({ found });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 exports.signup = signup;
 exports.login = login;
 exports.verifyTocken = verifyTocken;
@@ -401,4 +432,5 @@ exports.confirmOrder = confirmOrder;
 exports.paymentFailure = paymentFailure;
 exports.verifyPayment = verifyPayment;
 exports.getAllCount = getAllCount;
-
+exports.getOderDetail = getOderDetail;
+exports.getProductDetailData = getProductDetailData;

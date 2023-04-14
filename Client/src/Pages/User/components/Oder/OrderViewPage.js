@@ -1,87 +1,145 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
+import axios from '../../../../api/axios';
+import movieTrailer from 'movie-trailer';
+import YouTube from 'react-youtube';
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import {
   Typography,
   Card,
   CardHeader,
   CardContent,
   Grid,
+  IconButton,
+  Box,
+  Button
 } from '@material-ui/core';
 
 const OrderViewPage = () => {
+  const navigate = useNavigate();
   const { orderId } = useParams();
-  const [order, setOrder] = useState(null);
+  const [order, setOrder] = useState([]);
+  const [selectedCouser, setSelectedCouser] = useState(null);
+  const [trailerUrl, setTrailerUrl] = useState("");
+  const uid = localStorage.getItem("uid");
 
   useEffect(() => {
-    // Fetch the order data using the order ID from the API or from your database
-    const fetchOrder = async () => {
-      const response = await fetch(`https://your-api.com/orders/${orderId}`);
-      const data = await response.json();
-      setOrder(data);
-    };
-    fetchOrder();
-  }, [orderId]);
+    axios
+      .get("/api/oderhistory", {
+        params: {
+          uid: uid,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.userBooked);
+        setOrder(response.data.userBooked);
+      })
+      .catch((error) => console.error(error));
+  }, [uid]);
+
+  const handleClick = (link) => {
+    setTrailerUrl(link);
+  };
+  
+  // const handleCoursedata = (name) => {
+    
+  // };
+
+  const handleCoursedata = async (name) => {
+    try {
+      const response = await axios.get(`/api/product/${name}`);
+      setSelectedCouser(response.data);
+      navigate('/booking', { state: { selectedCouser: response.data } });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const opts = {
+    height: '390',
+    width: '100%',
+    playerVars: {
+      autoplay: 1,
+    },
+  };
 
   if (!order) {
-    return <div>Loading...</div>;
+    return <div>No course purchased</div>
   }
 
   return (
-    <div>
-      <Typography variant="h5" gutterBottom>
-        Order Details
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <Card>
-            <CardHeader title="Order Information" />
-            <CardContent>
-              <Typography variant="subtitle1">
-                Order ID: {order.id}
-              </Typography>
-              <Typography variant="subtitle1">
-                Customer Name: {order.customerName}
-              </Typography>
-              <Typography variant="subtitle1">
-                Product: {order.product}
-              </Typography>
-              <Typography variant="subtitle1">
-                Quantity: {order.quantity}
-              </Typography>
-              <Typography variant="subtitle1">
-                Price: ${order.price}
-              </Typography>
-              <Typography variant="subtitle1">
-                Total: ${order.quantity * order.price}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Card>
-            <CardHeader title="Shipping Information" />
-            <CardContent>
-              <Typography variant="subtitle1">
-                Name: {order.shippingName}
-              </Typography>
-              <Typography variant="subtitle1">
-                Address: {order.shippingAddress}
-              </Typography>
-              <Typography variant="subtitle1">
-                City: {order.shippingCity}
-              </Typography>
-              <Typography variant="subtitle1">
-                State: {order.shippingState}
-              </Typography>
-              <Typography variant="subtitle1">
-                Zip Code: {order.shippingZip}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </div>
+    <>
+      {order.map((item) => (
+        <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+          <Box
+            sx={{
+              position: "relative",
+              width: "200px",
+              height: "200px",
+              marginRight: "48px",
+            }}
+          >
+            <Box
+              component="img"
+              src={item.image[0].url}
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <IconButton>
+                <PlayCircleFilledIcon
+                  onClick={() => handleClick(item.link)}
+                  sx={{ fontSize: 48 }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Typography
+              variant="h4"
+              sx={{ marginBottom: "16px" }}
+            >
+              {item.name}
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <Button
+               onClick={() => handleCoursedata(item.name)}
+                variant="outlined"
+                sx={{ marginRight: "12px" }}
+              >
+                View Course Details
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      ))}
+      {trailerUrl && (
+  <YouTube
+    videoId={trailerUrl.replace("https://youtu.be/", "")}
+    opts={opts}
+  />
+)}
+    </>
   );
+  
 };
 
 export default OrderViewPage;

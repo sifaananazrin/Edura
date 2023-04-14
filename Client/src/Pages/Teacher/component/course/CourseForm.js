@@ -98,6 +98,8 @@ const Form = () => {
     formData.append("price", price);
     formData.append("image", image);
     formData.append("teachername", teachername);
+    console.log(formData)
+
 
     axios
       .post("http://localhost:5000/teacher/addcourse", formData, {
@@ -114,8 +116,8 @@ const Form = () => {
         setPrice("");
         setImage("");
 
-        if(response.data.course){
-          window.Storage="/teacher/Course"
+        if(response.data.success){
+          window.location="/teacher/Course"
         }
       })
       .catch((error) => {
@@ -167,8 +169,8 @@ const Form = () => {
             margin="normal"
             required
             fullWidth
-            value={category}
-            onChange={handleCategoryChange}
+            value={link}
+            onChange={handleLinkChange}
             id="courseLink"
             label="Course Link"
             name="courseLink"

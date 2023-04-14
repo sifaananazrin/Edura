@@ -116,7 +116,7 @@ const signup = async (req, res, next) => {
   
         newCourse.save()
           .then(course => {
-            res.json(course);
+            res.json({course,success:true});
           })
           .catch(err => {
             console.error(err);
