@@ -365,7 +365,7 @@ const paymentFailure = (req, res) => {
   res.send("payment failed");
 };
 
-const getProductDetailData = async (req, res) => {
+const getProductDetail= async (req, res) => {
   try {
     const { id } = req.params;
     const found = await Course.findOne({ _id: id });
@@ -408,7 +408,7 @@ const getOderDetail = async (req, res) => {
 };
 
 
-const getProductDetail = async (req, res) => {
+const getProductDetailData = async (req, res) => {
   try {
     const { name } = req.body;
     const found = await Course.findOne({ name: name });
