@@ -189,7 +189,7 @@ const getDeleteCourse = async (req, res) => {
 
 const getAllStudents = async (req, res) => {
   try {
-    const { teachername } = req.body;
+    const { teachername } = req.query;
 
     // Find all the bookings made by the teacher
     const bookings = await Booking.find({ teachername });

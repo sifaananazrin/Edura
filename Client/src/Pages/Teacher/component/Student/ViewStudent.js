@@ -22,11 +22,13 @@ function Course() {
   const [course, setcourse] = useState([])
   const [showAddCourseForm, setShowAddCourseForm] = useState(false);
   const classes = useStyles();
- const name= localStorage.getItem("name")
+ const teachername= localStorage.getItem("name")
+ console.log(teachername)
    console.log(course.name)
   useEffect(() => {
-    axios.get('http://localhost:5000/teacher/getallusers',)
+    axios.get(`http://localhost:5000/teacher/getallusers?teachername=${teachername}`)
       .then(response => {
+        console.log(response)
         setstudents(response.data.students);
         setcourse(response.data.course)
       })
