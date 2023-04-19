@@ -86,7 +86,7 @@ const signup = async (req, res, next) => {
   
   
   const addCourse = (req, res) => {
-    const { name, category, description, link, price,teachername } = req.body;
+    const { name, category, description, link, price,teachername,teacherid } = req.body;
   
     Course.findOne({ name: name })
       .then(existingCourse => {
@@ -104,7 +104,8 @@ const signup = async (req, res, next) => {
           description,
           link,
           price,
-          chapters
+          chapters,
+          teacherid
         });
   
         if (req.files && req.files.length > 0) {

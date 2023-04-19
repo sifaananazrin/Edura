@@ -54,7 +54,7 @@ const TeacherLogin= () => {
         const response = await axios.post(request.teacherlogin, values);
         console.log(response);
         if (response.data.message === "Login successful") {
-          localStorage.setItem("token",response.data.token)
+          localStorage.setItem("teachertoken",response.data.token)
           localStorage.setItem("tid",response.data.tid)
           localStorage.setItem("name",response.data.name)
           window.location = "/teacher/";

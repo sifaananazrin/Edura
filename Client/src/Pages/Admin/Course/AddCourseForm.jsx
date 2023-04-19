@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TextField, Button, Box, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-
+// import {config} from "../../../Helpers/axiosAdminEndpoints"
 function AddCourseForm({ onAddCourse, categories }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');

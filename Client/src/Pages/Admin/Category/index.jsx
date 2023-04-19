@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import {config} from "../../../Helpers/axiosAdminEndpoints"
 import {
   Table,
   TableBody,
@@ -32,11 +32,11 @@ const useStyles = makeStyles({
 });
 
 function Category() {
-  const config = {
-    headers: {
-      Authorization: `${localStorage.getItem("token")}`,
-    },
-  };
+  // const config = {
+  //   headers: {
+  //     Authorization: `${localStorage.getItem("token")}`,
+  //   },
+  // };
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState(null);
   const navigate = useNavigate(); // initialize useHistory

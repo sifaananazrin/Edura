@@ -13,6 +13,7 @@ import AddCategoryForm from "../Pages/Admin/Category/AddCategoryForm";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../Pages/Admin/theme";
 import AdminLogin from "../Pages/Login/AdminLogin";
+import PrivateRoutes from "../Helpers/PrivateRoutes";
 
 const AdminLayoutRoute=()=> {
 
@@ -36,40 +37,43 @@ const AdminLayoutRoute=()=> {
 }
 
 function AdminRouter() {
-  const token = localStorage.getItem("token");
+ 
   return (
     <Routes>
       <Route path="/login" element={<AdminLogin />} />
+      <Route element={<PrivateRoutes/>} >
       <Route element={<AdminLayoutRoute/>}>
       <Route
         path="/category"
-        element={token ? <Category /> : <Navigate to="/admin/login" />}
+        element={<Category />}
       />
       <Route
         path="/editcategory"
-        element={token ? <EditCategory /> : <Navigate to="/admin/login" />}
+        element={ <EditCategory /> }
       />
+      
       <Route
         path="/add-category"
-        element={token ? <AddCategoryForm /> : <Navigate to="/admin/login" />}
+        element={ <AddCategoryForm />}
       />
       <Route
         path="/home"
-        element={token ? <Dashboard /> : <Navigate to="/admin/login" />}
+        element={ <Dashboard />}
       />
       <Route
         path="/manageuser"
-        element={token ? <ManageUser /> : <Navigate to="/admin/login" />}
+        element={ <ManageUser /> }
       />
       <Route path="/approveteacher" element={<ApproveTeacher />} />
       <Route
         path="/category"
-        element={token ? <Course /> : <Navigate to="/admin/login" />}
+        element={<Course /> }
       />
       <Route
         path="/form"
-        element={token ? <Form /> : <Navigate to="/admin/login" />}
+        element={<Form /> }
       />
+      </Route>
       </Route>
     </Routes>
     

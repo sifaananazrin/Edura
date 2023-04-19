@@ -3,31 +3,27 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import axios from '../../../api/axios';
 import requests from '../../../api/request';
 import swal from 'sweetalert';
-
+import {config} from "../../../Helpers/axiosAdminEndpoints"
 function ManageUser() {
-  const config = {
-    headers: {
-      Authorization: `${localStorage.getItem("token")}`,
-    },
-  };
+  // const config = {
+  //   headers: {
+  //     Authorization: `${localStorage.getItem("token")}`,
+  //   },
+  // };
 
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-
-      
-
-
-        const response = await axios.get(requests.getAllUsers, config);
-       
-        setUsers(response.data.users);
-      } catch (error) {
-        console.log(error);
-      }
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(requests.getAllUsers, config); 
+      setUsers(response.data.users);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
+
+  useEffect(() => {
     fetchData();
   }, [config]);
 
@@ -58,7 +54,7 @@ function ManageUser() {
       
       const response = await axios.get(`/admin/status/${id}`, config);
       console.log(response)
-    
+      fetchData();
     } catch (error) {
       console.log(error);
     }

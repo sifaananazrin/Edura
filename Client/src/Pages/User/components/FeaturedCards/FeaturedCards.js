@@ -6,7 +6,7 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 
 //IMPORTING SVG'S AND IMAGES
-import photo_card from "../../../../assets/photo_card.png";
+// import photo_card from "../../../../assets/photo_card.png";
 import plus from "../../../../assets/plus.svg";
 import Wrapper from "../Wrapper";
 import styles from "./styles";

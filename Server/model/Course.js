@@ -18,6 +18,7 @@ const courseSchema = new mongoose.Schema({
       type:String
     }
   }],
+  teacherid: { type: String },
   link: { type: String },
   chapters: [{
     name: { type: String, required: true }, 

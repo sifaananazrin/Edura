@@ -2,14 +2,17 @@ import { useState } from 'react';
 import { TextField, Button, Box } from '@material-ui/core';
 import axios from '../../../api/axios';
 import requests from '../../../api/request';
+import {config} from "../../../Helpers/axiosAdminEndpoints"
+
+
 function AddCategoryForm({ onAddCategory }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const config = {
-    headers: {
-      Authorization: `${localStorage.getItem("token")}`,
-    },
-  };
+  // const config = {
+  //   headers: {
+  //     Authorization: `${localStorage.getItem("token")}`,
+  //   },
+  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
     

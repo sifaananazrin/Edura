@@ -2,17 +2,18 @@ import { useState } from 'react';
 import { TextField, Button, Box } from '@material-ui/core';
 import axios from '../../../api/axios';
 import requests from '../../../api/request';
+import {config} from "../../../Helpers/axiosAdminEndpoints"
 import { useLocation } from 'react-router-dom';
 function EditCategory({ onAddCategory }) {
     const location = useLocation();
     const selected = location.state.selected;
     const categories = selected.categories;
   
-    const config = {
-      headers: {
-        Authorization: `${localStorage.getItem("token")}`,
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     Authorization: `${localStorage.getItem("token")}`,
+    //   },
+    // };
     // Initialize state with the current category values
     const [name, setName] = useState(categories.name);
     const [description, setDescription] = useState(categories.description);

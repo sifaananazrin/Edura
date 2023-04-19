@@ -11,7 +11,7 @@ import ViewStudent from '../Pages/Teacher/component/Student/ViewStudent';
 
 
 function TeacherRouter() {
-  const token=localStorage.getItem("token");
+  const token=localStorage.getItem("teachertoken");
   return (
     <>
       <ButtonAppBar />

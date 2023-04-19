@@ -49,6 +49,7 @@ const Form = () => {
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
   const [teachername, setTeachername] = useState("");
+  const [teacherid,setTeacher] = useState("");
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -57,6 +58,7 @@ const Form = () => {
       .then((response) => {
         setCategories(response.data.categories);
         setTeachername(localStorage.getItem("name"))
+        setTeacher(localStorage.getItem("teachertoken"))
       })
       .catch((error) => {
         console.log(error);
@@ -98,6 +100,7 @@ const Form = () => {
     formData.append("price", price);
     formData.append("image", image);
     formData.append("teachername", teachername);
+    formData.append("teacherid", teachername);
     console.log(formData)
 
 

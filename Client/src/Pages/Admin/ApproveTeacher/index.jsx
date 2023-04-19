@@ -3,43 +3,85 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import axios from '../../../api/axios';
 import requests from '../../../api/request';
 import swal from 'sweetalert';
+import {config} from "../../../Helpers/axiosAdminEndpoints"
 
 function Teacher() {
-  const config = {
-    headers: {
-      Authorization: `${localStorage.getItem("token")}`,
-    },
-  };
+  // const config = {
+  //   headers: {
+  //     Authorization: `${localStorage.getItem("admintoken")}`,
+  //   },
+  // };
 
   const [teacher, setTeacher] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
 
       
 
 
-        const response = await axios.get(requests.getAllTeacher, config);
+  //       const response = await axios.get(requests.getAllTeacher, config);
        
-        setTeacher(response.data.teacher);
-      } catch (error) {
-        console.log(error);
-      }
+  //       setTeacher(response.data.teacher);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, [config]);
+
+  // const handleBlock =  (id) => {
+  //   swal({
+  //     title: "Are you sure?",
+  //     text: "You want to approve the teacher ",
+  //     icon: "warning",
+  //     buttons: true,
+  //     dangerMode: true,
+  //   })
+  //   .then((willDelete) => {
+  //     if (willDelete) {
+  //       swal("The teacher is teacher!", {
+  //         icon: "success",
+  //       });
+  //       block(id);
+  //     } else {
+  //       swal("The teacher not approve");
+  //     }
+  //   });
+  // };
+
+  // const block=async(id)=>{
+  //   try {
+
+
+      
+  //     const response = await axios.get(`/admin/approve/${id}`, config);
+  //     console.log(response)
+     
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(requests.getAllTeacher, config);
+      setTeacher(response.data.teacher);
+    } catch (error) {
+      console.log(error);
     }
-
-    fetchData();
-  }, [config]);
-
-  const handleBlock =  (id) => {
+  };
+  
+  const handleBlock = (id) => {
     swal({
       title: "Are you sure?",
       text: "You want to approve the teacher ",
       icon: "warning",
       buttons: true,
       dangerMode: true,
-    })
-    .then((willDelete) => {
+    }).then((willDelete) => {
       if (willDelete) {
         swal("The teacher is teacher!", {
           icon: "success",
@@ -50,19 +92,22 @@ function Teacher() {
       }
     });
   };
-
-  const block=async(id)=>{
+  
+  const block = async (id) => {
     try {
-
-
-      
       const response = await axios.get(`/admin/approve/${id}`, config);
-      console.log(response)
-    
+      console.log(response);
+      fetchData(); // calling fetchData function again
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+  
+  useEffect(() => {
+    fetchData();
+  }, [config]);
+  
+  
   
 
   return (
