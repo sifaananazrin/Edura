@@ -114,7 +114,29 @@ const TeacherSignup = () => {
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
             />
-            <FormLabel sx={{ mt: 2 }}>Password</FormLabel>
+          
+
+            <TextField
+              id="qualification"
+              name="qualification"
+              label="Qualification"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              autoComplete="qualification"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.qualification}
+              error={
+                formik.touched.qualification &&
+                Boolean(formik.errors.qualification)
+              }
+              helperText={
+                formik.touched.qualification && formik.errors.qualification
+              }
+            />
+              <FormLabel sx={{ mt: 2 }}>Password</FormLabel>
             <TextField
               fullWidth
               margin="normal"
@@ -137,27 +159,6 @@ const TeacherSignup = () => {
                   </InputAdornment>
                 ),
               }}
-            />
-
-            <TextField
-              id="qualification"
-              name="qualification"
-              label="Qualification"
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              autoComplete="qualification"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.qualification}
-              error={
-                formik.touched.qualification &&
-                Boolean(formik.errors.qualification)
-              }
-              helperText={
-                formik.touched.qualification && formik.errors.qualification
-              }
             />
 
             <FormLabel sx={{ mt: 2 }}>Confirm Password</FormLabel>

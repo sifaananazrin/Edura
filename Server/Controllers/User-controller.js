@@ -420,6 +420,10 @@ const getProductDetailData = async (req, res) => {
   }
 };
 
+
+
+
+
 exports.signup = signup;
 exports.login = login;
 exports.verifyTocken = verifyTocken;

@@ -16,14 +16,14 @@ const upload = multer({ storage })
 router.post('/signup', signup);
 router.post('/login', login);
 
-router.post('/addcourse',upload.array('image', 4),addCourse);
-router.get('/courses',getAllCourse);
-router.get('/categories',getAllCategories);
+router.post('/addcourse',validateTeacherToken,upload.array('image', 4),addCourse);
+router.get('/courses',validateTeacherToken,getAllCourse);
+router.get('/categories',validateTeacherToken,validateTeacherToken,getAllCategories);
 
 
 //coures 
-router.get('/editcoures/:id', getEditCourse);
-router.put('/editcoure/:id', postEditCourse);
-router.get('/delectcoures/:id',getDeleteCourse)
+router.get('/editcoures/:id',validateTeacherToken, getEditCourse);
+router.put('/editcoure/:id',validateTeacherToken, postEditCourse);
+router.get('/delectcoures/:id',validateTeacherToken,getDeleteCourse)
 router.get('/getallusers',getAllStudents)
 module.exports = router;

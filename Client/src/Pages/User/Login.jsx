@@ -1,5 +1,10 @@
 
-
+import {
+  formStyles,
+  formControlStyles,
+  buttonStyles,
+  labelStyles,
+} from "./LoginStyle";
 import React from "react";
 import axios from "../../api/axios";
 import request from "../../api/request"
@@ -72,15 +77,10 @@ function Login() {
   return (
 
     <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
+      style={formStyles}
     >
        <ToastContainer />
-      <FormControl   component="form" onSubmit={formik.handleSubmit}>
+      <FormControl  sx={formControlStyles}  component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
             padding={6}
@@ -151,15 +151,7 @@ function Login() {
             />
 
             <Button
-  sx={{
-    mt: 4,
-    borderRadius: 10,
-    bgcolor: "#673F86",
-    color: '#fff',
-    '&:hover': {
-      bgcolor: "#1d1f33",
-    },
-  }}
+  sx={buttonStyles}
   type='submit'
   fullWidth
   variant='contained'

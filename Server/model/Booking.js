@@ -39,7 +39,14 @@ const bookingSchema = new Schema({
     }
   }],
 
+  rating:{
+    type: Number, // changed the data type to Number
+    required: false, // set to false as rating is optional
+  }
+
 }, { timestamps: true });
+
+
 
 const Booking = mongoose.model('Booking', bookingSchema);
 module.exports = Booking;

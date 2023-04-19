@@ -100,6 +100,7 @@ const approveTeacher = async (req, res) => {
 
 
 
+
 // const postAddCategory = async (req, res) => {
 
 // try {

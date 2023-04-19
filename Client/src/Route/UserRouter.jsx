@@ -26,7 +26,7 @@ function UserRouter() {
           <CssBaseline />
           <Layout>
             <Routes>
-              <Route path="/Signup" element={<SignUp /> } />
+              <Route path="/signup" element={<SignUp /> } />
               <Route path="/payment" element={<Payment /> } />
               <Route path="/success" element={< SuccessPage />} />
              
