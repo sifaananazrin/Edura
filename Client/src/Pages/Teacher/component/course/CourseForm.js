@@ -10,7 +10,8 @@ import {
   Input,
   makeStyles,
 } from "@material-ui/core";
-import axios from "axios"
+import {config} from "../../../../Helpers/axiosTeacherEndpoints"
+import axios from "../../../../api/axios"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +55,7 @@ const Form = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/teacher/categories")
+      .get("/teacher/categories",config)
       .then((response) => {
         setCategories(response.data.categories);
         setTeachername(localStorage.getItem("name"))
@@ -105,10 +106,10 @@ const Form = () => {
 
 
     axios
-      .post("http://localhost:5000/teacher/addcourse", formData, {
+      .post("/addcourse", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-        },
+        },...config,
       })
       .then((response) => {
         console.log(response);

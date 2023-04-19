@@ -25,7 +25,7 @@ const Navbar = ({ white }) => {
     window.location.href = '/user/login'; // redirect to login page after logout
   };
   const filteredPages = pages.filter(page => page.title !== 'Logout')
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('usertoken');
 
   return (
     <Box sx={styles.navbar}>

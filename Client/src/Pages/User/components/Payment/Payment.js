@@ -54,12 +54,14 @@ const Payment = () => {
   const [paymentOption, setPaymentOption] = useState('');
   const location = useLocation();
   const selectedCourses = location.state;
+  const course_id = selectedCourses.course_id;
   const name = selectedCourses.name;
   const image = selectedCourses.image;
   const des = selectedCourses.description;
   const price = selectedCourses.totalAmount;
   const link = selectedCourses.link;
   const data=selectedCourses;
+  console.log(data)
 
   const handleRadioChange = (event) => {
     setPaymentOption(event.target.value);
@@ -80,6 +82,8 @@ const Payment = () => {
         name: name,
         totalAmount: price,
         image:image,
+        course_id:course_id,
+        link:link,
       })
       .then((response) => {
         console.log(response);

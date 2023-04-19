@@ -25,5 +25,5 @@ router.get('/categories',validateTeacherToken,validateTeacherToken,getAllCategor
 router.get('/editcoures/:id',validateTeacherToken, getEditCourse);
 router.put('/editcoure/:id',validateTeacherToken, postEditCourse);
 router.get('/delectcoures/:id',validateTeacherToken,getDeleteCourse)
-router.get('/getallusers',getAllStudents)
+router.get('/getallusers',validateTeacherToken,getAllStudents)
 module.exports = router;

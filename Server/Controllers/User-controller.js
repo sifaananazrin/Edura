@@ -345,7 +345,7 @@ const verifyPayment = async (req, res) => {
         name: details.data.name,
         totalAmount: details.data.totalAmount,
         image:details.data.image,
-        // paymentMethod: paymethod,
+        course_id:details.data.course_id,
         link:details.data.link,
         teachername:details.data.teachername,
 
@@ -421,6 +421,24 @@ const getProductDetailData = async (req, res) => {
 };
 
 
+const getAlreadyOder = async (req, res) => {
+  try {
+    const { user_id ,name} = req.body;
+    console.log(user_id)
+    const found = await Booking.findOne({ user_id: user_id });
+    if(found.name === name ){
+
+      res.send({success:true,massage:"already purchased"})
+    }else{
+      res.send({success:false,massage:"not purchased"})
+    }
+    // const discounts = await Products.find();
+
+    // res.send({ found });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 
 
@@ -438,3 +456,4 @@ exports.verifyPayment = verifyPayment;
 exports.getAllCount = getAllCount;
 exports.getOderDetail = getOderDetail;
 exports.getProductDetailData = getProductDetailData;
+exports.getAlreadyOder=getAlreadyOder;

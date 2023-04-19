@@ -3,7 +3,9 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { makeStyles } from '@mui/styles';
 import { useNavigate,Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import axios from "axios"
+import axios from "../../../../api/axios"
+import {config} from "../../../../Helpers/axiosTeacherEndpoints"
+
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +25,7 @@ function Course() {
   const classes = useStyles();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/teacher/courses')
+    axios.get('/teacher/courses',config)
       .then(response => {
         setCourses(response.data.course);
       })
@@ -34,7 +36,7 @@ function Course() {
 
   const handleRemove = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/teacher/delectcoures/${id}`);
+      const response = await axios.get(`/teacher/delectcoures/${id}`,null, config);
       if (response) {
         window.location.href = window.location.href;
       }
@@ -46,7 +48,7 @@ function Course() {
 
   const handleEdit = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/teacher/editcoure/${id}`);
+      const response = await axios.get(`/teacher/editcoure/${id}`,null, config);
       console.log(response);
     } catch (error) {
       console.log(error);

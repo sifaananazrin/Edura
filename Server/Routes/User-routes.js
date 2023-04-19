@@ -14,7 +14,8 @@ const {
      getProductDetail,
      getAllCount,
      getOderDetail,
-     getProductDetailData
+     getProductDetailData,
+     getAlreadyOder
      } = require('../Controllers/User-controller');
 
 const router = express.Router();
@@ -35,6 +36,7 @@ router.get("/product/:id", getProductDetail);
 router.get("/totalcounts", getAllCount);
 router.get("/oderhistory", getOderDetail);
 router.get("/productData", getProductDetailData);
+router.get("/alreadyoder", getAlreadyOder);
 
 // router.post("/logout",verifyTocken,logout)
 

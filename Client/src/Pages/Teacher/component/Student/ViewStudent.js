@@ -3,7 +3,8 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { makeStyles } from '@mui/styles';
 import { useNavigate,Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import axios from "axios"
+import {config} from "../../../../Helpers/axiosTeacherEndpoints"
+import axios from "../../../../api/axios"
 
 const useStyles = makeStyles({
   root: {
@@ -26,7 +27,7 @@ function Course() {
  console.log(teachername)
    console.log(course.name)
   useEffect(() => {
-    axios.get(`http://localhost:5000/teacher/getallusers?teachername=${teachername}`)
+    axios.get(`/teacher/getallusers?teachername=${teachername}`, config)
       .then(response => {
         console.log(response)
         setstudents(response.data.students);

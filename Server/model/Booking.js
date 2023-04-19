@@ -21,6 +21,10 @@ const bookingSchema = new Schema({
     type: String,
     required: false,
   },
+  course_id: {
+    type: String,
+    required: false,
+  },
   teachername: {
     type: String,
     required: true,

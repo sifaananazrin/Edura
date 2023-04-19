@@ -2,7 +2,7 @@ import React from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { useLocation } from 'react-router-dom';
-
+import axios from '../../api/axios';
 import Wrapper from '../User/components/Wrapper'
 import Breadcrumbs from '../User/components/Breadcrumbs'
 import CurrentStatus from '../User/components/CurrentStatus/CurrentStatus'
@@ -14,6 +14,10 @@ import Courses from '../User/components/Courses'
 
 //IMPORTING ICONS
 import imageslearn from '../../assets/imageslearn.png'
+
+
+
+
 
 const styles = {
   wrapper: (theme) => ({
@@ -44,8 +48,31 @@ const CourseDetailsScreen = () => {
   const des = selectedCourses.description;
   const price = selectedCourses.price;
   const link = selectedCourses.link;
+  const course_id = selectedCourses._id;
   const teachername = selectedCourses.teachername;
-console.log(link)
+  // const tid =localStorage.getItem("teachertoken")
+// console.log(link)
+ 
+
+ 
+
+// useEffect(() => {
+//   async function fetchData() {
+//     try {
+
+    
+
+
+//       const response = await axios.get("/api/alreadyoder",tid );
+     
+//       setTeacher(response.data.teacher);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+
+//   fetchData();
+// }, [config]);
 
 
   return (
@@ -61,7 +88,7 @@ console.log(link)
           <Box sx={styles.wrapperLeftBlock}>
           <Box component='img' src={image?.[0]?.url} sx={styles.img} />
 
-            <CurrentStatus  price={price} name={name} image={image} teachername={teachername} link={link}  />
+            <CurrentStatus  price={price} name={name} image={image} teachername={teachername} link={link} course_id={course_id}  />
             <CourseDescription des={des} />
             {/* <LearnCourse /> */}
             {/* <CourseContent /> */}
