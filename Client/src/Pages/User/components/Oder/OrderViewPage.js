@@ -18,7 +18,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { cardClasses } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,16 +34,18 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     borderRadius: 8,
     overflow: "hidden",
+    backgroundColor: "white", // set background-color to white
     boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
     transition: "all 0.3s ease-in-out",
     "&:hover": {
-      transform: "sc ale(1.05)",
+      transform: "scale(1.05)",
       boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.2)",
     },
   },
   cardMedia: {
     height: 0,
     paddingTop: "56.25%",
+    backgroundColor: "white",
     transition: "all 0.3s ease-in-out",
     "&:hover": {
       transform: "scale(1.1)",
@@ -82,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
     borderColor: theme.palette.primary.main,
   },
 }));
+
 
 const OrderViewPage = () => {
   const classes = useStyles();
@@ -149,7 +152,7 @@ const handleRatingClick = (value) => {
             lg={3}
             key={course._id}
           >
-            <Card className={classes.card} style={{ marginTop: "2rem" }}>
+            <Card className={classes.card } style={{ marginTop: "2rem" }}>
               <CardHeader title={course.title} />
               <CardMedia
                 className={classes.cardMedia}
