@@ -59,7 +59,8 @@ const Form = () => {
       .then((response) => {
         setCategories(response.data.categories);
         setTeachername(localStorage.getItem("name"))
-        setTeacher(localStorage.getItem("teachertoken"))
+        setTeachername(localStorage.getItem("name"))
+        setTeacher(localStorage.getItem("tid"))
       })
       .catch((error) => {
         console.log(error);
@@ -101,12 +102,12 @@ const Form = () => {
     formData.append("price", price);
     formData.append("image", image);
     formData.append("teachername", teachername);
-    formData.append("teacherid", teachername);
+    formData.append("teacherid", teacherid);
     console.log(formData)
 
 
     axios
-      .post("/addcourse", formData, {
+      .post("/teacher/addcourse", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },...config,

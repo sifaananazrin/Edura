@@ -36,7 +36,7 @@ function Course() {
 
   const handleRemove = async (id) => {
     try {
-      const response = await axios.get(`/teacher/delectcoures/${id}`,null, config);
+      const response = await axios.get(`/teacher/delectcoures/${id}`, config);
       if (response) {
         window.location.href = window.location.href;
       }
