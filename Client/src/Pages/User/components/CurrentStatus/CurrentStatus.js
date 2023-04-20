@@ -33,7 +33,7 @@ const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase}) =>
         {!puchase || !puchase.success ? (
         <Button onClick={bookNow}>Buy Now</Button>
       ) : (
-        <p> <b>You have already purchased this course.</b></p>
+        <p> <b>You have already purchased this course. check my course <br></br></b></p>
         
       )}
       </Box>

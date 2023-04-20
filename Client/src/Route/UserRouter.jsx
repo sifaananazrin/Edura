@@ -14,7 +14,7 @@ import { ThemeProvider } from '@mui/material'
  import Payment from '../Pages/User/components/Payment/Payment';
  import OrderViewPage from '../Pages/User/components/Oder/OrderViewPage';
  import SuccessPage from '../Pages/User/components/Success/SuccessPage';
-
+ import PrivateRoutes from '../Helpers/PrivateRoutesUser';
  
 
 function UserRouter() {
@@ -26,19 +26,24 @@ function UserRouter() {
           <CssBaseline />
           <Layout>
             <Routes>
+            <Route path="/login" element={!token ? <Login /> : <Navigate to="/user/home"/>} /> 
+            <Route path="/otp" element={<OTP/>}></Route>
               <Route path="/signup" element={<SignUp /> } />
+
+              <Route element={<PrivateRoutes/>} >
               <Route path="/payment" element={<Payment /> } />
               <Route path="/success" element={< SuccessPage/>}/>
               <Route path="/oders" element={< OrderViewPage/>}></Route>
-              <Route path="/otp" element={<OTP/>}></Route>
+              
               <Route path="/profile" element={<Profile/>}></Route>
-               <Route path="/login" element={!token ? <Login /> : <Navigate to="/user/home"/>} /> 
-              <Route path="/home" element={ token ?<HomeScreen /> :<Navigate to="/user/login"/>} />
-              <Route path={"/course-details"} element={ token ? <CourseDetailsScreen /> :<Navigate to="/user/login"/>} />
+               
+              <Route path="/home" element={ <HomeScreen /> } />
+              <Route path={"/course-details"} element={  <CourseDetailsScreen />}  />
               <Route
                 path={"/currently-featured"}
-                element={token ? <FeaturedCoursesScreen /> :<Navigate to="/user/login"/>}
+                element={ <FeaturedCoursesScreen />}
               />
+              </Route>
             </Routes>
           </Layout>
           </ThemeProvider>
