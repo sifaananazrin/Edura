@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { TextField, Button, Box } from '@material-ui/core';
 import axios from '../../../api/axios';
 import requests from '../../../api/request';
+import Spinner from '../../../component/Spinner';
 import {config} from "../../../Helpers/axiosAdminEndpoints"
 import { useLocation } from 'react-router-dom';
 function EditCategory({ onAddCategory }) {
@@ -15,6 +16,8 @@ function EditCategory({ onAddCategory }) {
     //   },
     // };
     // Initialize state with the current category values
+    const [loading, setLoading] = useState(false);
+
     const [name, setName] = useState(categories.name);
     const [description, setDescription] = useState(categories.description);
   
@@ -23,11 +26,13 @@ function EditCategory({ onAddCategory }) {
         
         try {
           // Send a POST request to the server's API endpoint with the new category data
+          setLoading(true);
           const response = await axios.put(`/admin/editcategory/${id}`, {
             name: name,
             description: description,
           },config);
           if (response) {
+            setLoading(false);
             window.location="/admin/category"
           }
       
@@ -44,6 +49,11 @@ function EditCategory({ onAddCategory }) {
       
   
     return (
+ <>
+      {loading ? (
+        <Spinner loading={loading} />
+      ) : (
+
       <Box component="form" style={{ backgroundColor: 'white', padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <TextField
           label="Category Name"
@@ -76,6 +86,8 @@ function EditCategory({ onAddCategory }) {
           Edit Category
         </Button>
       </Box>
+      )}
+</>
     );
   }
   

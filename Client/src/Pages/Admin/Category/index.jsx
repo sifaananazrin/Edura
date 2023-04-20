@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import {config} from "../../../Helpers/axiosAdminEndpoints"
+import Spinner from '../../../component/Spinner';
 import {
   Table,
   TableBody,
@@ -37,6 +38,9 @@ function Category() {
   //     Authorization: `${localStorage.getItem("token")}`,
   //   },
   // };
+
+  const [loading, setLoading] = useState(false);
+
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState(null);
   const navigate = useNavigate(); // initialize useHistory
@@ -49,10 +53,11 @@ function Category() {
 
       
 
-
+        setLoading(true);
         const response = await axios.get(requests.getAllCatory,config);
        
         setCategories(response.data.categories);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -65,9 +70,10 @@ function Category() {
     try {
 
 
-      
+      setLoading(false);
       const response = await axios.get(`/admin/editecategory/${id}`,config);
       setSelected(response.data);
+      setLoading(true);
       console.log(response)
       navigate('/admin/editcategory', { state: { selected: response.data } });
     
@@ -80,9 +86,10 @@ function Category() {
     try {
 
 
-      
+      setLoading(false);
       const response = await axios.get(`/admin/delectcategory/${id}`);
       if(response){
+        setLoading(true);
         window.location="/admin/category"
       }
       console.log(response)
@@ -98,6 +105,10 @@ function Category() {
 
   return (
     <>
+    {loading ? (
+        <Spinner loading={loading} />
+      ) : (
+        <div>
       <div className={classes.addButton}>
         <Button
           variant="contained"
@@ -147,6 +158,8 @@ function Category() {
           </TableBody>
         </Table>
       </TableContainer>
+      </div>
+)}
     </>
   );
 }

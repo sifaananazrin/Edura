@@ -4,10 +4,12 @@ import axios from '../../../api/axios';
 import requests from '../../../api/request';
 import {config} from "../../../Helpers/axiosAdminEndpoints"
 
-
+import Spinner from '../../../component/Spinner';
 function AddCategoryForm({ onAddCategory }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(false);
+
   // const config = {
   //   headers: {
   //     Authorization: `${localStorage.getItem("token")}`,
@@ -18,8 +20,10 @@ function AddCategoryForm({ onAddCategory }) {
     
     try {
       // Send a POST request to the server's API endpoint with the new category data
+      setLoading(true);
       const response = await axios.post(requests.addCatory, { name, description },config);
       if(response.data.success){
+        setLoading(false);
         window.location="/admin/category"
       }
 
@@ -35,6 +39,11 @@ function AddCategoryForm({ onAddCategory }) {
   };
 
   return (
+<>
+    {loading ? (
+      <Spinner loading={loading} />
+    ) : (
+
     <Box component="form" onSubmit={handleSubmit} style={{ backgroundColor: 'white', padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <TextField
         label="Category Name"
@@ -60,6 +69,8 @@ function AddCategoryForm({ onAddCategory }) {
         Add Category
       </Button>
     </Box>
+    )}
+    </>
   );
 }
 
