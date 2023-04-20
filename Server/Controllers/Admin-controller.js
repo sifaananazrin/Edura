@@ -207,8 +207,11 @@ const getDashboard=async (req,res)=>{
     const instractor=await Teacher.find().count()
     const courses=await Course.find().count()
     const BookingData=await Booking.find()
+    const pricegt = await Course.find({ price: { $gt: 500 } }).count();
+    const pricelt = await Course.find({ price: { $lt: parseInt("500") } }).count();
+  // console.log(pricelt)
     const TotalAmout=BookingData.reduce((total,oder)=>total+oder.totalAmount,0)
-    res.json({student,instractor,courses,TotalAmout})
+    res.json({student,instractor,courses,TotalAmout,pricegt,pricelt})
     // res.json({instractor})
     // res.json({courses})
   

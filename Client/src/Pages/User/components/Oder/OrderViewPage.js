@@ -99,7 +99,7 @@ const OrderViewPage = () => {
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const uid = localStorage.getItem("uid");
-
+  const [selectedCourses, setSelectedCourses] = useState(null);
   useEffect(() => {
     async function fetchOrder() {
       try {
@@ -136,6 +136,24 @@ const OrderViewPage = () => {
     },
   };
 
+  const CouresDetails = async (id) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `/api/product/${id}`,config
+      );
+      console.log(response);
+      setLoading(false);
+      setSelectedCourses(response.data.found);
+      navigate("/user/course-details", {
+        state: { selectedCourses: response.data.found },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  
   return (
 
     <>
@@ -197,7 +215,7 @@ const OrderViewPage = () => {
                 style={{ background: "#673F86" ,color:"white"}}
                 fullWidth
                 endIcon={<ArrowCircleRightIcon />}
-                onClick={() => navigate(`/courses/${course._id}`)}
+                 onClick={() => CouresDetails(course.course_id)}
               >
                 Details
               </Button>

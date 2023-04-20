@@ -109,9 +109,9 @@ function Course() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {courses && courses.map((course) => (
+            {courses && courses.map((course,index) => (
               <TableRow key={course.id}>
-                <TableCell component="th" scope="row">{course.id}</TableCell>
+                <TableCell component="th" scope="row">{index + 1}</TableCell>
                 <TableCell>{course.name}</TableCell>
                 <TableCell>{course.description}</TableCell>
                 <TableCell>{course.price}</TableCell>

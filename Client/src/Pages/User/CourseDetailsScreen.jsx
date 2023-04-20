@@ -51,9 +51,7 @@ const CourseDetailsScreen = () => {
   const course_id = selectedCourses._id;
   const teachername = selectedCourses.teachername;
   const user_id =localStorage.getItem("uid")
-  console.log(user_id)
-  console.log(cid)
-// console.log(link)
+
 
 const config = {
   headers: {

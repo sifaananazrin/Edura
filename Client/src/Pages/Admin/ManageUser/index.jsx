@@ -15,6 +15,7 @@ function ManageUser() {
     try {
       setLoading(true);
       const response = await axios.get(requests.getAllUsers, config); 
+      setUsers(response.data.users);
       setLoading(false);
     } catch (error) {
       console.log(error);

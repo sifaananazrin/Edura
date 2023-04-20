@@ -77,11 +77,11 @@ console.log(data)
         setdata(response.data);
         console.log(response.data)
         setUserData({
-                    labels: ["Students", "Instructors", "Courses"],
+                    labels: ["Rs 500>coures ", " Rs 500<coures", "Courses"],
                     datasets: [
                       {
                         label: "Count",
-                        data: [response.data.student, response.data.instractor, response.data.courses],
+                        data: [response.data.pricegt, response.data.pricelt, response.data.courses],
                         backgroundColor: [
                           "rgba(75,192,192,1)",
                           "#ecf0f1",
@@ -95,11 +95,11 @@ console.log(data)
                     ],
                   });
         setproduct({
-          labels: ["Users", "Product"],
+          labels: ["Students", "instractor"],
           datasets: [
             {
               label: "Count",
-              data: [response.data.usercount, response.data.productcount],
+              data: [response.data.student, response.data.instractor],
               backgroundColor: [
                 "rgba(75,192,192,1)",
                 "#ecf0f1",

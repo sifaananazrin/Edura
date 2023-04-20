@@ -89,7 +89,7 @@ const Payment = () => {
         image:image,
         course_id:course_id,
         link:link,
-      },...config)
+      },config)
       .then((response) => {
         setLoading(false);
         console.log(response);
@@ -130,22 +130,22 @@ const Payment = () => {
   }
 
   function verifyPayment(response, order) {
-    setLoading(true);
+     setLoading(true);
     axios
-      .post("http://localhost:5000/api/verifyPayment", {
+      .post("/api/verifyPayment", {
         razorpay_payment_id: response.razorpay_payment_id,
         razorpay_order_id: response.razorpay_order_id,
         razorpay_signature: response.razorpay_signature,
         order,
         userId: uid,
         data
-      })
+      },config)
       .then((response) => {
         setLoading(false);
         if (response.data.success) {
           navigate("/user/success");
         } else {
-          console.log("payment failed");
+          navigate("/user/failed");
         }
       })
       .catch((err) => {

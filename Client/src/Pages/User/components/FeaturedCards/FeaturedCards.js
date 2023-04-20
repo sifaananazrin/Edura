@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
@@ -13,8 +14,10 @@ import Wrapper from "../Wrapper";
 import styles from "./styles";
 
 const FeaturedCards = () => {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedCourses, setSelectedCourses] = useState(null);
 
   useEffect(() => {
     async function fetchCourses() {
@@ -32,6 +35,23 @@ const FeaturedCards = () => {
     fetchCourses();
   }, []);
   
+
+  const CouresDetails = async (id) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `/api/product/${id}`,config
+      );
+      console.log(response);
+      setLoading(false);
+      setSelectedCourses(response.data.found);
+      navigate("/user/course-details", {
+        state: { selectedCourses: response.data.found },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
 
@@ -76,7 +96,9 @@ const FeaturedCards = () => {
                   <Box sx={styles.footerCard}>
                     <Box sx={styles.price}>${course.price}</Box>
                     <Link sx={styles.link}>
-                      <Box component="span" sx={{ mr: "5px" }}>
+                      <Box 
+                      onClick={() => CouresDetails(course._id)}
+                      component="span" sx={{ mr: "5px" }}>
                         enroll now
                       </Box>
                       <Box component="img" src={plus} />
