@@ -15,6 +15,7 @@ import { ThemeProvider } from '@mui/material'
  import OrderViewPage from '../Pages/User/components/Oder/OrderViewPage';
  import SuccessPage from '../Pages/User/components/Success/SuccessPage';
  import PrivateRoutes from '../Helpers/PrivateRoutesUser';
+ import PaymentFailer from '../Pages/User/components/Payment/PaymentFailure';
  
 
 function UserRouter() {
@@ -32,6 +33,7 @@ function UserRouter() {
 
               <Route element={<PrivateRoutes/>} >
               <Route path="/payment" element={<Payment /> } />
+              <Route path="/failed" element={<PaymentFailer /> } />
               <Route path="/success" element={< SuccessPage/>}/>
               <Route path="/oders" element={< OrderViewPage/>}></Route>
               

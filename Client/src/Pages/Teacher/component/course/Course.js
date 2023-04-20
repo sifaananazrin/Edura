@@ -17,6 +17,12 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  actionButton: {
+    marginLeft: '5px',
+    marginRight: '5px',
+    fontSize: '12px',
+    padding: '6px 12px',
+  },
 });
 
 function Course() {
@@ -118,13 +124,20 @@ function Course() {
                 <TableCell>{course.category}</TableCell>
                 <TableCell>{course.link}</TableCell>
                 <TableCell>
-                  <Button variant="contained" color="primary" onClick={() => handleEdit(course._id)}>
-                    Edit
-                  </Button>
-                  &nbsp;
-                  <Button variant="contained" color="secondary" onClick={() => handleRemove(course._id)}>
-                    Remove
-                  </Button>
+                <Button variant="contained" color="primary" onClick={() => handleEdit(course._id)} style={{ height: '40px' }}>
+  Edit
+</Button>
+
+&nbsp;
+<Button
+  className={classes.actionButton}
+  variant="contained"
+  color="secondary"
+  onClick={() => handleRemove(course._id)}
+>
+  Remove
+</Button>
+
                 </TableCell>
               </TableRow>
             ))}

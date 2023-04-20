@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route ,Navigate} from 'react-router-dom';
 import ButtonAppBar from '../Pages/Teacher/component/navbar/navbar';
-import Dashboard from '../Pages/Teacher/component/dashboard/Dashboard.js';
+import Dashboard from '../Pages/Teacher/component/dashboard/DashboardCard';
 import Course from '../Pages/Teacher/component/course/Course.js';
 import CourseForm from '../Pages/Teacher/component/course/CourseForm.js';
 import EditCourse from '../Pages/Teacher/component/course/EditCourse.js';
