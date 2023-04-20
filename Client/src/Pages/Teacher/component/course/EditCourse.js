@@ -5,6 +5,7 @@ import { Container, TextField, Button, Select, MenuItem, InputLabel, Input, make
 import {config} from "../../../../Helpers/axiosTeacherEndpoints"
 import axios from "../../../../api/axios"
 import { useLocation } from 'react-router-dom';
+import Spinner from '../../../../component/Spinner';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,17 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const categories = [
-//   'Arts & Crafts',
-//   'Business',
-//   'Computer Science',
-//   'Cooking',
-//   'Dance',
-//   'Music',
-//   'Photography',
-//   'Sports',
-//   'Writing'
-// ];
 
 const EditCourse = () => {
 
@@ -50,15 +40,17 @@ const classes = useStyles();
   const [description, setDescription] = useState(data.description);
   const [price, setprice] = useState(data.price);
   const [link, setlink] = useState(data.link);
+  // const [loading, setLoading] = useState(false);
   const [category, setcategory] = useState(data.category);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get("/teacher/categories",config)
       .then((response) => {
+        setLoading(false);
         setCategories(response.data.categories);
-        // setTeachername(localStorage.getItem("name"))
-        // setTeacher(localStorage.getItem("teachertoken"))
+       
       })
       .catch((error) => {
         console.log(error);
@@ -99,6 +91,11 @@ const classes = useStyles();
   
 
   return (
+
+    <>
+    {loading ? (
+      <Spinner loading={loading} />
+    ) : (
     <Container maxWidth="sm">
       <div className={classes.root}>
         <h2>Edit a Course</h2>
@@ -191,6 +188,8 @@ const classes = useStyles();
         </form>
       </div>
     </Container>
+      )}
+      </>
   );
 };
 

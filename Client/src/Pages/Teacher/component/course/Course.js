@@ -29,8 +29,10 @@ function Course() {
   const classes = useStyles();
 
   useEffect(() => {
+    setLoading(true);
     axios.get('/teacher/courses',config)
       .then(response => {
+        setLoading(false);
         setCourses(response.data.course);
       })
       .catch(error => {
@@ -40,8 +42,10 @@ function Course() {
 
   const handleRemove = async (id) => {
     try {
+      setLoading(true);
       const response = await axios.get(`/teacher/delectcoures/${id}`, config);
       if (response) {
+        setLoading(false);
         window.location.href = window.location.href;
       }
       console.log(response);
@@ -54,10 +58,10 @@ function Course() {
     try {
 
 
-      setLoading(false);
+      setLoading(true);
       const response = await axios.get(`/teacher/editcoures/${id}`,config);
       setSelected(response.data);
-      setLoading(true);
+      setLoading(false);
       console.log(response)
       navigate('/teacher/edit-course', { state: { selected: response.data } });
     
@@ -79,6 +83,10 @@ function Course() {
 
 
   return (
+    <>
+    {loading ? (
+      <Spinner loading={loading} />
+    ) : (
     <div className={classes.root}>
       <div style={{ display: "flex" ,marginLeft:"900px",marginBottom:"20px"}}>
       <Link to="/teacher/create-course">
@@ -124,6 +132,8 @@ function Course() {
         </Table>
       </TableContainer>
     </div>
+      )}
+      </>
   );
 }
 

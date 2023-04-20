@@ -12,30 +12,42 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles";
-import axios from "axios";
+import axios from "../../../../api/axios";
 // import { Link } from '@mui/material';
+import {config} from "../../../../Helpers/axiosUserEndpoints"
+import Spinner from '../../../../component/Spinner';
+
 
 const SelectOrder = () => {
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [selectedCourses, setSelectedCourses] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
     async function fetchCourses() {
-      const response = await fetch("http://localhost:5000/api/course");
-      const data = await response.json();
-      setCourses(data.course);
-      console.log(data.course);
+      try {
+        setLoading(true);
+        const response = await axios.get("/api/course",config);
+        setCourses(response.data.course);
+        setLoading(false);
+        console.log(response.data.course);
+      } catch (error) {
+        console.error(error);
+      }
     }
-
+  
     fetchCourses();
   }, []);
+  
 
   const CouresDetails = async (id) => {
     try {
+      setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000/api/product/${id}`
+        `/api/product/${id}`,config
       );
       console.log(response);
+      setLoading(false);
       setSelectedCourses(response.data.found);
       navigate("/user/course-details", {
         state: { selectedCourses: response.data.found },
@@ -46,6 +58,11 @@ const SelectOrder = () => {
   };
 
   return (
+
+    <>
+    {loading ? (
+      <Spinner loading={loading} />
+    ) : (
     <Box sx={{ pt: "90px", flex: 1 }}>
       <Typography
         sx={{ ...styles.title, display: "flex", alignItems: "center" }}
@@ -125,6 +142,8 @@ const SelectOrder = () => {
         })}
       </Box>
     </Box>
+      )}
+      </>
   );
 };
 

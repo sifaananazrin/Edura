@@ -4,8 +4,9 @@ import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-
-//IMPORTING SVG'S AND IMAGES
+import axios from "../../../../api/axios";
+import {config} from "../../../../Helpers/axiosUserEndpoints"
+import Spinner from '../../../../component/Spinner';
 // import photo_card from "../../../../assets/photo_card.png";
 import plus from "../../../../assets/plus.svg";
 import Wrapper from "../Wrapper";
@@ -13,19 +14,31 @@ import styles from "./styles";
 
 const FeaturedCards = () => {
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchCourses() {
-      const response = await fetch("http://localhost:5000/api/course");
-      const data = await response.json();
-      setCourses(data.course);
-      console.log(data.course);
+      try {
+        setLoading(true);
+        const response = await axios.get("/api/course", config);
+        setCourses(response.data.course);
+        setLoading(false);
+        console.log(response.data.course);
+      } catch (error) {
+        console.error(error);
+      }
     }
-
+  
     fetchCourses();
   }, []);
+  
 
   return (
+
+    <>
+    {loading ? (
+      <Spinner loading={loading} />
+    ) : (
     <Box>
       <Wrapper>
         <Grid
@@ -76,6 +89,9 @@ const FeaturedCards = () => {
         </Grid>
       </Wrapper>
     </Box>
+
+)}
+</>
   );
 };
 

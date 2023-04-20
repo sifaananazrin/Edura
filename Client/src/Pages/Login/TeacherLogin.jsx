@@ -57,7 +57,7 @@ const TeacherLogin= () => {
           localStorage.setItem("teachertoken",response.data.token)
           localStorage.setItem("tid",response.data.tid)
           localStorage.setItem("name",response.data.name)
-          window.location = "/teacher/";
+          window.location = "/teacher/dashboard";
         } else {
           toast.error(response.data.message);
         }

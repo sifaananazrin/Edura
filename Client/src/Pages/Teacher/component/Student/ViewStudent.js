@@ -5,7 +5,7 @@ import { useNavigate,Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {config} from "../../../../Helpers/axiosTeacherEndpoints"
 import axios from "../../../../api/axios"
-
+import Spinner from '../../../../component/Spinner';
 const useStyles = makeStyles({
   root: {
     display: 'flex',
@@ -21,14 +21,19 @@ const useStyles = makeStyles({
 function Course() {
   const [students, setstudents] = useState([])
   const [course, setcourse] = useState([])
+  const [loading, setLoading] = useState(false);
   const [showAddCourseForm, setShowAddCourseForm] = useState(false);
   const classes = useStyles();
  const teachername= localStorage.getItem("name")
  console.log(teachername)
    console.log(course.name)
   useEffect(() => {
+
+    setLoading(true);
     axios.get(`/teacher/getallusers?teachername=${teachername}`, config)
       .then(response => {
+
+        setLoading(false);
         console.log(response)
         setstudents(response.data.students);
         setcourse(response.data.course)
@@ -72,6 +77,12 @@ function Course() {
 
 
   return (
+
+
+    <>
+    {loading ? (
+      <Spinner loading={loading} />
+    ) : (
     <div className={classes.root}>
       <div style={{ display: "flex" ,marginLeft:"900px",marginBottom:"20px"}}>
       {/* <Link to="/teacher/create-course">
@@ -114,6 +125,9 @@ function Course() {
         </Table>
       </TableContainer>
     </div>
+
+)}
+</>
   );
 }
 

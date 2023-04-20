@@ -3,7 +3,10 @@ import { Typography, Radio, RadioGroup, FormControlLabel, Button, Grid } from '@
 import { makeStyles } from '@mui/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useRazorpay from "react-razorpay";
-import axios from 'axios';
+import axios from '../../../../api/axios';
+import {config} from "../../../../Helpers/axiosUserEndpoints"
+import Spinner from '../../../../component/Spinner';
+
 
 const useStyles = makeStyles({
   centerItems: {
@@ -52,6 +55,7 @@ const Payment = () => {
   const uid = localStorage.getItem("uid");
   
   const [paymentOption, setPaymentOption] = useState('');
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const selectedCourses = location.state;
   const course_id = selectedCourses.course_id;
@@ -76,16 +80,18 @@ const Payment = () => {
   const classes = useStyles();
 
   function handlePayment() {
+    setLoading(true);
     axios
-      .post("http://localhost:5000/api/orderConfirmed", {
+      .post("/api/orderConfirmed", {
         user_id: uid,
         name: name,
         totalAmount: price,
         image:image,
         course_id:course_id,
         link:link,
-      })
+      },...config)
       .then((response) => {
+        setLoading(false);
         console.log(response);
         const order = response.data[0].orders;
         var options = {
@@ -124,6 +130,7 @@ const Payment = () => {
   }
 
   function verifyPayment(response, order) {
+    setLoading(true);
     axios
       .post("http://localhost:5000/api/verifyPayment", {
         razorpay_payment_id: response.razorpay_payment_id,
@@ -134,6 +141,7 @@ const Payment = () => {
         data
       })
       .then((response) => {
+        setLoading(false);
         if (response.data.success) {
           navigate("/user/success");
         } else {
@@ -146,6 +154,12 @@ const Payment = () => {
   }
 
   return (
+
+
+    <>
+    {loading ? (
+      <Spinner loading={loading} />
+    ) : (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
         <Typography variant="h4" align="center">
@@ -171,6 +185,8 @@ const Payment = () => {
         </form>
       </Grid>
     </Grid>
+      )}
+      </>
   );
 };
 

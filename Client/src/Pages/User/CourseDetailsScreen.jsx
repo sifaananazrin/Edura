@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { useLocation } from 'react-router-dom';
@@ -12,8 +12,7 @@ import Courses from '../User/components/Courses'
 // import LearnCourse from '../User/components/LearnCourse'
 // import CourseContent from '../User/components/CourseContent'
 
-//IMPORTING ICONS
-import imageslearn from '../../assets/imageslearn.png'
+// import {config} from "../../Helpers/axiosUserEndpoints"
 
 
 
@@ -44,35 +43,50 @@ const CourseDetailsScreen = () => {
   console.log(location)
   const selectedCourses = location.state.selectedCourses;
   const name = selectedCourses.name;
+  const cid = selectedCourses._id;
   const image = selectedCourses.image;
   const des = selectedCourses.description;
   const price = selectedCourses.price;
   const link = selectedCourses.link;
   const course_id = selectedCourses._id;
   const teachername = selectedCourses.teachername;
-  // const tid =localStorage.getItem("teachertoken")
+  const user_id =localStorage.getItem("uid")
+  console.log(user_id)
+  console.log(cid)
 // console.log(link)
- 
 
- 
+const config = {
+  headers: {
+    Authorization: `${localStorage.getItem("usertoken")}`,
+  },
+  params: {
+    user_id: user_id,
+    cid: cid
+  }
+};
 
-// useEffect(() => {
-//   async function fetchData() {
-//     try {
-
-    
 
 
-//       const response = await axios.get("/api/alreadyoder",tid );
-     
-//       setTeacher(response.data.teacher);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
+const [puchase, setpuchase] = useState('');
 
-//   fetchData();
-// }, [config]);
+ console.log(puchase)
+
+
+
+useEffect(() => {
+  async function fetchData() {
+    try {
+
+  const response = await axios.get("/api/alreadyoder",config);
+         setpuchase(response.data);
+      // console.log(response.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  fetchData();
+}, []);
 
 
   return (
@@ -88,7 +102,7 @@ const CourseDetailsScreen = () => {
           <Box sx={styles.wrapperLeftBlock}>
           <Box component='img' src={image?.[0]?.url} sx={styles.img} />
 
-            <CurrentStatus  price={price} name={name} image={image} teachername={teachername} link={link} course_id={course_id}  />
+            <CurrentStatus  price={price} name={name} image={image} puchase={puchase} teachername={teachername} link={link} course_id={course_id}  />
             <CourseDescription des={des} />
             {/* <LearnCourse /> */}
             {/* <CourseContent /> */}

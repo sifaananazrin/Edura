@@ -8,7 +8,7 @@ import EditCourse from '../Pages/Teacher/component/course/EditCourse.js';
 import  Login from '../Pages/Login/TeacherLogin';
 import TeacherSignup  from '../Pages/Login/TeacherSignup';
 import ViewStudent from '../Pages/Teacher/component/Student/ViewStudent';
-
+import PrivateRoutes from '../Helpers/PrivateRoutesTeacher';
 
 function TeacherRouter() {
   const token=localStorage.getItem("teachertoken");
@@ -19,13 +19,14 @@ function TeacherRouter() {
   <Route path="/login" element={<Login />} />
   <Route path="/signup" element={<TeacherSignup />} />
   
-  {/* <Route element={}> */}
-    <Route path="/student" element={token ? <ViewStudent /> : <Navigate to="/teacher/login"/>} />
-    <Route path="/dashboard" element={token ? <Dashboard /> : <Navigate to="/teacher/login"/>} />
-    <Route path="/course" element={token ? <Course /> : <Navigate to="/teacher/login"/>} />
-    <Route path="/create-course" element={token ? <CourseForm /> : <Navigate to="/teacher/login"/>} />
-    <Route path="/edit-course" element={token ? <EditCourse /> : <Navigate to="/teacher/login"/>} />
-  {/* </Route> */}
+  <Route element={<PrivateRoutes/>} >
+    <Route path="/student" element={<ViewStudent />} />
+    <Route path="/dashboard" element={ <Dashboard /> } />
+    <Route path="/course" element={ <Course />} />
+    <Route path="/create-course" element={<CourseForm /> } />
+    <Route path="/edit-course" element={ <EditCourse /> } />
+
+  </Route>
 </Routes>
 
     </>

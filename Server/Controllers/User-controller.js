@@ -88,10 +88,14 @@ const login = async (req, res, next) => {
   if (!isPasswordCorrect) {
     return res.status(401).json({ message: "Invalid email or password" });
   }
-
-  const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: "35s",
-  });
+  const reps = {
+    // eslint-disable-next-line no-underscore-dangle
+    id: existingUser._id,
+    email:existingUser.email,
+    accountType: 'user',
+  };
+  // after password is correct we want to generate a token
+  const token = jwt.sign(reps, process.env.JWT_SECRET_KEY);
 
   res.cookie(String(existingUser.id), token, {
     path: "/",
@@ -423,22 +427,20 @@ const getProductDetailData = async (req, res) => {
 
 const getAlreadyOder = async (req, res) => {
   try {
-    const { user_id ,name} = req.body;
-    console.log(user_id)
-    const found = await Booking.findOne({ user_id: user_id });
-    if(found.name === name ){
-
-      res.send({success:true,massage:"already purchased"})
-    }else{
-      res.send({success:false,massage:"not purchased"})
+    const { user_id, cid } = req.query;
+    // console.log(req.body)
+    console.log(cid)
+    const found = await Booking.findOne({ user_id: user_id, course_id: cid });
+    if (found) {
+      res.send({ success:true, massage:"already purchased" })
+    } else {
+      res.send({ success:false, massage:"not purchased" })
     }
-    // const discounts = await Products.find();
-
-    // res.send({ found });
   } catch (error) {
     console.log(error.message);
   }
 };
+
 
 
 

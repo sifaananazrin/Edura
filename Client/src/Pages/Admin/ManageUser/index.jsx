@@ -4,15 +4,18 @@ import axios from '../../../api/axios';
 import requests from '../../../api/request';
 import swal from 'sweetalert';
 import {config} from "../../../Helpers/axiosAdminEndpoints"
+import Spinner from "../../../component/Spinner";
+
 function ManageUser() {
 
 
   const [users, setUsers] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const fetchData = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(requests.getAllUsers, config); 
-      setUsers(response.data.users);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -47,9 +50,10 @@ function ManageUser() {
     try {
 
 
-      
+      setLoading(true);
       const response = await axios.get(`/admin/status/${id}`, config);
       console.log(response)
+      setLoading(false);
       fetchData();
     } catch (error) {
       console.log(error);
@@ -58,6 +62,10 @@ function ManageUser() {
   
 
   return (
+    <>
+    {loading ? (
+      <Spinner loading={loading} />
+    ) : (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
@@ -93,6 +101,9 @@ function ManageUser() {
         </TableBody>
       </Table>
     </TableContainer>
+ )}
+ </>
+
   );
 }
 

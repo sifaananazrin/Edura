@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../../api/axios";
-import movieTrailer from "movie-trailer";
-import YouTube from "react-youtube";
-import StarIcon from "@mui/icons-material/Star";
+import movieTrailer from 'movie-trailer';
+import YouTube from 'react-youtube';
+// import StarIcon from "@mui/icons-material/Star";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import {
@@ -19,6 +19,9 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { cardClasses } from "@mui/material";
+import {config} from "../../../../Helpers/axiosUserEndpoints"
+import Spinner from '../../../../component/Spinner';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,41 +96,36 @@ const OrderViewPage = () => {
   const [order, setOrder] = useState([]);
   const [selectedCouser, setSelectedCouser] = useState(null);
   const [trailerUrl, setTrailerUrl] = useState("");
+  const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const uid = localStorage.getItem("uid");
 
   useEffect(() => {
-    axios
-      .get("/api/oderhistory", {
-        params: {
-          uid: uid,
-        },
-      })
-      .then((response) => {
-        console.log(response.data.userBooked);
-        setOrder(response.data.userBooked);
-        console.log(response.data.userBooked);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-const handleRatingClick = (value) => {
-    setRating(value);
-  };
-  const handleClick = (course) => {
-    if (typeof course.title === "string") {
-      movieTrailer(course.title)
-        .then((url) => {
-          const urlParams = new URLSearchParams(new URL(url).search);
-          setTrailerUrl(urlParams.get("v"));
-          setSelectedCouser(course);
-        })
-        .catch((error) => {
-          console.log(error);
+    async function fetchOrder() {
+      try {
+        setLoading(true);
+        const response = await axios.get("/api/oderhistory", {
+          params: {
+            uid: uid,
+          },
+          ...config,
         });
+        // console.log(response.data.userBooked);
+        setOrder(response.data.userBooked);
+        setLoading(false);
+        // console.log(response.data.userBooked);
+      } catch (error) {
+        console.error(error);
+      }
     }
+  
+    fetchOrder();
+  }, [uid, config]);
+  
+
+  const handleClick = (link) => {
+    setTrailerUrl(link);
+    console.log(link)
   };
 
   const opts = {
@@ -139,6 +137,11 @@ const handleRatingClick = (value) => {
   };
 
   return (
+
+    <>
+    {loading ? (
+      <Spinner loading={loading} />
+    ) : (
     
     <Box className={classes.root}>
       <Grid container spacing={3}>
@@ -158,12 +161,12 @@ const handleRatingClick = (value) => {
                 className={classes.cardMedia}
                 image={course.image[0].url}
                 title={course.title}
-                onClick={() => handleClick(course)}
+                onClick={() => handleClick(course.link)}
               >
                 <IconButton
                   className={classes.playIcon}
                   aria-label="play"
-                  onClick={() => handleClick(course)}
+                  onClick={() => handleClick(course.link)}
                 >
                   <PlayCircleFilledIcon />
                 </IconButton>
@@ -185,15 +188,7 @@ const handleRatingClick = (value) => {
                 <Typography variant="subtitle1" color="textPrimary">
                   {course.teachername}
                 </Typography>
-                <div>
-                {[...Array(3)].map((_, i) => (
-        <StarIcon
-          key={i}
-          style={{ color: i < rating ? "#fdd835" : "#e0e0e0" }}
-          onClick={() => handleRatingClick(i + 1)}
-        />
-      ))}
-                </div>
+            
               </Box>
 
               <Button
@@ -212,11 +207,16 @@ const handleRatingClick = (value) => {
       </Grid>
       {trailerUrl && (
         <YouTube
-          videoId={trailerUrl.replace("https://youtu.be/", "")}
-          opts={opts}
-        />
-      )}
+  videoId={typeof trailerUrl === "string" ? trailerUrl.replace("https://youtu.be/", "") : ""}
+ 
+  opts={opts}
+/>
+
+)}
     </Box>
+
+)}
+</>
   );
 };
 

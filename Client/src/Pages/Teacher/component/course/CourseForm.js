@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import {config} from "../../../../Helpers/axiosTeacherEndpoints"
 import axios from "../../../../api/axios"
+import Spinner from '../../../../component/Spinner';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,11 +53,13 @@ const Form = () => {
   const [teachername, setTeachername] = useState("");
   const [teacherid,setTeacher] = useState("");
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false); 
 
   useEffect(() => {
-    axios
-      .get("/teacher/categories",config)
+    setLoading(true);
+    axios.get("/teacher/categories",config)
       .then((response) => {
+        setLoading(false);
         setCategories(response.data.categories);
         setTeachername(localStorage.getItem("name"))
         setTeachername(localStorage.getItem("name"))
@@ -105,7 +108,7 @@ const Form = () => {
     formData.append("teacherid", teacherid);
     console.log(formData)
 
-
+    setLoading(true);
     axios
       .post("/teacher/addcourse", formData, {
         headers: {
@@ -120,7 +123,7 @@ const Form = () => {
         setLink("");
         setPrice("");
         setImage("");
-
+        setLoading(false);
         if(response.data.success){
           window.location="/teacher/Course"
         }
@@ -131,6 +134,11 @@ const Form = () => {
   };
 
   return (
+
+    <>
+    {loading ? (
+      <Spinner loading={loading} />
+    ) : (
     <Container maxWidth="sm">
       <div className={classes.root}>
         <h2>Create a Course</h2>
@@ -226,6 +234,9 @@ const Form = () => {
         </form>
       </div>
     </Container>
+
+)}
+</>
   );
 };
 

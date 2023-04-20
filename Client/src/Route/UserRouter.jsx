@@ -28,8 +28,7 @@ function UserRouter() {
             <Routes>
               <Route path="/signup" element={<SignUp /> } />
               <Route path="/payment" element={<Payment /> } />
-              <Route path="/success" element={< SuccessPage />} />
-             
+              <Route path="/success" element={< SuccessPage/>}/>
               <Route path="/oders" element={< OrderViewPage/>}></Route>
               <Route path="/otp" element={<OTP/>}></Route>
               <Route path="/profile" element={<Profile/>}></Route>

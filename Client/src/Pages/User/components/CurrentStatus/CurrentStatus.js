@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider'
 import {useNavigate} from "react-router-dom"
 import styles from './styles'
 
-const CurrentStatus = ({price,name,image,teachername,link,course_id}) => {
+const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase}) => {
  
   // name, totalAmount,paymethod,uid,image
   const navigate = useNavigate();
@@ -30,7 +30,12 @@ const CurrentStatus = ({price,name,image,teachername,link,course_id}) => {
     <Box sx={styles.wrapper}>
       <Box sx={styles.blockInfo}>
         <Typography sx={styles.title}>current status</Typography>
+        {!puchase || !puchase.success ? (
         <Button onClick={bookNow}>Buy Now</Button>
+      ) : (
+        <p> <b>You have already purchased this course.</b></p>
+        
+      )}
       </Box>
       <Divider orientation='vertical' sx={styles.divider} />
       <Box sx={styles.blockInfo}>

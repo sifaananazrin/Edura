@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import axios from 'axios'
+import axios from '../../../../api/axios'
 import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -8,7 +8,7 @@ import link from '@mui/material/Link'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import Wrapper from '../Wrapper'
-
+import {config} from "../../../../Helpers/axiosUserEndpoints"
 //IMPORTING SVG'S AND IMAGES
 import banner_photo from '../../../../assets/banner_photo.png'
 // import ant_design_play from '../../assets/ant-design_play-circle-filled.svg'
@@ -22,7 +22,7 @@ import styles from './styles'
 const Hero = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:5000/api/totalcounts')
+    axios.get('/api/totalcounts',config)
       .then(response => {
         setData(response.data);
       
