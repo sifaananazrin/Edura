@@ -352,7 +352,7 @@ const verifyPayment = async (req, res) => {
         course_id:details.data.course_id,
         link:details.data.link,
         teachername:details.data.teachername,
-
+        teacherid:details.data.teacherid,
         order_placed_on: new Date(),
       });
     

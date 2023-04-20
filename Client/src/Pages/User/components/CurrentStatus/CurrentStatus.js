@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider'
 import {useNavigate} from "react-router-dom"
 import styles from './styles'
 
-const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase}) => {
+const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase,teacherid}) => {
  
   // name, totalAmount,paymethod,uid,image
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase}) =>
       link:link,
       teachername:teachername,
       name: name,
+      teacherid:teacherid,
       image:image, 
       totalAmount: price
     };

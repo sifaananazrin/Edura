@@ -70,12 +70,12 @@ function CardList() {
           imageUrl="https://th.bing.com/th/id/OIP.nESUKY-r6jZEbjPnqSHPaAHaEJ?pid=ImgDet&w=811&h=455&rs=1"
         />
         <CardWithImage
-          title="Card 2"
+          title="earn"
           description="Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting."
           imageUrl="https://assets.website-files.com/5e79d9bc743cefe74e32cdc6/6062f3e50351e753587b55d7_as-soon-as-nuke-p-500.png"
         />
         <CardWithImage
-          title="Card 3"
+          title="Featur thinks"
           description="Whether you've been teaching for years or are teaching for the first time, you can make an engaging course. We've compiled resources and best practices to help you get to the next level, no matter where you're starting."
           imageUrl="https://www.smoney.com.au/wp-content/uploads/2020/01/how-much-need.png?x44096"
         />

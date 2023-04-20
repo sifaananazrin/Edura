@@ -50,6 +50,7 @@ const CourseDetailsScreen = () => {
   const link = selectedCourses.link;
   const course_id = selectedCourses._id;
   const teachername = selectedCourses.teachername;
+  const teacherid = selectedCourses.teacherid;
   const user_id =localStorage.getItem("uid")
 
 
@@ -100,7 +101,7 @@ useEffect(() => {
           <Box sx={styles.wrapperLeftBlock}>
           <Box component='img' src={image?.[0]?.url} sx={styles.img} />
 
-            <CurrentStatus  price={price} name={name} image={image} puchase={puchase} teachername={teachername} link={link} course_id={course_id}  />
+            <CurrentStatus  price={price} teacherid={teacherid} name={name} image={image} puchase={puchase} teachername={teachername} link={link} course_id={course_id}  />
             <CourseDescription des={des} />
             {/* <LearnCourse /> */}
             {/* <CourseContent /> */}

@@ -32,19 +32,39 @@ function Course() {
   const [courses, setCourses] = useState([])
   const [selected, setSelected] = useState(null);
   const [showAddCourseForm, setShowAddCourseForm] = useState(false);
+  const teacherid=localStorage.getItem('tid')
+ 
   const classes = useStyles();
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   axios.get('/teacher/courses',config)
+  //     .then(response => {
+  //       setLoading(false);
+  //       setCourses(response.data.course);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }, []); 
 
   useEffect(() => {
     setLoading(true);
-    axios.get('/teacher/courses',config)
-      .then(response => {
-        setLoading(false);
-        setCourses(response.data.course);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []); 
+    axios.get('/teacher/courses', {
+      params: {
+        teacherid: teacherid
+      },
+      headers: config.headers
+    })
+    .then(response => {
+      setLoading(false);
+      setCourses(response.data.course);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }, []);
+
 
   const handleRemove = async (id) => {
     try {

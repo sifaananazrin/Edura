@@ -29,6 +29,10 @@ const bookingSchema = new Schema({
     type: String,
     required: true,
   },
+  teacherid: {
+    type: String,
+    required: true,
+  },
   totalAmount: {
     type: Number,
     required: true,

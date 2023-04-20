@@ -139,7 +139,9 @@ const addCourse = (req, res) => {
 
 const getAllCourse = async (req, res) => {
   try {
-    const course = await Course.find();
+    const { teacherid } = req.query;
+    const course = await Course.find({ teacherid });
+
     res.send({ success: true, course });
   } catch (error) {
     res.send({ success: false, message: error.message });
@@ -196,10 +198,10 @@ const getDeleteCourse = async (req, res) => {
 
 const getAllStudents = async (req, res) => {
   try {
-    const { teachername } = req.query;
-
+    const { teacherid } = req.query;
+  // console.log(teacherid)
     // Find all the bookings made by the teacher
-    const bookings = await Booking.find({ teachername });
+    const bookings = await Booking.find({ teacherid });
 
     // Extract the user IDs from the bookings
     const userIds = bookings.map((booking) => booking.user_id);

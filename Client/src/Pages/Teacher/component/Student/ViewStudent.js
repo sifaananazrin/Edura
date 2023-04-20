@@ -24,13 +24,13 @@ function Course() {
   const [loading, setLoading] = useState(false);
   const [showAddCourseForm, setShowAddCourseForm] = useState(false);
   const classes = useStyles();
- const teachername= localStorage.getItem("name")
- console.log(teachername)
-   console.log(course.name)
+ const teacherid= localStorage.getItem("tid")
+//  console.log(teachername)
+  //  console.log(course.name)
   useEffect(() => {
 
     setLoading(true);
-    axios.get(`/teacher/getallusers?teachername=${teachername}`, config)
+    axios.get(`/teacher/getallusers?teacherid=${teacherid}`, config)
       .then(response => {
 
         setLoading(false);
