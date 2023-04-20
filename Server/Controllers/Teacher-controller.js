@@ -90,8 +90,7 @@ const getAllCategories = async (req, res) => {
 };
 
 const addCourse = (req, res) => {
-  const { name, category, description, link, price, teachername, teacherid } =
-    req.body;
+  const { name, category, description, link, price, teachername, teacherid } = req.body;
 
   Course.findOne({ name: name })
     .then((existingCourse) => {
@@ -158,17 +157,19 @@ const postEditCourse = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { name, category, description, link, price } = req.body;
+    const { name, category, description, link, price, teachername, teacherid } = req.body;
     const chapters = [];
     const course = await Course.updateOne(
       { _id: id },
       {
         name,
         category,
+        teachername,
         description,
         price,
         link,
         chapters,
+        teacherid,
       }
     );
     if (course) {

@@ -40,7 +40,6 @@ function Category() {
   // };
 
   const [loading, setLoading] = useState(false);
-
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState(null);
   const navigate = useNavigate(); // initialize useHistory

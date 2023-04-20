@@ -5,11 +5,7 @@ import requests from '../../../api/request';
 import swal from 'sweetalert';
 import {config} from "../../../Helpers/axiosAdminEndpoints"
 function ManageUser() {
-  // const config = {
-  //   headers: {
-  //     Authorization: `${localStorage.getItem("token")}`,
-  //   },
-  // };
+
 
   const [users, setUsers] = useState([]);
 

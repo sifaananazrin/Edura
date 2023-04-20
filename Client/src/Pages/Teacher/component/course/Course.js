@@ -5,7 +5,7 @@ import { useNavigate,Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from "../../../../api/axios"
 import {config} from "../../../../Helpers/axiosTeacherEndpoints"
-
+import Spinner from '../../../../component/Spinner';
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +20,11 @@ const useStyles = makeStyles({
 });
 
 function Course() {
+
+
+  const [loading, setLoading] = useState(false);
   const [courses, setCourses] = useState([])
+  const [selected, setSelected] = useState(null);
   const [showAddCourseForm, setShowAddCourseForm] = useState(false);
   const classes = useStyles();
 
@@ -46,10 +50,17 @@ function Course() {
     }
   }
 
-  const handleEdit = async (id) => {
+  const handleEdit =async (id) => {
     try {
-      const response = await axios.get(`/teacher/editcoure/${id}`,null, config);
-      console.log(response);
+
+
+      setLoading(false);
+      const response = await axios.get(`/teacher/editcoures/${id}`,config);
+      setSelected(response.data);
+      setLoading(true);
+      console.log(response)
+      navigate('/teacher/edit-course', { state: { selected: response.data } });
+    
     } catch (error) {
       console.log(error);
     }
@@ -61,9 +72,9 @@ function Course() {
 
   const navigate = useNavigate();
   
-  function handleClick() {
-    navigate('/teacher/edit-course');
-  }
+  // function handleClick() {
+  //   navigate('/teacher/edit-course');
+  // }
  
 
 
@@ -99,7 +110,7 @@ function Course() {
                 <TableCell>{course.category}</TableCell>
                 <TableCell>{course.link}</TableCell>
                 <TableCell>
-                  <Button variant="contained" color="primary" onClick={handleClick}>
+                  <Button variant="contained" color="primary" onClick={() => handleEdit(course._id)}>
                     Edit
                   </Button>
                   &nbsp;
