@@ -7,10 +7,10 @@ import Wrapper from '../User/components/Wrapper'
 import Breadcrumbs from '../User/components/Breadcrumbs'
 import CurrentStatus from '../User/components/CurrentStatus/CurrentStatus'
 import CourseDescription from '../User/components/CourseDescription'
-// import CourseDetails from '../User/components/CourseDetails'
+import CourseDetails from '../User/components/CourseDetails'
 import Courses from '../User/components/Courses'
-// import LearnCourse from '../User/components/LearnCourse'
-// import CourseContent from '../User/components/CourseContent'
+import LearnCourse from '../User/components/LearnCourse'
+import CourseContent from '../User/components/CourseContent'
 
 // import {config} from "../../Helpers/axiosUserEndpoints"
 
@@ -67,8 +67,11 @@ const config = {
 
 
 const [puchase, setpuchase] = useState('');
+// const [purchased, setPurchased] = useState(false);
 
  console.log(puchase)
+
+
 
 
 
@@ -78,7 +81,8 @@ useEffect(() => {
 
   const response = await axios.get("/api/alreadyoder",config);
          setpuchase(response.data);
-      // console.log(response.data)
+        //  setPurchased(true);
+      console.log(response.data)
     } catch (error) {
       console.log(error);
     }
@@ -104,6 +108,15 @@ useEffect(() => {
             <CurrentStatus  price={price} teacherid={teacherid} name={name} image={image} puchase={puchase} teachername={teachername} link={link} course_id={course_id}  />
             <CourseDescription des={des} />
             {/* <LearnCourse /> */}
+
+         <Box>
+            {puchase.success  ? (
+        <CourseContent />
+      ) : (
+        <h1>You haven't purchased this course yet.</h1>
+      )}
+
+</Box>
             {/* <CourseContent /> */}
           </Box>
           <Box>

@@ -30,8 +30,8 @@ const CourseContent = () => {
         <Box sx={styles.lesson}>
           {' '}
           <Box sx={styles.titleLesson}>
-            <Radio />
-            <Typography>lesson 1.1</Typography>
+            {/* <Radio /> */}
+            <Typography>chapters</Typography>
           </Box>
           <Box onClick={handleClick} sx={styles.btnCollapse}>
             Collapse
@@ -47,9 +47,9 @@ const CourseContent = () => {
         <Collapse in={openCollapse} timeout='auto'>
           <Box>
             <Box sx={styles.blockTopic}>
-              1 topic
-              <Divider orientation='vertical' sx={styles.topicDivider} />2
-              quizzes
+               topic
+              {/* <Divider orientation='vertical' sx={styles.topicDivider} /> */}
+             
             </Box>
           </Box>
           <Box sx={styles.blockInfo}>
@@ -58,29 +58,29 @@ const CourseContent = () => {
               <DescriptionIcon />
               lesson content
             </Typography>
-            <Box sx={styles.blockSteps}>
+            {/* <Box sx={styles.blockSteps}>
               0% complate{' '}
               <Divider
                 orientation='vertical'
                 sx={{ borderColor: '#fff', m: 1 }}
               />
               0/1 steps
-            </Box>
+            </Box> */}
           </Box>
-          <Box sx={styles.basicTopicLesson}>
+          {/* <Box sx={styles.basicTopicLesson}>
             <Radio />
             <Typography>basic topic 1</Typography>
-          </Box>
+          </Box> */}
         </Collapse>
       </Card>
-      <Typography sx={styles.lessonTitle}>Section 2</Typography>
-      <Card sx={styles.cardLesson}>
-        <Box sx={styles.lesson}>
+      {/* <Typography sx={styles.lessonTitle}>Section 2</Typography> */}
+      {/* <Card sx={styles.cardLesson}> */}
+        {/* <Box sx={styles.lesson}>
           <Box sx={styles.titleLesson}>
             <Radio />
             <Typography>lesson 2.1</Typography>
-          </Box>
-          <Box onClick={handleClick} sx={styles.btnCollapse}>
+          </Box> */}
+          {/* <Box onClick={handleClick} sx={styles.btnCollapse}>
             Collapse
             <Box sx={styles.wrapperIcon}>
               {openCollapse ? (
@@ -88,10 +88,10 @@ const CourseContent = () => {
               ) : (
                 <ExpandMore sx={styles.icon} />
               )}
-            </Box>
-          </Box>
-        </Box>
-        <Collapse in={openCollapse} timeout='auto'>
+            </Box> */}
+          {/* </Box> */}
+        {/* // </Box> */}
+        {/* <Collapse in={openCollapse} timeout='auto'>
           <Box>
             <Box sx={styles.blockTopic}>
               1 topic
@@ -104,22 +104,22 @@ const CourseContent = () => {
               {' '}
               <DescriptionIcon />
               lesson content
-            </Typography>
-            <Box sx={styles.blockSteps}>
+            </Typography> */}
+            {/* <Box sx={styles.blockSteps}>
               0% complite{' '}
               <Divider
                 orientation='vertical'
                 sx={{ borderColor: '#fff', m: 1 }}
               />
               0/1 steps
-            </Box>
-          </Box>
-          <Box sx={styles.basicTopicLesson}>
+            </Box> */}
+          {/* </Box> */}
+          {/* <Box sx={styles.basicTopicLesson}>
             <Radio />
             <Typography>basic topic 1</Typography>
-          </Box>
-        </Collapse>
-      </Card>
+          </Box> */}
+        {/* </Collapse> */}
+      {/* </Card> */}
     </Box>
   )
 }

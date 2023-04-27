@@ -38,11 +38,22 @@ const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase,teac
         
       )}
       </Box>
+
+      {!puchase || !puchase.success ? (
+        <>
       <Divider orientation='vertical' sx={styles.divider} />
       <Box sx={styles.blockInfo}>
         <Typography sx={styles.title}>Price</Typography>
         <Typography sx={styles.price}>Rs{price}</Typography>
       </Box>
+      </>
+        ) : (
+          <Box sx={styles.blockInfo}>
+            <Typography sx={styles.title}>Thank you for your purchase!</Typography>
+          </Box>
+        )}
+      </Box>
+    );
       {/* <Divider orientation='vertical' sx={styles.divider} /> */}
       {/* <Box sx={styles.blockInfo}>
         <Typography sx={styles.title}>get started</Typography>
@@ -51,8 +62,8 @@ const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase,teac
           Or <Link sx={styles.link}>Login</Link>
         </Typography>
       </Box> */}
-    </Box>
-  )
+  
+  
 }
 
 export default CurrentStatus
