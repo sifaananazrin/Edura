@@ -64,6 +64,7 @@ const Payment = () => {
   const des = selectedCourses.description;
   const price = selectedCourses.totalAmount;
   const link = selectedCourses.link;
+  const list=selectedCourses.list
   const teacherid = selectedCourses.teacherid;
 
   const data=selectedCourses;
@@ -91,7 +92,8 @@ const Payment = () => {
         image:image,
         course_id:course_id,
         link:link,
-        teacherid:teacherid
+        teacherid:teacherid,
+        list:list
       },config)
       .then((response) => {
         setLoading(false);

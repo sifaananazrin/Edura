@@ -6,8 +6,9 @@ import Divider from '@mui/material/Divider'
 import {useNavigate} from "react-router-dom"
 import styles from './styles'
 
-const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase,teacherid}) => {
- 
+const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase,teacherid,list }) => {
+  
+  // console.log(list)
   // name, totalAmount,paymethod,uid,image
   const navigate = useNavigate();
   function bookNow() {
@@ -20,7 +21,8 @@ const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase,teac
       name: name,
       teacherid:teacherid,
       image:image, 
-      totalAmount: price
+      totalAmount: price,
+       list :list ,
     };
     navigate("/user/payment", { state: data });
     
@@ -49,7 +51,7 @@ const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase,teac
       </>
         ) : (
           <Box sx={styles.blockInfo}>
-            <Typography sx={styles.title}>Thank you for your purchase!</Typography>
+            <Typography sx={styles.title}>Thank you for your purchase! </Typography>
           </Box>
         )}
       </Box>

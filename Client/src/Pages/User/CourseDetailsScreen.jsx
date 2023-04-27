@@ -40,7 +40,7 @@ const styles = {
 }
 const CourseDetailsScreen = () => {
   const location = useLocation();
-  console.log(location)
+  // console.log(location)
   const selectedCourses = location.state.selectedCourses;
   const name = selectedCourses.name;
   const cid = selectedCourses._id;
@@ -48,6 +48,7 @@ const CourseDetailsScreen = () => {
   const des = selectedCourses.description;
   const price = selectedCourses.price;
   const link = selectedCourses.link;
+  const list = selectedCourses.list;
   const course_id = selectedCourses._id;
   const teachername = selectedCourses.teachername;
   const teacherid = selectedCourses.teacherid;
@@ -69,7 +70,7 @@ const config = {
 const [puchase, setpuchase] = useState('');
 // const [purchased, setPurchased] = useState(false);
 
- console.log(puchase)
+//  console.log(puchase)
 
 
 
@@ -82,7 +83,7 @@ useEffect(() => {
   const response = await axios.get("/api/alreadyoder",config);
          setpuchase(response.data);
         //  setPurchased(true);
-      console.log(response.data)
+      // console.log(response.data)
     } catch (error) {
       console.log(error);
     }
@@ -105,13 +106,13 @@ useEffect(() => {
           <Box sx={styles.wrapperLeftBlock}>
           <Box component='img' src={image?.[0]?.url} sx={styles.img} />
 
-            <CurrentStatus  price={price} teacherid={teacherid} name={name} image={image} puchase={puchase} teachername={teachername} link={link} course_id={course_id}  />
+            <CurrentStatus  price={price} teacherid={teacherid} name={name} image={image} puchase={puchase} teachername={teachername} link={link} course_id={course_id} list={list}  />
             <CourseDescription des={des} />
             {/* <LearnCourse /> */}
 
          <Box>
             {puchase.success  ? (
-        <CourseContent />
+        <CourseContent list={list} />
       ) : (
         <h1>You haven't purchased this course yet.</h1>
       )}

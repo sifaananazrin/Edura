@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import styles from './styles'
 
 const CourseDescription = ({des}) => {
-  console.log(des)
+  // console.log(des)
   return (
     <Box sx={styles.wrapper}>
       <Typography sx={styles.title}>Course Details</Typography>
