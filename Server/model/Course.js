@@ -19,12 +19,14 @@ const courseSchema = new mongoose.Schema({
     }
   }],
   teacherid: { type: String },
+  status: {
+    type: String,
+    default: "pending",
+  },
   link: { type: String },
-  chapters: [{
-    name: { type: String, required: true }, 
-    description: { type: String },
-    content: { type: String }
-  }]
+  list: {
+    type: Array,
+  }
 });
 
 const Course = mongoose.model('Course', courseSchema);

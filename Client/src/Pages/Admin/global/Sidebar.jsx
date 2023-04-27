@@ -172,6 +172,13 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+               <Item
+              title="couser"
+              to="/admin/couser"
+              icon={<ReceiptOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
 
             <Typography
               variant="h6"

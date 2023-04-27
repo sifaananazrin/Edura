@@ -289,12 +289,13 @@ const PostOtp = async (req, res) => {
 
 const getAllCourse = async (req, res) => {
   try {
-    const course = await Course.find();
+    const course = await Course.find({ status: 'Approve' });
     res.send({ success: true, course });
   } catch (error) {
     res.send({ success: false, message: error.message });
   }
 };
+
 
 const confirmOrder = async (req, res) => {
   const { name, totalAmount, uid, image,teachername,link } = req.body;

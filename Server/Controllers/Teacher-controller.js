@@ -5,6 +5,9 @@ const User = require("../model/User");
 const Category = require("../model/Category");
 const Course = require("../model/Course");
 const Booking = require("../model/Booking");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const signup = async (req, res, next) => {
   const { name, email, password, qualification } = req.body;
@@ -90,8 +93,10 @@ const getAllCategories = async (req, res) => {
 };
 
 const addCourse = (req, res) => {
-  const { name, category, description, link, price, teachername, teacherid } = req.body;
-
+  const { name, category, description, link, price, teachername, token } = req.body;
+  const list = JSON.parse(req.body.list);
+  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  const teacherid = decoded.teacherId;
   Course.findOne({ name: name })
     .then((existingCourse) => {
       if (existingCourse) {
@@ -102,7 +107,7 @@ const addCourse = (req, res) => {
       }
 
       // Create a new course if one does not already exist
-      const chapters = [];
+      // const chapters = [];
       const newCourse = new Course({
         name,
         category,
@@ -110,7 +115,7 @@ const addCourse = (req, res) => {
         description,
         link,
         price,
-        chapters,
+        list,
         teacherid,
       });
 
@@ -159,7 +164,8 @@ const postEditCourse = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { name, category, description, link, price, teachername, teacherid } = req.body;
+    const { name, category, description, link, price, teachername, teacherid } =
+      req.body;
     const chapters = [];
     const course = await Course.updateOne(
       { _id: id },
@@ -199,7 +205,7 @@ const getDeleteCourse = async (req, res) => {
 const getAllStudents = async (req, res) => {
   try {
     const { teacherid } = req.query;
-  // console.log(teacherid)
+    // console.log(teacherid)
     // Find all the bookings made by the teacher
     const bookings = await Booking.find({ teacherid });
 

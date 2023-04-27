@@ -224,6 +224,40 @@ const getDashboard=async (req,res)=>{
 
 
 
+const getAllCourse = async (req, res) => {
+  try {
+    // const { teacherid } = req.query;
+    const course = await Course.find()
+
+    res.send({ success: true, course });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
+
+
+const approveCousers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let value;
+    const check = await Course.findById(id);
+    if (check) {
+      if (check.status === "pending") {
+        value = 'Approve';
+      } else {
+        value = 'pending';
+      }
+    } else {
+      throw new Error('Something went wrong');
+    }
+    await Course.findByIdAndUpdate(id, {
+      status: value,
+    });
+    res.send({ success: true, message: 'Cousers status updated' });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
 
 
 
@@ -238,5 +272,7 @@ const getDashboard=async (req,res)=>{
     postEditCategory,
     getDeleteCategory,
     getEditCategory,
-    getDashboard
+    getDashboard,
+    getAllCourse,
+    approveCousers
   };

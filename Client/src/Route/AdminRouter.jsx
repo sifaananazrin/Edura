@@ -8,6 +8,7 @@ import Category from "../Pages/Admin/Category";
 import EditCategory from "../Pages/Admin/Category/EditCategory";
 import Form from "../Pages/Admin/form";
 import ApproveTeacher from "../Pages/Admin/ApproveTeacher";
+import Cousers from "../Pages/Admin/Coures";
 import AddCategoryForm from "../Pages/Admin/Category/AddCategoryForm";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../Pages/Admin/theme";
@@ -67,6 +68,10 @@ function AdminRouter() {
       <Route
         path="/form"
         element={<Form /> }
+      />
+       <Route
+        path="/couser"
+        element={<Cousers /> }
       />
       </Route>
       </Route>

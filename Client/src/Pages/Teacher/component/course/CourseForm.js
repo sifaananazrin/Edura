@@ -13,6 +13,8 @@ import {
 import {config} from "../../../../Helpers/axiosTeacherEndpoints"
 import axios from "../../../../api/axios"
 import Spinner from '../../../../component/Spinner';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
 // ];
 
 const Form = () => {
+
+  const intialValues = {
+    list: "",
+  };
   const classes = useStyles();
   const [name, setCourseName] = useState("");
   const [description, setDescription] = useState("");
@@ -51,9 +57,15 @@ const Form = () => {
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
   const [teachername, setTeachername] = useState("");
-  const [teacherid,setTeacher] = useState("");
+  const [token,setToken] = useState("");
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false); 
+  const [formList, setFormList] = useState([]);
+  const [formValues, setFormValues] = useState(intialValues);
+
+  // console.log(formValues)
+
+
 
   useEffect(() => {
     setLoading(true);
@@ -62,14 +74,16 @@ const Form = () => {
         setLoading(false);
         setCategories(response.data.categories);
         setTeachername(localStorage.getItem("name"))
-        setTeachername(localStorage.getItem("name"))
-        setTeacher(localStorage.getItem("tid"))
+        // setTeachername(localStorage.getItem("name"))
+       setToken(localStorage.getItem("teachertoken"))
+      //  console.log(token)
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
+  // console.log(formValues)
     
   const handleCourseNameChange = (event) => {
     setCourseName(event.target.value);
@@ -95,6 +109,45 @@ const Form = () => {
     setImage(event.target.files[0]);
   };
 
+  const handleListChange = (event) => {
+    const { value } = event.target;
+    setFormValues({ ...formValues, list: value });
+    // setFormValues({ ...formValues, list: value });
+  };
+
+
+  const handleAddList = (e) => {
+    e.preventDefault();
+    //!preventing the default  refreshing behavior when submitting the form
+    setFormList([...formList, { list: formValues.list }]);
+    setFormValues({ ...formValues, list: "" });
+  };
+
+
+  const handleDelete = (id) => {
+    const ListFilter = formList.filter((list, index) => {
+      return id !== index;
+    });
+    setFormList(ListFilter);
+  };
+
+  const renderedList = formList.map((list, index) => {
+    return (
+      <li
+        key={index}
+        className="bg-gray-100 flex  justify-between items-center py-2 px-4 rounded-lg mb-4"
+      >
+        <span className="text-gray-600 mr-4">{list.list}</span>
+        <span className="text-gray-500 cursor-pointer hover:text-red-500">
+        <IconButton onClick={() => handleDelete(index)}>
+          <DeleteIcon />
+        </IconButton>
+        </span>
+      </li>
+    );
+  });
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -105,8 +158,10 @@ const Form = () => {
     formData.append("price", price);
     formData.append("image", image);
     formData.append("teachername", teachername);
-    formData.append("teacherid", teacherid);
-    console.log(formData)
+    formData.append("token", token);
+    formData.append("list", JSON.stringify(formList));
+
+    console.log(formList)
 
     setLoading(true);
     axios
@@ -222,6 +277,31 @@ const Form = () => {
             margin="normal"
             onChange={handleImageChange}
           />
+
+{/* <label className="block text-white font-bold mb-2 " htmlFor="details">
+            Details
+          </label> */}
+          <TextField
+            name="list"
+            className="rounded-lg shadow-md border-gray-400 appearance-none border w-[400px] py-2 px-3  text-black leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            label="chapter"
+            value={formValues.list}
+            onChange={handleListChange}
+            placeholder="Enter plan detail"
+          />
+          <button
+            onClick={handleAddList}
+            className="bg-custom-gym  text-white font-bold ml-6 py-2 px-6 rounded focus:outline-none focus:shadow-outline hover:bg-custom-head"
+          >
+            Add
+          </button>
+
+          <ul className="mt-3 max-h-24 overflow-y-auto scrollbar-thumb-black scrollbar-track-black">
+            {renderedList}
+          </ul>
+
+
           <Button
             type="submit"
             fullWidth

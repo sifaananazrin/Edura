@@ -27,7 +27,7 @@ function UserRouter() {
           <CssBaseline />
           <Layout>
             <Routes>
-            <Route path="/login" element={!token ? <Login /> : <Navigate to="/user/home"/>} /> 
+            <Route exact  path="/login" element={!token ? <Login /> : <Navigate to="/user/home"/>} /> 
             <Route path="/otp" element={<OTP/>}></Route>
               <Route path="/signup" element={<SignUp /> } />
 
