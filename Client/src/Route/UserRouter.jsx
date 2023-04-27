@@ -45,6 +45,8 @@ function UserRouter() {
                 path={"/currently-featured"}
                 element={ <FeaturedCoursesScreen />}
               />
+              <Route path="*" element={<h1>404 Error: Page Not Found</h1>} />
+              
               </Route>
             </Routes>
           </Layout>

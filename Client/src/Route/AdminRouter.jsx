@@ -73,6 +73,8 @@ function AdminRouter() {
         path="/couser"
         element={<Cousers /> }
       />
+
+   <Route path="*" element={<h1>404 Error: Page Not Found</h1>} />
       </Route>
       </Route>
     </Routes>

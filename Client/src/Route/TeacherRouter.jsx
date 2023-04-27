@@ -25,7 +25,7 @@ function TeacherRouter() {
     <Route path="/course" element={ <Course />} />
     <Route path="/create-course" element={<CourseForm /> } />
     <Route path="/edit-course" element={ <EditCourse /> } />
-
+    <Route path="*" element={<h1>404 Error: Page Not Found</h1>} />
   </Route>
 </Routes>
 
