@@ -85,6 +85,8 @@ useEffect(() => {
         //  setPurchased(true);
       // console.log(response.data)
     } catch (error) {
+      localStorage.removeItem("usertoken");
+        localStorage.removeItem("uid");
       console.log(error);
     }
   }
@@ -113,6 +115,7 @@ useEffect(() => {
          <Box>
             {puchase.success  ? (
         <CourseContent list={list} />
+        // <CourseDetails />
       ) : (
         <h1>You haven't purchased this course yet.</h1>
       )}
@@ -121,6 +124,12 @@ useEffect(() => {
             {/* <CourseContent /> */}
           </Box>
           <Box>
+          {puchase.success  ? (
+        <CourseDetails list={list} />
+        // <CourseDetails />
+      ) : (
+        <h1>You haven't purchased this course yet.</h1>
+      )}
             {/* <CourseDetails /> */}
             {/* <Courses /> */}
           </Box>

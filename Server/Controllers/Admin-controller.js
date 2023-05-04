@@ -38,6 +38,18 @@ const adminLogin = async (req, res) => {
       }
     };
 
+
+    const getApprovedTeacher = async (req, res) => {
+      try {
+        const approvedTeachers = await Teacher.find({ status: 'Approve' });
+
+        res.send({ success: true, approvedTeachers });
+      } catch (error) {
+        res.send({ success: false, message: error.message });
+      }
+    };
+
+
 // exports.adminLogin=adminLogin
 
 const blockUnblockUser = async (req, res) => {
@@ -260,6 +272,30 @@ const approveCousers = async (req, res) => {
 };
 
 
+const blockUnblockTeachers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let value;
+    const check = await Teacher.findById(id);
+    if (check) {
+      if (check.IsBlock === "Active") {
+        value = 'Blocked';
+      } else {
+        value = 'Active';
+      }
+    } else {
+      throw new Error('Something went wrong');
+    }
+    await Teacher.findByIdAndUpdate(id, {
+      IsBlock: value,
+    });
+    res.send({ success: true, message: 'teacher status updated' });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
+
+
 
   module.exports = {
     adminLogin,
@@ -274,5 +310,7 @@ const approveCousers = async (req, res) => {
     getEditCategory,
     getDashboard,
     getAllCourse,
-    approveCousers
+    approveCousers,
+    getApprovedTeacher,
+    blockUnblockTeachers
   };

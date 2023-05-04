@@ -39,6 +39,8 @@ function Course() {
         setcourse(response.data.course)
       })
       .catch(error => {
+        localStorage.removeItem("teachertoken");
+        localStorage.removeItem("tid");
         console.log(error);
       });
   }, []); 

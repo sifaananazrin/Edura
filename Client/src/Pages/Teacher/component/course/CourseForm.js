@@ -55,6 +55,8 @@ const Form = () => {
       //  console.log(token)
       })
       .catch((error) => {
+        localStorage.removeItem("teachertoken");
+        localStorage.removeItem("tid");
         console.log(error);
       });
   }, []);

@@ -49,7 +49,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     // Find teacher with matching email
-    const found = await Teacher.findOne({ email });
+    const found = await Teacher.findOne({ email ,IsBlock: "Active"  });
 
     // Check if teacher exists and is approved
     if (found && found.status === "Approve") {

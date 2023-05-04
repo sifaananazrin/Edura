@@ -18,4 +18,7 @@ router.get('/students',validateAdminToken, controller.getDashboard)
 router.get('/couser',validateAdminToken, controller.getAllCourse)
 router.get('/approvecouser/:id', validateAdminToken, controller.approveCousers);
 
+
+router.get('/teacher', validateAdminToken, controller.getApprovedTeacher);
+router.get('/blockteacher/:id',validateAdminToken, controller.blockUnblockTeachers);
 module.exports = router;

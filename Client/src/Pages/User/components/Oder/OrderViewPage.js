@@ -115,6 +115,8 @@ const OrderViewPage = () => {
         setLoading(false);
         // console.log(response.data.userBooked);
       } catch (error) {
+        localStorage.removeItem("usertoken");
+        localStorage.removeItem("uid");
         console.error(error);
       }
     }
@@ -149,6 +151,8 @@ const OrderViewPage = () => {
         state: { selectedCourses: response.data.found },
       });
     } catch (error) {
+      localStorage.removeItem("usertoken");
+        localStorage.removeItem("uid");
       console.log(error);
     }
   };

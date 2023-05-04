@@ -17,6 +17,7 @@ const FeaturedCards = () => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState(null);
 
   useEffect(() => {
@@ -26,9 +27,14 @@ const FeaturedCards = () => {
         const response = await axios.get("/api/course", config);
         setCourses(response.data.course);
         setLoading(false);
-        console.log(response.data.course);
-      } catch (error) {
-        console.error(error);
+        setError(null);
+        // console.log(response.data.course);
+      } catch (err) {
+        console.error(err);
+        // window.location= "/user/login"
+        localStorage.removeItem("usertoken")
+        localStorage.removeItem("uid");
+        return;
       }
     }
   
@@ -48,10 +54,20 @@ const FeaturedCards = () => {
       navigate("/user/course-details", {
         state: { selectedCourses: response.data.found },
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      window.location= "/user/login"
+      console.log(err);
     }
   };
+
+
+  // if (error) {
+   
+  //   localStorage.removeItem("usertoken")
+  //         localStorage.removeItem("uid");// Navigate to the login page if there's an error
+  //   return null; // Return null to prevent rendering the component
+  // }
+
 
   return (
 

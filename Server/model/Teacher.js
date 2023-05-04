@@ -24,6 +24,10 @@ const teacherSchema = new mongoose.Schema({
     type: String,
     default: "pending",
   },
+  IsBlock: {
+    type: String,
+    default: "Active",
+  },
 });
 
 module.exports = mongoose.model('Teacher', teacherSchema);

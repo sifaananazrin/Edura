@@ -32,6 +32,8 @@ const SelectOrder = () => {
         setLoading(false);
         console.log(response);
       } catch (error) {
+        localStorage.removeItem("usertoken");
+        localStorage.removeItem("uid");
         console.error(error);
       }
     }
@@ -52,6 +54,8 @@ const SelectOrder = () => {
         state: { selectedCourses: response.data.found },
       });
     } catch (error) {
+      localStorage.removeItem("usertoken");
+        localStorage.removeItem("uid");
       console.log(error);
     }
   };
@@ -75,15 +79,15 @@ const SelectOrder = () => {
             <Card
               sx={{
                 ...styles.card,
-                width: "100%",
+                width: "550px",
                 display: "flex",
                 marginBottom: "24px",
               }}
               key={index}
             >
-              <Box sx={{ padding: "24px", display: "flex", width: "100%" }}>
+              <Box sx={{ padding: "20px", display: "flex", width: "190px" }}>
                 <Box
-                  sx={{ display: "flex", alignItems: "center", width: "100%" }}
+                  sx={{ display: "flex", alignItems: "center", width: "300px" }}
                 >
                   {course.image && course.image.length > 0 && (
                     <Box
@@ -105,11 +109,11 @@ const SelectOrder = () => {
                       backgroundColor: "#673F86",
                       color:"white",
                       fontSize: "24px",
-                      width: "100px",
-                      height: "50px",
+                      width: "150px",
+                      height: "90px",
                     }}
                   >
-                    {course.price}
+                   Rs {course.price}
                   </Box>
                 </Box>
                 <Typography
@@ -120,6 +124,9 @@ const SelectOrder = () => {
                   }}
                 >
                   {course.name}
+                  <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
+                       Instructor: {course.teachername}
+  </Typography>
                 </Typography>
                 <Box
                   sx={{

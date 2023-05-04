@@ -4,6 +4,7 @@ import Topbar from "../Pages/Admin/global/Topbar";
 import Sidebar from "../Pages/Admin/global/Sidebar";
 import Dashboard from "../Pages/Admin/dashboard/index";
 import ManageUser from "../Pages/Admin/ManageUser";
+import ManageTeacher from "../Pages/Admin/ManageTeacher";
 import Category from "../Pages/Admin/Category";
 import EditCategory from "../Pages/Admin/Category/EditCategory";
 import Form from "../Pages/Admin/form";
@@ -63,6 +64,10 @@ function AdminRouter() {
       <Route
         path="/manageuser"
         element={ <ManageUser /> }
+      />
+      <Route
+        path="/manageteacher"
+        element={ <ManageTeacher /> }
       />
       <Route path="/approveteacher" element={<ApproveTeacher />} />
       <Route

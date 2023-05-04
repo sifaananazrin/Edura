@@ -1,46 +1,59 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import axios from '../../../../api/axios'
-import { Link } from 'react-router-dom';
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import link from '@mui/material/Link'
-import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import Wrapper from '../Wrapper'
-import {config} from "../../../../Helpers/axiosUserEndpoints"
+import React from "react";
+import { useState, useEffect } from "react";
+import axios from "../../../../api/axios";
+import { Link, useNavigate } from "react-router-dom";
+// import { Redirect } from 'react-router-dom';
+
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import link from "@mui/material/Link";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import Wrapper from "../Wrapper";
+import { config } from "../../../../Helpers/axiosUserEndpoints";
 //IMPORTING SVG'S AND IMAGES
-import banner_photo from '../../../../assets/banner_photo.png'
+import banner_photo from "../../../../assets/banner_photo.png";
 // import ant_design_play from '../../assets/ant-design_play-circle-filled.svg'
-import eye from '../../../../assets/eye.svg'
-import bx_bxs_time from '../../../../assets/bx_bxs-time.svg'
-import el_group from '../../../../assets/el_group.svg'
+import eye from "../../../../assets/eye.svg";
+import bx_bxs_time from "../../../../assets/bx_bxs-time.svg";
+import el_group from "../../../../assets/el_group.svg";
 // import planet from '../../assets/planet.svg'
 
-import styles from './styles'
+import styles from "./styles";
 
 const Hero = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    axios.get('/api/totalcounts',config)
-      .then(response => {
+    axios
+      .get("/api/totalcounts", config)
+      .then((response) => {
         setData(response.data);
-      
+        setError(null);
       })
-      .catch(error => {
+      .catch((err) => {
+        localStorage.removeItem("usertoken");
+        localStorage.removeItem("uid");
+        return;
       });
   }, []);
-  
+
+  // if (error) {
+  //   return null; // navigate to the login page
+  // }
+
   return (
     <Box sx={styles.hero}>
       <Wrapper>
         <Box sx={styles.info}>
-          <Box component='img' sx={styles.imgBanner} src={banner_photo} />
-          <Box sx={{ zIndex: 3, position: 'relative' }}>
-            <Typography variant='h2' sx={styles.title}>
+          <Box component="img" sx={styles.imgBanner} src={banner_photo} />
+          <Box sx={{ zIndex: 3, position: "relative" }}>
+            <Typography variant="h2" sx={styles.title}>
               A revolutionary way to educate.
             </Typography>
-            <Typography variant='body1' sx={styles.text}>
+            <Typography variant="body1" sx={styles.text}>
               “Online education is electronically supported learning that relies
               on the Internet for teacher/student interaction and the
               distribution of class materials.”
@@ -50,8 +63,12 @@ const Hero = () => {
                 {/* <Box component='img' src={ant_design_play} /> */}
                 {/* <Box component='span'>What’s null?</Box> */}
               </Link>
-              <Button component={Link} to='/user/currently-featured' sx={styles.viewBtn}>
-                <Box component='img' src={eye} />
+              <Button
+                component={Link}
+                to="/user/currently-featured"
+                sx={styles.viewBtn}
+              >
+                <Box component="img" src={eye} />
                 view courses
               </Button>
             </Box>
@@ -59,12 +76,12 @@ const Hero = () => {
         </Box>
         <Box sx={styles.blockCards}>
           <Card sx={styles.card}>
-            <Box component='img' src={bx_bxs_time} />
+            <Box component="img" src={bx_bxs_time} />
             <Box sx={styles.content}>{data.TotalInstructors}</Box>
             <Box sx={styles.subContent}>Instractors</Box>
           </Card>
           <Card sx={styles.card}>
-            <Box component='img' src={el_group} />
+            <Box component="img" src={el_group} />
             <Box sx={styles.content}>{data.TotalUsers}</Box>
             <Box sx={styles.subContent}>Students</Box>
           </Card>
@@ -76,7 +93,7 @@ const Hero = () => {
         </Box>
       </Wrapper>
     </Box>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

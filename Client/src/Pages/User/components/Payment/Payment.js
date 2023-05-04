@@ -130,6 +130,8 @@ const Payment = () => {
         })
         .catch((err) => {
           console.log(err);
+         localStorage.removeItem("usertoken");
+        localStorage.removeItem("uid");
         });
     
   }

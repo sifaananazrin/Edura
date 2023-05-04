@@ -7,76 +7,13 @@ const Course = require("../model/Course");
 const Booking = require("../model/Booking");
 const Teacher=require("../model/Teacher");
 
-// const signup = async (req, res, next) => {
-//   const { name, email, password } = req.body;
-//   let existingUser;
-//   try {
-//     existingUser = await User.findOne({ email: email });
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   if (existingUser) {
-//     return res
-//       .status(400)
-//       .json({ message: "user already exists! Login Instead" });
-//   }
-//   const hashPassword = bcrypt.hashSync(password);
-
-//   const user = new User({
-//     name,
-//     email,
-//     password: hashPassword,
-//   });
-//   try {
-//     await user.save();
-//   } catch (err) {
-//     console.log(err);
-//   }
-
-//   return res.status(201).json({ message: user });
-// };
-
-//user login
-
-// const login = async (req, res, next) => {
-//   const { email, password } = req.body;
-//   console.log(email)
-//   let existingUser;
-//   try {
-//     existingUser = await User.findOne({ email: email });
-//   } catch (err) {
-//     return new Error(err);
-//   }
-//   if (!existingUser) {
-//     return res.status(400).json({ user:true });
-//   }
-
-//   const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
-//   if (!isPasswordCorrect) {
-//     return res.status(400).json({ pass: true });
-//   }
-
-//   const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, {
-//     expiresIn: "35s",
-//   });
-
-//   res.cookie(String(existingUser.id), token, {
-//     path: "/",
-//     expires: new Date(Date.now() + 1000 * 30),
-//     httpOnly: true,
-//     sameSite: "lax",
-//   });
-//   res
-//     .status(200)
-//     .json({ log: true, user: existingUser, token });
-// };
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
   console.log(email);
   let existingUser;
   try {
-    existingUser = await User.findOne({ email: email });
+    existingUser = await User.findOne({ email: email ,status: "Active" });
   } catch (err) {
     return new Error(err);
   }
@@ -198,35 +135,7 @@ const mailTransporter = nodemailer.createTransport({
 
 const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
-// const signup = async (req,res,next)=>{
-//     const{name,email,password} =req.body;
-// let existingUser;
-// try{
-//     existingUser = await User.findOne({email: email})
-// } catch(err){
-//     console.log(err)
-// }
-// if(existingUser){
-//     return res.status(400).json({message:"user already exists! Login Instead"})
-// }
-// const hashPassword= bcrypt.hashSync(password)
 
-//     const user = new User({
-//         // name:req.body.name,
-//         // email:req.body.email,
-//         // password:req.body.password
-//         name,
-//         email,
-//         password:hashPassword,
-//     })
-//     try{
-//       await user.save();
-//     }catch(err){
-//         console.log(err)
-//     }
-
-//     return res.status(201).json({message:user})
-// }
 const signup = async (req, res) => {
   name = req.body.name;
   email = req.body.email;
@@ -300,21 +209,6 @@ const getAllCourse = async (req, res) => {
 const confirmOrder = async (req, res) => {
   const { name, totalAmount, uid, image,teachername,link } = req.body;
  console.log(totalAmount)
-  //   const order = new Booking({
-  //   order_id: Date.now(),
-  //   user_id: uid,
-  //   name: name,
-  //   totalAmount: totalAmount,
-  //   image:image,
-  //   // paymentMethod: paymethod,
-  //   order_placed_on: new Date(),
-  // });
-
-  // order.save().then((order) => {
-  //   const oid = order._id;
-
-  // if (paymethod === 'cod') {
-  //   res.json([{ success: true, oid }]);
 
   const options = {
     amount: totalAmount * 100,
@@ -342,8 +236,7 @@ const verifyPayment = async (req, res) => {
 
   if (hmac == details.razorpay_signature) {
     console.log("payment verified!");
-    // const objId = new mongoose.Types.ObjectId(details.order.receipt);
-    // console.log(objId);
+    
     const order = new Booking({
         order_id: Date.now(),
         user_id: details.userId,
@@ -374,7 +267,7 @@ const getProductDetail= async (req, res) => {
   try {
     const { id } = req.params;
     const found = await Course.findOne({ _id: id });
-    // const discounts = await Products.find();
+ 
 
     res.send({ found });
   } catch (error) {
@@ -398,8 +291,7 @@ const getAllCount=async(req,res)=>{
 const getOderDetail = async (req, res) => {
   try {
     const { uid } = req.query;
-    // console.log(uid)
-    // console.log(carName)
+    
     const userBooked = await Booking.find({ user_id: uid });
     console.log(userBooked);
     console.log(userBooked.to);
@@ -408,7 +300,7 @@ const getOderDetail = async (req, res) => {
     }
   } catch (error) {
     console.log(error.message);
-    // res.send({ success: false });
+    
   }
 };
 
@@ -417,7 +309,7 @@ const getProductDetailData = async (req, res) => {
   try {
     const { name } = req.body;
     const found = await Course.findOne({ name: name });
-    // const discounts = await Products.find();
+   
 
     res.send({ found });
   } catch (error) {

@@ -1,9 +1,10 @@
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
+const Teacher = require("../model/Teacher");
 
 dotenv.config();
 
-const validateTeacherToken = (req, res, next) => {
+const validateTeacherToken = async(req, res, next) => {
   const token = req.header('Authorization');
 
   if (token === 'Bearer null') {
@@ -13,12 +14,16 @@ const validateTeacherToken = (req, res, next) => {
   try {
     // eslint-disable-next-line no-unused-vars
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    if (decoded.accountType === 'teacher') {
+
+    const  status=await Teacher.findById(decoded.teacherId)
+    console.log(decoded)
+    
+    if (decoded.accountType === 'teacher' && status.IsBlock == "Active") {
       return next();
     }
     throw new Error();
   } catch (error) {
-    return res.status(403).send('Invalid Token.');
+     res.status(403).send('Invalid Token.');
   }
 };
 

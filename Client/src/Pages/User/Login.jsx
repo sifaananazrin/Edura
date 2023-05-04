@@ -8,7 +8,7 @@ import {
 import React from "react";
 import axios from "../../api/axios";
 import request from "../../api/request"
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
   
 import {
@@ -79,7 +79,7 @@ function Login() {
     <div
       style={formStyles}
     >
-       <ToastContainer />
+       {/* <ToastContainer /> */}
       <FormControl  sx={formControlStyles}  component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
@@ -156,7 +156,7 @@ function Login() {
   fullWidth
   variant='contained'
 >
-  SignUp
+  Sign In
 </Button>
 <p style={{ textAlign: 'center', marginTop: '10px' }}>
   {"Don't have an account yet? "}

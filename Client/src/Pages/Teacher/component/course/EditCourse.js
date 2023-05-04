@@ -39,6 +39,8 @@ const classes = useStyles();
        
       })
       .catch((error) => {
+        localStorage.removeItem("teachertoken");
+        localStorage.removeItem("tid");
         console.log(error);
       });
   }, []);
