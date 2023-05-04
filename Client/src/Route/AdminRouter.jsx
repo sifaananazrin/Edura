@@ -12,7 +12,7 @@ import Cousers from "../Pages/Admin/Coures";
 import AddCategoryForm from "../Pages/Admin/Category/AddCategoryForm";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../Pages/Admin/theme";
-import AdminLogin from "../Pages/Login/AdminLogin";
+import AdminLogin from "../Pages/Authentication/AdminLogin";
 import PrivateRoutes from "../Helpers/PrivateRoutes";
 
 const AdminLayoutRoute=()=> {

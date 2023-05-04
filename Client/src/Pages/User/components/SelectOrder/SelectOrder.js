@@ -30,7 +30,7 @@ const SelectOrder = () => {
         const response = await axios.get("/api/course",config);
         setCourses(response.data.course);
         setLoading(false);
-        console.log(response.data.course);
+        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -46,7 +46,6 @@ const SelectOrder = () => {
       const response = await axios.get(
         `/api/product/${id}`,config
       );
-      console.log(response);
       setLoading(false);
       setSelectedCourses(response.data.found);
       navigate("/user/course-details", {
@@ -63,7 +62,7 @@ const SelectOrder = () => {
     {loading ? (
       <Spinner loading={loading} />
     ) : (
-    <Box sx={{ pt: "90px", flex: 1 }}>
+    <Box sx={{  flex: 1 }}>
       <Typography
         sx={{ ...styles.title, display: "flex", alignItems: "center" }}
       >

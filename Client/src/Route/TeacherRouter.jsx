@@ -5,8 +5,8 @@ import Dashboard from '../Pages/Teacher/component/dashboard/DashboardCard';
 import Course from '../Pages/Teacher/component/course/Course.js';
 import CourseForm from '../Pages/Teacher/component/course/CourseForm.js';
 import EditCourse from '../Pages/Teacher/component/course/EditCourse.js';
-import  Login from '../Pages/Login/TeacherLogin';
-import TeacherSignup  from '../Pages/Login/TeacherSignup';
+import  Login from '../Pages/Authentication/TeacherLogin';
+import TeacherSignup  from '../Pages/Authentication/TeacherSignup';
 import ViewStudent from '../Pages/Teacher/component/Student/ViewStudent';
 import PrivateRoutes from '../Helpers/PrivateRoutesTeacher';
 

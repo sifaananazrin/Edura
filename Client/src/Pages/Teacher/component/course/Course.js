@@ -6,35 +6,18 @@ import { useState, useEffect } from 'react';
 import axios from "../../../../api/axios"
 import {config} from "../../../../Helpers/axiosTeacherEndpoints"
 import Spinner from '../../../../component/Spinner';
-
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    paddingTop: '20px',
-  },
-  table: {
-    minWidth: 650,
-  },
-  actionButton: {
-    marginLeft: '5px',
-    marginRight: '5px',
-    fontSize: '12px',
-    padding: '6px 12px',
-  },
-});
+import useStyles from "./CourseStyle";
 
 function Course() {
 
-
+  const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [courses, setCourses] = useState([])
   const [selected, setSelected] = useState(null);
   const [showAddCourseForm, setShowAddCourseForm] = useState(false);
   const teacherid=localStorage.getItem('tid')
  
-  const classes = useStyles();
+
 
   // useEffect(() => {
   //   setLoading(true);
@@ -131,6 +114,7 @@ function Course() {
               <TableCell>Price</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Link</TableCell>
+              <TableCell>status</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
@@ -143,6 +127,7 @@ function Course() {
                 <TableCell>{course.price}</TableCell>
                 <TableCell>{course.category}</TableCell>
                 <TableCell>{course.link}</TableCell>
+                <TableCell>{course.status}</TableCell>
                 <TableCell>
                 <Button variant="contained" color="primary" onClick={() => handleEdit(course._id)} style={{ height: '40px' }}>
   Edit

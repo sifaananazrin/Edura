@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { buttonStyle,boxStyles,divstyle ,paragraphStyle  } from "./styles"
 import {
   FormControl,
   FormGroup,
@@ -64,29 +65,12 @@ const TeacherSignup = () => {
   });    
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
+      style={divstyle }
     >
       <FormControl component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
-            padding={6}
-            display={"flex"}
-            justifyContent={"center"}
-            flexDirection="column"
-            width={400}
-            margin="auto"
-            alignContent={"center"}
-            sx={{
-              border: "1px solid #ccc",
-              borderRadius: 10,
-              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-              bgcolor: "#fff",
-            }}
+           sx={boxStyles}
           >
             <Typography variant="h4" textAlign={"center"} sx={{ mb: 4 }}>
               Welcome Teacher...
@@ -116,26 +100,7 @@ const TeacherSignup = () => {
             />
           
 
-            <TextField
-              id="qualification"
-              name="qualification"
-              label="Qualification"
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              autoComplete="qualification"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.qualification}
-              error={
-                formik.touched.qualification &&
-                Boolean(formik.errors.qualification)
-              }
-              helperText={
-                formik.touched.qualification && formik.errors.qualification
-              }
-            />
+           
               <FormLabel sx={{ mt: 2 }}>Password</FormLabel>
             <TextField
               fullWidth
@@ -189,24 +154,36 @@ const TeacherSignup = () => {
                 ),
               }}
             />
+             <TextField
+              id="qualification"
+              name="qualification"
+              label="Qualification"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              autoComplete="qualification"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.qualification}
+              error={
+                formik.touched.qualification &&
+                Boolean(formik.errors.qualification)
+              }
+              helperText={
+                formik.touched.qualification && formik.errors.qualification
+              }
+            />
 
             <Button
-              sx={{
-                mt: 4,
-                borderRadius: 10,
-                bgcolor: "#930050",
-                color: "#fff",
-                "&:hover": {
-                  bgcolor: "#930050",
-                },
-              }}
+             sx={buttonStyle}
               type="submit"
               fullWidth
               variant="contained"
             >
               SignUp
             </Button>
-            <p style={{ textAlign: "center", marginTop: "10px" }}>
+            <p style={paragraphStyle}>
               {"Don't have an account yet? "}
               <Link to="/teacher/login">Login</Link>
             </p>

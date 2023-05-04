@@ -16,40 +16,16 @@ import Spinner from '../../../../component/Spinner';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: theme.spacing(4),
-  },
-  form: {
-    width: "100%",
-    marginTop: theme.spacing(2),
-  },
-  submitButton: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import useStyles from "./CourseFormStyle"
+  
 
-// const categories = [
-//   'Arts & Crafts',
-//   'Business',
-//   'Computer Science',
-//   'Cooking',
-//   'Dance',
-//   'Music',
-//   'Photography',
-//   'Sports',
-//   'Writing'
-// ];
 
 const Form = () => {
-
+  const classes = useStyles();
   const intialValues = {
     list: "",
   };
-  const classes = useStyles();
+  
   const [name, setCourseName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");

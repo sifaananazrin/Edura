@@ -3,6 +3,7 @@ import axios from '../../api/axios';
 import requests from '../../api/request';
 import { Formik, Form } from 'formik';
 import Swal from "sweetalert2";
+import { boxStyles,buttonStyle, divstyle,TextFieldColor } from './AdminStyle';
 
 import {
   Button,
@@ -51,26 +52,16 @@ function AdminLogin() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div style={divstyle}>
+
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
           <Form>
             <FormControl>
               <FormGroup>
                 <Box
-                  padding={6}
-                  display={"flex"}
-                  justifyContent={"center"}
-                  flexDirection="column"
-                  width={400}
-                  margin="auto"
-                  alignContent={"center"}
-                  sx={{
-                    border: '1px solid #ccc',
-                    borderRadius: 10,
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                    bgcolor: '#fff',
-                  }}
+                
+                  sx={boxStyles}
                 >
                   <Typography variant="h4" textAlign={"center"} sx={{ mb: 4 }}>
                     Login
@@ -86,7 +77,7 @@ function AdminLogin() {
                     onBlur={handleBlur}
                     error={touched.email && Boolean(errors.email)}
                     helperText={touched.email && errors.email}
-                    sx={{ bgcolor: '#f9f9f9' }}
+                    sx={TextFieldColor}
                   />
                   <FormLabel sx={{ mt: 2 }}>Password</FormLabel>
                   <TextField
@@ -99,18 +90,10 @@ function AdminLogin() {
                     onBlur={handleBlur}
                     error={touched.password && Boolean(errors.password)}
                     helperText={touched.password && errors.password}
-                    sx={{ bgcolor: '#f9f9f9' }}
+                    sx={TextFieldColor}
                   />
                   <Button
-                    sx={{
-                      mt: 4,
-                      borderRadius: 10,
-                      bgcolor: "#2b2d42",
-                      color: '#fff',
-                      '&:hover': {
-                        bgcolor: "#1d1f33",
-                      },
-                    }}
+                    sx={buttonStyle}
                     type='submit'
                     fullWidth
                     variant='contained'

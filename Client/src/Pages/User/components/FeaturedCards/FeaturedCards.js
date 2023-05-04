@@ -94,7 +94,7 @@ const FeaturedCards = () => {
                   </Box>
                   <Divider sx={styles.divider} />
                   <Box sx={styles.footerCard}>
-                    <Box sx={styles.price}>${course.price}</Box>
+                    <Box sx={styles.price}>Rs{course.price}</Box>
                     <Link sx={styles.link}>
                       <Box 
                       onClick={() => CouresDetails(course._id)}

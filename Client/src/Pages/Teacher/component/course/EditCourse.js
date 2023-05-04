@@ -6,22 +6,7 @@ import {config} from "../../../../Helpers/axiosTeacherEndpoints"
 import axios from "../../../../api/axios"
 import { useLocation } from 'react-router-dom';
 import Spinner from '../../../../component/Spinner';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: theme.spacing(4)
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(2),
-  },
-  submitButton: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import useStyles from "./CourseStyle";
 
 
 const EditCourse = () => {
@@ -40,9 +25,10 @@ const classes = useStyles();
   const [description, setDescription] = useState(data.description);
   const [price, setprice] = useState(data.price);
   const [link, setlink] = useState(data.link);
+  // const [image, setImage] = useState(data.image);
   // const [loading, setLoading] = useState(false);
   const [category, setcategory] = useState(data.category);
-
+  // console.log(category)
   useEffect(() => {
     setLoading(true);
     axios
@@ -154,11 +140,11 @@ const classes = useStyles();
             id="category"
             name="category"
             displayEmpty
+            value={category}
             defaultValue=""
           >
             <MenuItem value={category}>
               <em>Select a category</em>
-            </MenuItem>
             {categories &&
               categories.map((category) => (
                 <MenuItem key={category._id} value={category.name}>
@@ -166,6 +152,7 @@ const classes = useStyles();
                 </MenuItem>
               ))}
           
+            </MenuItem>
           </Select>
           <InputLabel htmlFor="image">Image</InputLabel>
           <Input
@@ -175,6 +162,8 @@ const classes = useStyles();
             required
             fullWidth
             margin="normal"
+            // inputProps={{ accept: 'image/*' }}
+            // defaultValue={image[0].url}
           />
    <Button
           variant="contained"

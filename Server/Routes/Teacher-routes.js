@@ -22,7 +22,7 @@ router.get('/categories',validateTeacherToken,validateTeacherToken,getAllCategor
 
 
 //coures 
-router.get('/editcoures/:id',validateTeacherToken, getEditCourse);
+router.get('/editcoures/:id', getEditCourse);
 router.put('/editcoure/:id',validateTeacherToken, postEditCourse);
 router.get('/delectcoures/:id',validateTeacherToken,getDeleteCourse)
 router.get('/getallusers',validateTeacherToken,getAllStudents)

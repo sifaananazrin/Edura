@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminRouter from "./Route/AdminRouter";
 import UserRouter from "./Route/UserRouter";
 import Home from "./Pages/User/Login"
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import TeacherRouter from "./Route/TeacherRouter"; 
 import { BounceLoader } from "react-spinners";
@@ -15,8 +16,9 @@ function App() {
     <>
     
         <Router>
+        <ToastContainer />
           <Routes>
-         
+          
           <Route path="/" element={<Home />} />
             <Route path="/admin/*" element={<AdminRouter />} />
             <Route path="/user/*" element={<UserRouter />} />

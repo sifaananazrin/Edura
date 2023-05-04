@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 
 
 
-import SearchInput from '../SearchInput'
+// import SearchInput from '../SearchInput'
 import Navbar from '../Navbar'
 import Drawer from '../Drawer'
 
@@ -112,11 +112,14 @@ const Header = () => {
           >
             <Navbar white />
           </Box>
-          <SearchInput />
+          {/* <SearchInput /> */}
 
           <Box sx={{ display: 'flex' }}>
             <IconButton>
+           
+              <Link to='/user/oders'>
               <Box component='img' src={shopping_cart} />
+  </Link>
             </IconButton>
             <IconButton sx={{ display: { xs: 'none', lg: 'block' } }}>
   <Link to='/user/profile'>

@@ -122,7 +122,7 @@ useEffect(() => {
           </Box>
           <Box>
             {/* <CourseDetails /> */}
-            <Courses />
+            {/* <Courses /> */}
           </Box>
         </Box>
       </Wrapper>

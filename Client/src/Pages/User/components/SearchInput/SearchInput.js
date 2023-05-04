@@ -4,7 +4,7 @@ import InputBase from '@mui/material/InputBase'
 import IconButton from '@mui/material/IconButton'
 
 //IMPORTING ICONS
-import SearchIcon from '@mui/icons-material/Search'
+// import SearchIcon from '@mui/icons-material/Search'
 
 const styles = {
   paper: {
@@ -27,7 +27,7 @@ const SearchInput = () => {
         inputProps={{ 'aria-label': 'search' }}
       />
       <IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
-        <SearchIcon />
+        {/* <SearchIcon /> */}
       </IconButton>
     </Paper>
   )

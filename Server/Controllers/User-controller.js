@@ -289,7 +289,7 @@ const PostOtp = async (req, res) => {
 
 const getAllCourse = async (req, res) => {
   try {
-    const course = await Course.find({ status: 'Approve' });
+    const course = await Course.find({ status: 'Approve' }).select('-link -list');
     res.send({ success: true, course });
   } catch (error) {
     res.send({ success: false, message: error.message });

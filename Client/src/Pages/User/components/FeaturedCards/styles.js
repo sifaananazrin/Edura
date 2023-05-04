@@ -1,4 +1,4 @@
-const styles = {
+ const styles = {
   wrapper: {
     maxWidth: '1240px',
     m: 'auto',

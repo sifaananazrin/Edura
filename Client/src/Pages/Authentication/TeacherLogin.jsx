@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
+import { boxStyles, buttonStyle, divstyle,paragraphStyle } from "./TeacherLoginStyle";
 import * as Yup from "yup";
 import {
   FormControl,
@@ -16,7 +17,7 @@ import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "../../api/axios"
 import request from "../../api/request"
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const validationSchema = Yup.object().shape({
  
@@ -42,9 +43,7 @@ const TeacherLogin= () => {
   const formik = useFormik({
     initialValues: {
      
-      email: "",
-      //   qualification: "",
-      
+      email: "", 
       password: "",
       
     },
@@ -70,29 +69,13 @@ const TeacherLogin= () => {
   });     
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
+      style={divstyle}
     >
       <FormControl component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
-            padding={6}
-            display={"flex"}
-            justifyContent={"center"}
-            flexDirection="column"
-            width={400}
-            margin="auto"
-            alignContent={"center"}
-            sx={{
-              border: "1px solid #ccc",
-              borderRadius: 10,
-              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-              bgcolor: "#fff",
-            }}
+          
+            sx={boxStyles }
           >
             <Typography variant="h4" textAlign={"center"} sx={{ mb: 4 }}>
               Welcome Teacher...
@@ -140,24 +123,18 @@ const TeacherLogin= () => {
            
 
             <Button
-              sx={{
-                mt: 4,
-                borderRadius: 10,
-                bgcolor: "#930050",
-                color: "#fff",
-                "&:hover": {
-                  bgcolor: "#930050",
-                },
-              }}
+              sx={buttonStyle}
               type="submit"
               fullWidth
               variant="contained"
             >
               Login
             </Button>
-            <p style={{ textAlign: "center", marginTop: "10px" }}>
-              {"Don't have an account yet? "}
-              <Link to="/teacher/signup">signup</Link>
+            <p style={paragraphStyle}>
+
+             
+           { "Don't have an account yet? "}
+             <Link to="/teacher/signup">signup</Link>
             </p>
           </Box>
         </FormGroup>
