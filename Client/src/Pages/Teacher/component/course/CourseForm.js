@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate} from 'react-router-dom';
 import { useEffect,useState} from "react";
 import {
   Container,
@@ -25,7 +26,7 @@ const Form = () => {
   const intialValues = {
     list: "",
   };
-  
+  const navigate = useNavigate();
   const [name, setCourseName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -158,7 +159,7 @@ const Form = () => {
         setImage("");
         setLoading(false);
         if(response.data.success){
-          window.location="/teacher/Course"
+          navigate('/teacher/course');
         }
       })
       .catch((error) => {

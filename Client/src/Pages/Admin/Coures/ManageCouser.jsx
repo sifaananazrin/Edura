@@ -48,7 +48,7 @@ function Category() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/admin/couser", config);
+      const response = await axios.get("/admin/approvecouser", config);
       setcourse(response.data.course);
       setLoading(false);
     } catch (error) {
@@ -57,63 +57,9 @@ function Category() {
   };
 
 
-  const handleApprove = (id) => {
-    swal({
-      title: "Are you sure?",
-      text: "You want to approve the course",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willApprove) => {
-      if (willApprove) {
-        swal("The course has been approved!", {
-          icon: "success",
-        });
-        approveCourse(id);
-      } else {
-        swal("The course was not approved");
-      }
-    });
-  };
+ 
   
-  const handleReject = (id) => {
-    swal({
-      title: "Are you sure?",
-      text: "You want to reject the course",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willReject) => {
-      if (willReject) {
-        swal("The course has been rejected!", {
-          icon: "success",
-        });
-        rejectCourse(id);
-      } else {
-        swal("The course was not rejected");
-      }
-    });
-  };
-  
-  const approveCourse = async (id) => {
-    try {
-      const response = await axios.get(`/admin/approvecouser/${id}`, config);
-      console.log(response);
-      fetchData(); // calling fetchData function again
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  
-  const rejectCourse = async (id) => {
-    try {
-      const response = await axios.get(`/admin/rejact/${id}`, config);
-      console.log(response);
-      fetchData(); // calling fetchData function again
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
 
   useEffect(() => {
     // setLoading(true);
@@ -148,7 +94,7 @@ function Category() {
               <TableCell>Video Link</TableCell>
               <TableCell>Teacher</TableCell>
               <TableCell>status</TableCell>
-              <TableCell>Approve</TableCell>
+              {/* <TableCell>Approve</TableCell> */}
               {/* <TableCell>Reject</TableCell> */}
             </TableRow>
           </TableHead>
@@ -162,29 +108,7 @@ function Category() {
                 <TableCell>{courses.link}</TableCell>
                 <TableCell>{courses.teachername}</TableCell>
                 <TableCell>{courses.status}</TableCell>
-                <TableCell>
-  {courses.status === "Approve" || courses.status === "rejected" ? (
-    <span>Status updated</span>
-  ) : (
-    <>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => handleApprove(courses._id)}
-      >
-        Approve
-      </Button>
-      
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => handleReject(courses._id)}
-      >
-        Reject
-      </Button>
-    </>
-  )}
-</TableCell>
+
 
               </TableRow>
             ))}

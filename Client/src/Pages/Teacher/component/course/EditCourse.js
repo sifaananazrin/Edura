@@ -4,14 +4,14 @@ import React from 'react';
 import { Container, TextField, Button, Select, MenuItem, InputLabel, Input, makeStyles } from '@material-ui/core';
 import {config} from "../../../../Helpers/axiosTeacherEndpoints"
 import axios from "../../../../api/axios"
-import { useLocation } from 'react-router-dom';
+import { useLocation ,useNavigate} from 'react-router-dom';
 import Spinner from '../../../../component/Spinner';
 import useStyles from "./CourseStyle";
 
 
 const EditCourse = () => {
 
-
+  const navigate = useNavigate();
   const location = useLocation();
   const selected = location.state.selected;
   const data = selected.course;
@@ -60,7 +60,8 @@ const classes = useStyles();
       },config);
       if (response) {
         setLoading(false);
-        window.location="/teacher/Course"
+        navigate('/teacher/course');
+        // window.location="/teacher/Course"
       }
   
       // Call the `onAddCategory` callback function with the new category data returned from the server

@@ -9,6 +9,8 @@ import  Login from '../Pages/Authentication/TeacherLogin';
 import TeacherSignup  from '../Pages/Authentication/TeacherSignup';
 import ViewStudent from '../Pages/Teacher/component/Student/ViewStudent';
 import PrivateRoutes from '../Helpers/PrivateRoutesTeacher';
+import AddExam from '../Pages/Teacher/component/course/Addexam';
+
 
 function TeacherRouter() {
   const token=localStorage.getItem("teachertoken");
@@ -25,6 +27,7 @@ function TeacherRouter() {
     <Route path="/course" element={ <Course />} />
     <Route path="/create-course" element={<CourseForm /> } />
     <Route path="/edit-course" element={ <EditCourse /> } />
+    <Route path="/addexam" element={ <AddExam /> } />
     <Route path="*" element={<h1>404 Error: Page Not Found</h1>} />
   </Route>
 </Routes>

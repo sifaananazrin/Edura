@@ -6,7 +6,7 @@ const nodemailer = require("nodemailer");
 const Course = require("../model/Course");
 const Booking = require("../model/Booking");
 const Teacher=require("../model/Teacher");
-
+const Exam=require("../model/Exam");
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -334,6 +334,22 @@ const getAlreadyOder = async (req, res) => {
   }
 };
 
+const getQuestions = async (req, res) => {
+  try {
+    const { courseId } = req.query;
+    console.log(courseId);
+    const found = await Exam.find({ courseId });
+        console.log(found)
+    if (found.length > 0) {
+      res.send({ found });
+    } else {
+      res.send({ message: 'No exams found for this course' });
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ error: 'Internal server error' });
+  }
+};
 
 
 
@@ -352,3 +368,4 @@ exports.getAllCount = getAllCount;
 exports.getOderDetail = getOderDetail;
 exports.getProductDetailData = getProductDetailData;
 exports.getAlreadyOder=getAlreadyOder;
+exports.getQuestions=getQuestions;

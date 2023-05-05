@@ -16,7 +16,7 @@ const validateToken =async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     // console.log(decoded)
     const  isBlock=await User.findById(decoded.id)
-          console.log(isBlock)
+          // console.log(isBlock)
     if (decoded.accountType == 'user' && isBlock.status=="Active" ) {
       return next();
     }

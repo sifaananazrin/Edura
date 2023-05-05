@@ -5,6 +5,7 @@ const User = require("../model/User");
 const Category = require("../model/Category");
 const Course = require("../model/Course");
 const Booking = require("../model/Booking");
+const Exam = require("../model/Exam");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -221,6 +222,37 @@ const getAllStudents = async (req, res) => {
   }
 };
 
+
+const addExam = async (req, res) => {
+  const { courseId, list } = req.body;
+  console.log(req.body)
+  // couserid
+  // Check if exam with same courseId already exists
+  const existingExam = await Exam.findOne({ courseId });
+  if (existingExam) {
+    return res.status(409).json({ message: "Exam already exists" });
+  }
+
+  // Create new exam if it doesn't exist
+  const newExam = new Exam({
+    courseId,
+    list,
+  });
+
+  try {
+    await newExam.save();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Unable to add exam" });
+  }
+
+  return res.status(201).json({ message: "Exam added successfully" });
+};
+
+
+
+
+
 exports.getAllCourse = getAllCourse;
 exports.addCourse = addCourse;
 exports.signup = signup;
@@ -230,3 +262,4 @@ exports.getEditCourse = getEditCourse;
 exports.postEditCourse = postEditCourse;
 exports.getAllStudents = getAllStudents;
 exports.getDeleteCourse = getDeleteCourse;
+exports.addExam = addExam;

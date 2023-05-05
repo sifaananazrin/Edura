@@ -5,7 +5,7 @@ const multer  = require('multer')
 // router.post('/TeachSignup', teacherController.signup);
 // router.post('/TeachLogin', teacherController.login);
 
-const { signup, login ,addCourse,getAllCourse,getAllCategories,getEditCourse,postEditCourse,getDeleteCourse ,getAllStudents} = require('../Controllers/Teacher-controller');
+const { signup, login ,addCourse,getAllCourse,getAllCategories,getEditCourse,postEditCourse,getDeleteCourse ,getAllStudents,addExam} = require('../Controllers/Teacher-controller');
 
 
 const { storage } = require('../Middleware/cloudinary');
@@ -26,4 +26,5 @@ router.get('/editcoures/:id', getEditCourse);
 router.put('/editcoure/:id',validateTeacherToken, postEditCourse);
 router.get('/delectcoures/:id',validateTeacherToken,getDeleteCourse)
 router.get('/getallusers',validateTeacherToken,getAllStudents)
+router.post('/exam',validateTeacherToken,addExam)
 module.exports = router;

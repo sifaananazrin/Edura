@@ -15,7 +15,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../Pages/Admin/theme";
 import AdminLogin from "../Pages/Authentication/AdminLogin";
 import PrivateRoutes from "../Helpers/PrivateRoutes";
-
+import ManageCouser from "../Pages/Admin/Coures/ManageCouser"
 const AdminLayoutRoute=()=> {
 
   const [theme, colorMode] = useMode();
@@ -77,6 +77,10 @@ function AdminRouter() {
        <Route
         path="/couser"
         element={<Cousers /> }
+      />
+        <Route
+        path="/managecouser"
+        element={<ManageCouser /> }
       />
 
    <Route path="*" element={<h1>404 Error: Page Not Found</h1>} />

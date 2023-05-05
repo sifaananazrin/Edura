@@ -17,8 +17,10 @@ router.get('/delectcategory/:id',validateAdminToken, controller.getDeleteCategor
 router.get('/students',validateAdminToken, controller.getDashboard)
 router.get('/couser',validateAdminToken, controller.getAllCourse)
 router.get('/approvecouser/:id', validateAdminToken, controller.approveCousers);
+router.get('/rejact/:id', validateAdminToken, controller.rejectCousers);
 
 
 router.get('/teacher', validateAdminToken, controller.getApprovedTeacher);
+router.get('/approvecouser', validateAdminToken, controller.getAllAproveCourse);
 router.get('/blockteacher/:id',validateAdminToken, controller.blockUnblockTeachers);
 module.exports = router;

@@ -217,10 +217,11 @@ const getDashboard=async (req,res)=>{
   try{
     const student=await User.find().count()
     const instractor=await Teacher.find().count()
-    const courses=await Course.find().count()
+    const courses=await Course.find({status: "pending"}).count()
     const BookingData=await Booking.find()
-    const pricegt = await Course.find({ price: { $gt: 500 } }).count();
-    const pricelt = await Course.find({ price: { $lt: parseInt("500") } }).count();
+    const pricegt =   await Course.find({ status: "Approve" }).count();;
+    const pricelt = await Course.find({  status: "rejected"} ).count();
+    
   // console.log(pricelt)
     const TotalAmout=BookingData.reduce((total,oder)=>total+oder.totalAmount,0)
     res.json({student,instractor,courses,TotalAmout,pricegt,pricelt})
@@ -239,7 +240,7 @@ const getDashboard=async (req,res)=>{
 const getAllCourse = async (req, res) => {
   try {
     // const { teacherid } = req.query;
-    const course = await Course.find()
+    const course = await Course.find();
 
     res.send({ success: true, course });
   } catch (error) {
@@ -247,23 +248,57 @@ const getAllCourse = async (req, res) => {
   }
 };
 
+const getAllAproveCourse = async (req, res) => {
+  try {
+    // const { teacherid } = req.query;
+    const course = await Course.find({ status: 'Approve' });
+
+    res.send({ success: true, course });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
+
+// const approveCousers = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     let value;
+//     const check = await Course.findById(id);
+//     if (check) {
+//       if (check.status === "pending") {
+//         value = 'Approve';
+//       } else {
+//         value = 'pending';
+//       }
+//     } else {
+//       throw new Error('Something went wrong');
+//     }
+//     await Course.findByIdAndUpdate(id, {
+//       status: value,
+//     });
+//     res.send({ success: true, message: 'Cousers status updated' });
+//   } catch (error) {
+//     res.send({ success: false, message: error.message });
+//   }
+// };
 
 const approveCousers = async (req, res) => {
   try {
     const { id } = req.params;
-    let value;
-    const check = await Course.findById(id);
-    if (check) {
-      if (check.status === "pending") {
-        value = 'Approve';
-      } else {
-        value = 'pending';
-      }
-    } else {
-      throw new Error('Something went wrong');
-    }
     await Course.findByIdAndUpdate(id, {
-      status: value,
+      status: 'Approve',
+    });
+    res.send({ success: true, message: 'Cousers status updated' });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+};
+
+const rejectCousers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Course.findByIdAndUpdate(id, {
+      status: 'rejected',
     });
     res.send({ success: true, message: 'Cousers status updated' });
   } catch (error) {
@@ -312,5 +347,7 @@ const blockUnblockTeachers = async (req, res) => {
     getAllCourse,
     approveCousers,
     getApprovedTeacher,
-    blockUnblockTeachers
+    blockUnblockTeachers,
+    rejectCousers,
+    getAllAproveCourse
   };

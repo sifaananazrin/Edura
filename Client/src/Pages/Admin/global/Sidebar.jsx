@@ -165,6 +165,13 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+               <Item
+              title="Manage Couser"
+              to="/admin/managecouser" //team
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Item
               title="Approve teacher"
               to="/admin/approveteacher" //contact
@@ -180,7 +187,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
                <Item
-              title="couser"
+              title=" Approve couser"
               to="/admin/couser"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}

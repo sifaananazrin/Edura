@@ -19,17 +19,7 @@ function Course() {
  
 
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   axios.get('/teacher/courses',config)
-  //     .then(response => {
-  //       setLoading(false);
-  //       setCourses(response.data.course);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }, []); 
+  
 
   useEffect(() => {
     setLoading(true);
@@ -57,7 +47,8 @@ function Course() {
       const response = await axios.get(`/teacher/delectcoures/${id}`, config);
       if (response) {
         setLoading(false);
-        window.location.href = window.location.href;
+        // window.location.href = window.location.href;
+        navigate('/teacher/course');
       }
       console.log(response);
     } catch (error) {
@@ -85,6 +76,8 @@ function Course() {
     setShowAddCourseForm(true);
   };
 
+
+  
   const navigate = useNavigate();
   
   // function handleClick() {
@@ -118,6 +111,7 @@ function Course() {
               <TableCell>Link</TableCell>
               <TableCell>status</TableCell>
               <TableCell>Action</TableCell>
+              {/* <TableCell>Exam</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -146,6 +140,13 @@ function Course() {
 </Button>
 
                 </TableCell>
+
+
+                {/* <TableCell>                 <Button variant="contained" color="primary"  onClick={() => navigate("/teacher/addexam",{state: {courseId : course._id}})} style={{ height: '40px' }}>
+  add exam
+</Button>  </TableCell> */}
+
+
               </TableRow>
             ))}
           </TableBody>

@@ -114,7 +114,7 @@ useEffect(() => {
 
          <Box>
             {puchase.success  ? (
-        <CourseContent list={list} />
+        <CourseContent list={list} course_id={course_id} />
         // <CourseDetails />
       ) : (
         <h1>You haven't purchased this course yet.</h1>

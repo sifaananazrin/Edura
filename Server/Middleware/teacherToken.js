@@ -16,7 +16,7 @@ const validateTeacherToken = async(req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
     const  status=await Teacher.findById(decoded.teacherId)
-    console.log(decoded)
+    // console.log(decoded)
     
     if (decoded.accountType === 'teacher' && status.IsBlock == "Active") {
       return next();

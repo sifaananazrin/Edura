@@ -77,7 +77,7 @@ console.log(data)
         setdata(response.data);
         console.log(response.data)
         setUserData({
-                    labels: ["Rs 500>coures ", " Rs 500<coures", "Courses"],
+                    labels: ["Approve coures ", " rejected coures", " pending review"],
                     datasets: [
                       {
                         label: "Count",

@@ -16,7 +16,7 @@ import { ThemeProvider } from '@mui/material'
  import SuccessPage from '../Pages/User/components/Success/SuccessPage';
  import PrivateRoutes from '../Helpers/PrivateRoutesUser';
  import PaymentFailer from '../Pages/User/components/Payment/PaymentFailure';
- 
+ import QuestionPage from '../Pages/User/QuestionPage';
 
 function UserRouter() {
 
@@ -41,6 +41,7 @@ function UserRouter() {
                
               <Route path="/home" element={ <HomeScreen /> } />
               <Route path={"/course-details"} element={  <CourseDetailsScreen />}  />
+              <Route path={"/exam"} element={  <QuestionPage />}  />
               <Route
                 path={"/currently-featured"}
                 element={ <FeaturedCoursesScreen />}
