@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NotFound from "./component/NotFound";
 import TeacherRouter from "./Route/TeacherRouter"; 
 import { BounceLoader } from "react-spinners";
+import Exam from "./Route/ExamRouter"
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/admin/*" element={<AdminRouter />} />
             <Route path="/user/*" element={<UserRouter />} />
             <Route path="/teacher/*" element={<TeacherRouter />} />
+            <Route path="/exam/*" element={<Exam />} />
             <Route path="*" element={<NotFound/>} />
           </Routes>
         </Router>

@@ -28,6 +28,10 @@ const teacherSchema = new mongoose.Schema({
     type: String,
     default: "Active",
   },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = mongoose.model('Teacher', teacherSchema);

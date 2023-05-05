@@ -80,9 +80,9 @@ function Course() {
   
   const navigate = useNavigate();
   
-  // function handleClick() {
-  //   navigate('/teacher/edit-course');
-  // }
+  function handleClick() {
+    navigate('/teacher/edit-course');
+  }
  
 
 
@@ -141,10 +141,10 @@ function Course() {
 
                 </TableCell>
 
-
-                {/* <TableCell>                 <Button variant="contained" color="primary"  onClick={() => navigate("/teacher/addexam",{state: {courseId : course._id}})} style={{ height: '40px' }}>
+   
+                <TableCell>                 <Button variant="contained" color="primary"  onClick={() => navigate("/teacher/addexam",{state: {courseId : course._id}})} style={{ height: '40px' }}>
   add exam
-</Button>  </TableCell> */}
+</Button>  </TableCell>
 
 
               </TableRow>

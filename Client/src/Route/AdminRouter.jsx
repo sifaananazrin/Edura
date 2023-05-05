@@ -16,6 +16,8 @@ import { ColorModeContext, useMode } from "../Pages/Admin/theme";
 import AdminLogin from "../Pages/Authentication/AdminLogin";
 import PrivateRoutes from "../Helpers/PrivateRoutes";
 import ManageCouser from "../Pages/Admin/Coures/ManageCouser"
+import NotFound from "../component/NotFound";
+
 const AdminLayoutRoute=()=> {
 
   const [theme, colorMode] = useMode();
@@ -83,7 +85,7 @@ function AdminRouter() {
         element={<ManageCouser /> }
       />
 
-   <Route path="*" element={<h1>404 Error: Page Not Found</h1>} />
+   <Route path="*" element={<NotFound/>} />
       </Route>
       </Route>
     </Routes>

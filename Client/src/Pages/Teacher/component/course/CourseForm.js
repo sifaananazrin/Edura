@@ -1,4 +1,6 @@
 import React from "react";
+import styled from 'styled-components';
+// import { FormContainer, Form, SubmitButton } from './CourseFormStyle';
 import { useNavigate} from 'react-router-dom';
 import { useEffect,useState} from "react";
 import {
@@ -300,3 +302,24 @@ const Form = () => {
 };
 
 export default Form;
+
+
+
+
+// const FormContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `;
+
+// const Form = styled.form`
+//   width: 100%;
+// `;
+
+// const SubmitButton = styled.button`
+//   /* styles for button */
+// `;
+
+// export { FormContainer, Form, SubmitButton };
+
+

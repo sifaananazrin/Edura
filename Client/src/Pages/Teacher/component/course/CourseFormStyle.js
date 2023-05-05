@@ -1,3 +1,22 @@
+
+// import styled from 'styled-components';
+
+// const FormContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `;
+
+// const Form = styled.form`
+//   width: 100%;
+// `;
+
+// const SubmitButton = styled.button`
+//   /* styles for button */
+// `;
+
+// export { FormContainer, Form, SubmitButton };
+
 import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,4 +35,4 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-  export default useStyles;
+  export default useStyles;   

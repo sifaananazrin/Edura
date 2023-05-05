@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -17,6 +17,9 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 // import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AdminRouter from "../../../Route/AdminRouter";
+import SchoolIcon from '@material-ui/icons/School';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 // import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -51,9 +54,11 @@ const LogoutButton = ({ handleLogout }) => {
 };
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.clear();
-    window.location.href = '/admin/login'; // redirect to login page after logout
+    // window.location.href = '/admin/login';
+    navigate('/admin/login'); // redirect to login page after logout
   };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -161,14 +166,14 @@ const Sidebar = () => {
             <Item
               title="Manage Teacher"
               to="/admin/manageteacher" //team
-              icon={<PeopleOutlinedIcon />}
+              icon={<PeopleAltIcon />}
               selected={selected}
               setSelected={setSelected}
             />
                <Item
-              title="Manage Couser"
+              title="Manage Couse"
               to="/admin/managecouser" //team
-              icon={<PeopleOutlinedIcon />}
+              icon={<SchoolIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -187,9 +192,9 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
                <Item
-              title=" Approve couser"
+              title=" Approve couse"
               to="/admin/couser"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<CheckCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />

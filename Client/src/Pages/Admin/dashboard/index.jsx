@@ -95,11 +95,11 @@ console.log(data)
                     ],
                   });
         setproduct({
-          labels: ["Students", "instractor"],
+          labels: ["recently purchased", "recently add cousers"],
           datasets: [
             {
               label: "Count",
-              data: [response.data.student, response.data.instractor],
+              data: [response.data.recentlyEnrollment, response.data.recentlyCreatedCourses],
               backgroundColor: [
                 "rgba(75,192,192,1)",
                 "#ecf0f1",

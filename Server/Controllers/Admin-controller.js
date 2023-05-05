@@ -215,20 +215,30 @@ const getDeleteCategory = async (req, res) => {
 
 const getDashboard=async (req,res)=>{
   try{
-    const student=await User.find().count()
-    const instractor=await Teacher.find().count()
-    const courses=await Course.find({status: "pending"}).count()
-    const BookingData=await Booking.find()
-    const pricegt =   await Course.find({ status: "Approve" }).count();;
-    const pricelt = await Course.find({  status: "rejected"} ).count();
-    
-  // console.log(pricelt)
-    const TotalAmout=BookingData.reduce((total,oder)=>total+oder.totalAmount,0)
-    res.json({student,instractor,courses,TotalAmout,pricegt,pricelt})
-    // res.json({instractor})
-    // res.json({courses})
-  
+    const today = new Date();
+    const past7Days = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
+    // Count the number of courses created within the last four days
+    const recentlyCreatedCourses = await Course.find({ createdAt: { $gte: past7Days } }).count();
+    const recentlyEnrollment = await Booking.find({ createdAt: { $gte: past7Days } }).count();
+
+    // Count the number of users and instructors
+    const student = await User.find().count();
+    const instractor = await Teacher.find().count(); 
+
+    // Count the number of courses in pending status
+    const courses = await Course.find({status: "pending"}).count();
+
+    // Fetch all booking data and calculate the total amount of revenue generated
+    const BookingData = await Booking.find();
+    const TotalAmout = BookingData.reduce((total,oder)=>total+oder.totalAmount,0);
+
+    // Count the number of courses with status "Approve" and "rejected"
+    const pricegt = await Course.find({ status: "Approve" }).count();
+    const pricelt = await Course.find({  status: "rejected"} ).count();
+
+    // Return all the data as a JSON response
+    res.json({student,instractor,courses,TotalAmout,pricegt,pricelt,recentlyCreatedCourses,recentlyEnrollment});
   } catch(err){
     console.log(err)
   }

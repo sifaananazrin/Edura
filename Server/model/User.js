@@ -17,6 +17,10 @@ status: {
   type: String,
   default: "Active",
 },
+createdAt: {
+  type: Date,
+  default: Date.now
+},
 });
 
 module.exports = mongoose.model('User', userSchema);

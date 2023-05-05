@@ -26,7 +26,11 @@ const courseSchema = new mongoose.Schema({
   link: { type: String },
   list: {
     type: Array,
-  }
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 const Course = mongoose.model('Course', courseSchema);

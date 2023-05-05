@@ -26,5 +26,5 @@ router.get('/editcoures/:id', getEditCourse);
 router.put('/editcoure/:id',validateTeacherToken, postEditCourse);
 router.get('/delectcoures/:id',validateTeacherToken,getDeleteCourse)
 router.get('/getallusers',validateTeacherToken,getAllStudents)
-router.post('/exam',validateTeacherToken,addExam)
+router.post('/exam',addExam)
 module.exports = router;

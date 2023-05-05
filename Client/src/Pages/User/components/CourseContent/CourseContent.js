@@ -48,10 +48,10 @@ const CourseContent = ({list,course_id }) => {
   {/* //exam added */}
 
 
-      {/* <Box sx={styles.titleBlock}>
+      <Box sx={styles.titleBlock}>
         <Typography sx={styles.title}>Take Test </Typography>
-        <Button onClick={() => navigate("/user/exam",{state: {courseId : course_id}})}>Exam</Button>
-      </Box> */}
+        <Button onClick={() => navigate("/exam",{state: {courseId : course_id}})}>Exam</Button>
+      </Box>
 
 
 
