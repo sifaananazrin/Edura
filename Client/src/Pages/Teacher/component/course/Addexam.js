@@ -156,8 +156,15 @@
 // };
 
 import { useState } from "react";
+import { useLocation ,useNavigate} from 'react-router-dom';
+import { toast } from 'react-toastify';
 import axios from "../../../../api/axios";
 export default function QuizForm() {
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
+   const cid = location.state.courseId;
   const [question, setQuestion] = useState("");
   const [optionA, setOptionA] = useState("");
   const [optionB, setOptionB] = useState("");
@@ -165,7 +172,7 @@ export default function QuizForm() {
   const [optionD, setOptionD] = useState("");
   const [correctOption, setCorrectOption] = useState("");
   const [questions, setQuestions] = useState([]);
-  const courseId = "4636";
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newQuestion = {
@@ -183,7 +190,7 @@ export default function QuizForm() {
 
     try {
       const response = await axios.post("/teacher/exam", {
-        courseId,
+        courseId:cid,
         question,
         a: optionA,
         b: optionB,
@@ -191,7 +198,11 @@ export default function QuizForm() {
         d: optionD,
         correct: correctOption,
       });
-
+      if (response.status === 201) {
+        toast.success(response.data.message);
+      } else if (response.status === 200) {
+        toast.error(response.data.message);
+      }
       setQuestions([...questions, newQuestion]);
       setQuestion("");
       setOptionA("");
@@ -291,13 +302,22 @@ export default function QuizForm() {
         </div>
 
         <div>
-          <button
-            type="submit"
-            className="w-full py-3 rounded-md bg-blue-500 text-white font-medium"
-          >
-            Add Question
-          </button>
-        </div>
+  <button
+    type="submit"
+    className="w-full py-3 rounded-md bg-blue-500 text-white font-medium mb-2"
+  >
+    Add Question
+  </button>
+  <button
+  onClick={()=>{
+    navigate("/teacher/course")
+  }}
+    className="w-full py-3 rounded-md bg-blue-500 text-white font-medium"
+  >
+    Back
+  </button>
+</div>
+
       </form>
     </div>
   );

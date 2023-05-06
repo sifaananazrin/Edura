@@ -50,7 +50,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     // Find teacher with matching email
-    const found = await Teacher.findOne({ email ,IsBlock: "Active"  });
+    const found = await Teacher.findOne({ email, IsBlock: "Active" });
 
     // Check if teacher exists and is approved
     if (found && found.status === "Approve") {
@@ -94,7 +94,8 @@ const getAllCategories = async (req, res) => {
 };
 
 const addCourse = (req, res) => {
-  const { name, category, description, link, price, teachername, token } = req.body;
+  const { name, category, description, link, price, teachername, token } =
+    req.body;
   const list = JSON.parse(req.body.list);
   const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
   const teacherid = decoded.teacherId;
@@ -156,7 +157,7 @@ const getAllCourse = async (req, res) => {
 
 const getEditCourse = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+  // console.log(id);
   const course = await Course.findOne({ _id: id });
   res.send({ course });
 };
@@ -191,6 +192,38 @@ const postEditCourse = async (req, res) => {
   }
 };
 
+const getEditExam = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const quiz = await Quiz.findOne({ _id: id });
+    console.log(quiz);
+    res.send({ quiz });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+const EditExam = async (req, res) => {
+  try {
+    console.log("hloooooooo")
+    const { id } = req.params;
+    console.log(id);
+    console.log(req.body);
+
+    const updatedQuiz = await Quiz.findByIdAndUpdate(id, { ...req.body });
+    console.log(updatedQuiz);
+
+    res.status(200).send({ message: "updated" });
+
+    // Create new exam if it doesn't exist
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Unable to add exam" });
+  }
+};
+
 const getDeleteCourse = async (req, res) => {
   try {
     const { id } = req.params;
@@ -222,39 +255,69 @@ const getAllStudents = async (req, res) => {
   }
 };
 
-
 const addExam = async (req, res) => {
   try {
     const { courseId, question, a, b, c, d, correct } = req.body;
-   console.log(req.body)
+    console.log(req.body);
     // Check if exam with same courseId already exists
-    // const existingExam = await Quiz.findOne({ courseId });
-    // if (existingExam) {
-    //   return res.status(409).json({ message: "Exam already exists" });
-    // }
+    const quizzcount = await Quiz.countDocuments({ courseId });
+    // const quizzcount="10"
+    if (quizzcount <= 10) {
+      console.log(quizzcount);
+      const newExam = new Quiz({
+        courseId,
+        question,
+        a,
+        b,
+        c,
+        d,
+        correct,
+      });
 
+      await newExam.save();
+      await Course.findByIdAndUpdate(courseId, {
+        quizz: "added",
+      });
+
+      return res
+        .status(201)
+        .json({ message: ` ${quizzcount + 1} Question  added successfully` });
+    } else {
+      return res.status(200).json({ message: "You have added 10 questions" });
+    }
     // Create new exam if it doesn't exist
-    const newExam = new Quiz({
-      courseId,
-      question,
-      a,
-      b,
-      c,
-      d,
-      correct,
-    });
-
-    await newExam.save();
-
-    return res.status(201).json({ message: "Exam added successfully" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Unable to add exam" });
   }
 };
 
+const getQuestions = async (req, res) => {
+  try {
+    const { courseId } = req.query;
+    const found = await Quiz.find({ courseId });
+    if (found.length > 0) {
+      res.send({ found });
+    } else {
+      res.send({ message: "No exams found for this course" });
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ error: "Internal server error" });
+  }
+};
 
-
+const DeleteQuestions = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    await Quiz.deleteOne({ _id: id }).then(() => {
+      res.send({ message: " data delected" });
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 exports.getAllCourse = getAllCourse;
 exports.addCourse = addCourse;
@@ -266,3 +329,7 @@ exports.postEditCourse = postEditCourse;
 exports.getAllStudents = getAllStudents;
 exports.getDeleteCourse = getDeleteCourse;
 exports.addExam = addExam;
+exports.getQuestions = getQuestions;
+exports.DeleteQuestions = DeleteQuestions;
+exports.getEditExam = getEditExam;
+exports.EditExam = EditExam;

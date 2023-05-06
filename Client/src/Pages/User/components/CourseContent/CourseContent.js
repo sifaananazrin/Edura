@@ -50,7 +50,7 @@ const CourseContent = ({list,course_id }) => {
 
       <Box sx={styles.titleBlock}>
         <Typography sx={styles.title}>Take Test </Typography>
-        <Button onClick={() => navigate("/exam",{state: {courseId : course_id}})}>Exam</Button>
+        <Button onClick={() => navigate("/exam",{state: {courseId : course_id}})}>quizz</Button>
       </Box>
 
 

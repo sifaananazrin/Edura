@@ -27,6 +27,7 @@ const courseSchema = new mongoose.Schema({
   list: {
     type: Array,
   },
+  quizz: { type: String,default: "pending", },
   createdAt: {
     type: Date,
     default: Date.now

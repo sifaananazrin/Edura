@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Rating from "@mui/material/Rating";
 import React, { useState, useEffect } from "react";
+
 // import { useNavigate } from "react-router-dom";
 //IMPORTING ICONS AND IMAGES
 import arrow from "../../../../assets/arrow_down.svg";
@@ -85,9 +86,9 @@ const SelectOrder = () => {
               }}
               key={index}
             >
-              <Box sx={{ padding: "20px", display: "flex", width: "190px" }}>
+              <Box sx={{ padding: "20px", display: "flex", width: "300px" }}>
                 <Box
-                  sx={{ display: "flex", alignItems: "center", width: "300px" }}
+                  sx={{ display: "flex", alignItems: "center", width: "500px" }}
                 >
                   {course.image && course.image.length > 0 && (
                     <Box
@@ -101,16 +102,17 @@ const SelectOrder = () => {
                       }}
                     />
                   )}
-                  <Box
+ <Box
                     sx={{
-                      display: "flex",
+                      display: "flow",
                       alignItems: "center",
                       justifyContent: "center",
                       backgroundColor: "#673F86",
                       color:"white",
-                      fontSize: "24px",
-                      width: "150px",
-                      height: "90px",
+                      fontSize: "20px",
+                      width: "100px",
+                      height: "50px",
+                      
                     }}
                   >
                    Rs {course.price}
@@ -119,7 +121,7 @@ const SelectOrder = () => {
                 <Typography
                   sx={{
                     ...styles.titleCard,
-                    marginLeft: "24px",
+                    marginLeft: "90px",
                     alignSelf: "center",
                   }}
                 >

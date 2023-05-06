@@ -38,7 +38,7 @@ router.get("/totalcounts",validateUserToken, getAllCount);
 router.get("/oderhistory", validateUserToken,getOderDetail);
 router.get("/productData", validateUserToken,getProductDetailData);
 router.get("/alreadyoder", validateUserToken,getAlreadyOder);
-router.get("/exam", validateUserToken,getQuestions);
+router.get("/exam",getQuestions);
 
 
 

@@ -41,7 +41,7 @@ const styles = {
 const CourseDetailsScreen = () => {
   const location = useLocation();
   // console.log(location)
-  const selectedCourses = location.state.selectedCourses;
+  const selectedCourses = location.state?.selectedCourses;
   const name = selectedCourses.name;
   const cid = selectedCourses._id;
   const image = selectedCourses.image;
@@ -49,6 +49,7 @@ const CourseDetailsScreen = () => {
   const price = selectedCourses.price;
   const link = selectedCourses.link;
   const list = selectedCourses.list;
+  const quizz = selectedCourses.quizz;
   const course_id = selectedCourses._id;
   const teachername = selectedCourses.teachername;
   const teacherid = selectedCourses.teacherid;
@@ -113,11 +114,11 @@ useEffect(() => {
             {/* <LearnCourse /> */}
 
          <Box>
-            {puchase.success  ? (
+            {puchase.success && quizz=="added"   ? (
         <CourseContent list={list} course_id={course_id} />
         // <CourseDetails />
       ) : (
-        <h1>You haven't purchased this course yet.</h1>
+        <h1></h1>
       )}
 
 </Box>
