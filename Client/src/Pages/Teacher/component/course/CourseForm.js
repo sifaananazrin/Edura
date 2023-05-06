@@ -18,7 +18,7 @@ import axios from "../../../../api/axios"
 import Spinner from '../../../../component/Spinner';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-
+import { toast } from 'react-toastify';
 import useStyles from "./CourseFormStyle"
   
 
@@ -55,7 +55,8 @@ const Form = () => {
         setTeachername(localStorage.getItem("name"))
         // setTeachername(localStorage.getItem("name"))
        setToken(localStorage.getItem("teachertoken"))
-      //  console.log(token)
+       
+       
       })
       .catch((error) => {
         localStorage.removeItem("teachertoken");
@@ -152,7 +153,13 @@ const Form = () => {
         },...config,
       })
       .then((response) => {
-        console.log(response);
+        if (response.status === 201) {
+          toast.success(response.data.message);
+        } else if (response.status === 400) {
+          toast.error(response.data.error);
+        }
+        
+        // console.log(response);
         setCourseName("");
         setDescription("");
         setCategory("");
@@ -165,6 +172,7 @@ const Form = () => {
         }
       })
       .catch((error) => {
+        toast.error(error);
         console.log(error);
       });
   };

@@ -20,7 +20,7 @@ const adminLogin = async (req, res) => {
             accountType: 'admin',
           };
           const token = jwt.sign(reps, process.env.JWT_SECRET_KEY);
-          res.send({ success: true, token });
+          res.send({ success: true, token ,message:"Login sucessfuly"});
         } else {
           throw new Error('admin not found');
         }

@@ -2,7 +2,9 @@ import React from 'react';
 import axios from '../../api/axios';
 import requests from '../../api/request';
 import { Formik, Form } from 'formik';
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { boxStyles,buttonStyle, divstyle,TextFieldColor } from './AdminStyle';
 
 import {
@@ -27,6 +29,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function AdminLogin() {
+  const navigate = useNavigate();
   const initialValues = {
     email: '',
     password: '',
@@ -35,16 +38,16 @@ function AdminLogin() {
   const onSubmit = async (values, actions) => {
     try {
       const response = await axios.post(requests.adminlogin, values);
-      console.log(response.data);
+      // console.log(response.data);
       if(response.data.success){
         localStorage.setItem("admintoken",response.data.token)
-        window.location="/admin/home"
+        // window.location="/admin/home"
+        navigate("/admin/home")
+        toast.success(response.data.message);
+        // navigate("/admin/home")
       }else {
-        Swal.fire({
-          icon: "error",
-          title: "Invalid admin ID or Password",
-          text: "admin is not found",
-        });
+        toast.error(response.data.message);
+
       }
     } catch (error) {
       console.error(error);

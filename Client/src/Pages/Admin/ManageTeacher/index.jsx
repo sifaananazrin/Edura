@@ -93,10 +93,10 @@ function ManageTeacher() {
                  
                 <Button
   variant="contained"
-  color={teachers.status=="Blocked"? "primary" : "secondary"}
+  color={teachers.IsBlock=="Blocked"? "primary" : "secondary"}
   onClick={() => handleBlock(teachers._id)}
 >
-  {teachers.status==="Blocked"? "Unblock" : "Blocked"}
+  {teachers.IsBlock==="Blocked"? "Unblock" : "Blocked"}
 </Button>
 
                   

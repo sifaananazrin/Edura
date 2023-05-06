@@ -169,7 +169,7 @@ function Course() {
                           }
                           style={{ height: "40px" }}
                         >
-                          add exam
+                          add Quiz
                         </Button>{" "}
                       </TableCell>
                       <TableCell>
@@ -182,7 +182,7 @@ function Course() {
                           }
                           style={{ height: "40px" }}
                         >
-                          View exam
+                          View Quiz
                         </Button>{" "}
                       </TableCell>
                     </TableRow>

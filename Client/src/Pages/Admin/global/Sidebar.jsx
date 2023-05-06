@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -10,6 +10,7 @@ import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
+// import { useNavigate} from 'react-router-dom';
 // import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 // import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
@@ -17,17 +18,24 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 // import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AdminRouter from "../../../Route/AdminRouter";
-import SchoolIcon from '@material-ui/icons/School';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import SchoolIcon from "@material-ui/icons/School";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 // import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import { toast } from "react-toastify";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const handleLogout = () => {
-    localStorage.clear();
-    window.location.href = '/admin/login'; // redirect to login page after logout
+    // localStorage.clear();
+    toast.error("Logout successfuly");
+    localStorage.removeItem("admintoken");
+    navigate("/admin/login");
+    
+
+    // window.location.href = '/admin/login'; // redirect to login page after logout
   };
   const theme = useTheme();
+  const navigate = useNavigate();
   const colors = tokens(theme.palette.mode);
   return (
     <MenuItem
@@ -58,7 +66,7 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.clear();
     // window.location.href = '/admin/login';
-    navigate('/admin/login'); // redirect to login page after logout
+    navigate("/admin/login"); // redirect to login page after logout
   };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -170,7 +178,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-               <Item
+            <Item
               title="Manage Couse"
               to="/admin/managecouser" //team
               icon={<SchoolIcon />}
@@ -191,7 +199,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-               <Item
+            <Item
               title=" Approve couse"
               to="/admin/couser"
               icon={<CheckCircleIcon />}
@@ -213,7 +221,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             /> */}
-             {/* <Item
+            {/* <Item
               title="View Category"
               to="/admin/category" //team
               icon={<PeopleOutlinedIcon />}
@@ -221,10 +229,10 @@ const Sidebar = () => {
               setSelected={setSelected}
             /> */}
 
-{/* <a  onClick={handleLogout}> */}
-<LogoutButton handleLogout={handleLogout} />
+            {/* <a  onClick={handleLogout}> */}
+            <LogoutButton handleLogout={handleLogout} />
             {/* </a> */}
-         {/* <Item
+            {/* <Item
               title="Course Category"
               to="/course-category"
               icon={<CalendarTodayOutlinedIcon />}
@@ -237,7 +245,7 @@ const Sidebar = () => {
               icon={<HelpOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            /> */} 
+            /> */}
 
             {/* <Typography
               variant="h6"

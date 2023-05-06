@@ -131,7 +131,7 @@ const addCourse = (req, res) => {
       newCourse
         .save()
         .then((course) => {
-          res.json({ course, success: true });
+          res.status(201).json({ course, success: true,message:"Course added" });
         })
         .catch((err) => {
           console.error(err);

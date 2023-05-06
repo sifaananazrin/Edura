@@ -77,11 +77,11 @@ console.log(data)
         setdata(response.data);
         console.log(response.data)
         setUserData({
-                    labels: ["Approve coures ", " rejected coures", " pending review"],
+                    labels: ["recently purchased", " recently add cousers", " pending review"],
                     datasets: [
                       {
                         label: "Count",
-                        data: [response.data.pricegt, response.data.pricelt, response.data.courses],
+                        data: [response.data.recentlyEnrollment,  response.data.recentlyCreatedCourses, response.data.courses],
                         backgroundColor: [
                           "rgba(75,192,192,1)",
                           "#ecf0f1",

@@ -135,7 +135,7 @@ const classes = useStyles();
             name="courseLink"
           />
           {/* <InputLabel htmlFor="category">Category</InputLabel> */}
-          <Select
+          {/* <Select
             variant="outlined"
             margin="normal"
             required
@@ -146,7 +146,7 @@ const classes = useStyles();
             value={category}
             defaultValue=""
           >
-            <MenuItem value={category}>
+            <MenuItem >
               <em>Select a category</em>
             {categories &&
               categories.map((category) => (
@@ -156,6 +156,28 @@ const classes = useStyles();
               ))}
           
             </MenuItem>
+          </Select> */}
+           <Select
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="category"
+            value={category}
+            onChange={(event) => setcategory(event.target.value)}
+            name="category"
+            displayEmpty
+            defaultValue=""
+          >
+            <MenuItem value="">
+              <em>Select a category</em>
+            </MenuItem>
+            {categories &&
+              categories.map((category) => (
+                <MenuItem key={category._id} value={category.name}>
+                  {category.name}
+                </MenuItem>
+              ))}
           </Select>
           <InputLabel htmlFor="image">Image</InputLabel>
           <Input
