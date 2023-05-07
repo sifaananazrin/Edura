@@ -40,9 +40,10 @@ function AdminLogin() {
       const response = await axios.post(requests.adminlogin, values);
       // console.log(response.data);
       if(response.data.success){
-        localStorage.setItem("admintoken",response.data.token)
+       
         // window.location="/admin/home"
         navigate("/admin/home")
+        localStorage.setItem("admintoken",response.data.token)
         toast.success(response.data.message);
         // navigate("/admin/home")
       }else {

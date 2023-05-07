@@ -33,7 +33,7 @@ const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase,teac
     <Box sx={styles.wrapper}>
       <Box sx={styles.blockInfo}>
         <Typography sx={styles.title}>current status</Typography>
-        {!puchase || !puchase.success ? (
+        {!puchase || !puchase=="true" ? (
         <Button onClick={bookNow}>Buy Now</Button>
       ) : (
         <p> <b>You have already purchased this course. check my course <br></br></b></p>
@@ -41,7 +41,7 @@ const CurrentStatus = ({price,name,image,teachername,link,course_id,puchase,teac
       )}
       </Box>
 
-      {!puchase || !puchase.success ? (
+      {!puchase || !puchase=="true" ? (
         <>
       <Divider orientation='vertical' sx={styles.divider} />
       <Box sx={styles.blockInfo}>

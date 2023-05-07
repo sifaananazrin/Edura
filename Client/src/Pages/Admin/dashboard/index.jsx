@@ -77,11 +77,11 @@ console.log(data)
         setdata(response.data);
         console.log(response.data)
         setUserData({
-                    labels: ["recently purchased", " recently add cousers", " pending review"],
+                    labels: ["recently purchased", " recently add cousers"],
                     datasets: [
                       {
                         label: "Count",
-                        data: [response.data.recentlyEnrollment,  response.data.recentlyCreatedCourses, response.data.courses],
+                        data: [response.data.recentlyEnrollment,  response.data.recentlyCreatedCourses],
                         backgroundColor: [
                           "rgba(75,192,192,1)",
                           "#ecf0f1",
@@ -95,11 +95,11 @@ console.log(data)
                     ],
                   });
         setproduct({
-          labels: ["recently purchased", "recently add cousers"],
+          labels: ["pending review", "recently Approved"],
           datasets: [
             {
               label: "Count",
-              data: [response.data.recentlyEnrollment, response.data.recentlyCreatedCourses],
+              data: [response.data.courses, response.data.pricegt],
               backgroundColor: [
                 "rgba(75,192,192,1)",
                 "#ecf0f1",

@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const Course = require("../model/Course");
 const Booking = require("../model/Booking");
-const Teacher=require("../model/Teacher");
+const Teacher = require("../model/Teacher");
 const Quiz = require("../model/Quiz");
 
 const login = async (req, res, next) => {
@@ -13,7 +13,7 @@ const login = async (req, res, next) => {
   console.log(email);
   let existingUser;
   try {
-    existingUser = await User.findOne({ email: email ,status: "Active" });
+    existingUser = await User.findOne({ email: email, status: "Active" });
   } catch (err) {
     return new Error(err);
   }
@@ -28,8 +28,8 @@ const login = async (req, res, next) => {
   const reps = {
     // eslint-disable-next-line no-underscore-dangle
     id: existingUser._id,
-    email:existingUser.email,
-    accountType: 'user',
+    email: existingUser.email,
+    accountType: "user",
   };
   // after password is correct we want to generate a token
   const token = jwt.sign(reps, process.env.JWT_SECRET_KEY);
@@ -40,15 +40,13 @@ const login = async (req, res, next) => {
     httpOnly: true,
     sameSite: "lax",
   });
-  res
-    .status(200)
-    .json({
-      message: "Login successful",
-      name: existingUser.name,
-      token,
-      email: existingUser.email,
-      uid: existingUser._id,
-    });
+  res.status(200).json({
+    message: "Login successful",
+    name: existingUser.name,
+    token,
+    email: existingUser.email,
+    uid: existingUser._id,
+  });
 };
 
 //verify token
@@ -135,7 +133,6 @@ const mailTransporter = nodemailer.createTransport({
 
 const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
-
 const signup = async (req, res) => {
   name = req.body.name;
   email = req.body.email;
@@ -198,17 +195,18 @@ const PostOtp = async (req, res) => {
 
 const getAllCourse = async (req, res) => {
   try {
-    const course = await Course.find({ status: 'Approve' }).select('-link -list');
+    const course = await Course.find({ status: "Approve" }).select(
+      "-link -list"
+    );
     res.send({ success: true, course });
   } catch (error) {
     res.send({ success: false, message: error.message });
   }
 };
 
-
 const confirmOrder = async (req, res) => {
-  const { name, totalAmount, uid, image,teachername,link } = req.body;
- console.log(totalAmount)
+  const { name, totalAmount, uid, image, teachername, link } = req.body;
+  console.log(totalAmount);
 
   const options = {
     amount: totalAmount * 100,
@@ -236,22 +234,22 @@ const verifyPayment = async (req, res) => {
 
   if (hmac == details.razorpay_signature) {
     console.log("payment verified!");
-    
+
     const order = new Booking({
-        order_id: Date.now(),
-        user_id: details.userId,
-        name: details.data.name,
-        totalAmount: details.data.totalAmount,
-        image:details.data.image,
-        course_id:details.data.course_id,
-        link:details.data.link,
-        teachername:details.data.teachername,
-        teacherid:details.data.teacherid,
-        order_placed_on: new Date(),
-      });
-    
-     await order.save()
-     res.json({ success: true, message: "payment success" });
+      order_id: Date.now(),
+      user_id: details.userId,
+      name: details.data.name,
+      totalAmount: details.data.totalAmount,
+      image: details.data.image,
+      course_id: details.data.course_id,
+      link: details.data.link,
+      teachername: details.data.teachername,
+      teacherid: details.data.teacherid,
+      order_placed_on: new Date(),
+    });
+
+    await order.save();
+    res.json({ success: true, message: "payment success" });
   } else {
     res.json({ success: false, err_message: "payment failed" });
   }
@@ -259,39 +257,44 @@ const verifyPayment = async (req, res) => {
 
 const paymentFailure = (req, res) => {
   const details = req.body;
-  console.log(details);
+  // console.log(details);
   res.send("payment failed");
 };
 
-const getProductDetail= async (req, res) => {
+const getProductDetail = async (req, res) => {
   try {
     const { id } = req.params;
-    const found = await Course.findOne({ _id: id });
- 
-
-    res.send({ found });
+    const { user_id } = req.query;
+   
+    const check = await Booking.findOne({ user_id: user_id, course_id: id });
+    if (check) {
+      const found = await Course.findOne({ _id: id })
+      return res.status(200).send({ found ,success: true, massage: "already purchased"});
+    } else {
+      const found = await Course.findOne({ _id: id }).select("-link -list");
+      return res.status(200).send({ found ,success: false, massage: "not purchased"});
+    }
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("Internal Server Error");
   }
 };
 
-const getAllCount=async(req,res)=>{
-  try{
-    const TotalUsers=await User.find().count()
-    const TotalInstructors= await Teacher.find().count()
-    res.json({TotalUsers,TotalInstructors})
 
-  }catch(error){
+const getAllCount = async (req, res) => {
+  try {
+    const TotalUsers = await User.find().count();
+    const TotalInstructors = await Teacher.find().count();
+    res.json({ TotalUsers, TotalInstructors });
+  } catch (error) {
     console.log(error);
-}
-
-}
-
+  }
+};
 
 const getOderDetail = async (req, res) => {
   try {
     const { uid } = req.query;
-    
+
     const userBooked = await Booking.find({ user_id: uid });
     console.log(userBooked);
     console.log(userBooked.to);
@@ -300,16 +303,13 @@ const getOderDetail = async (req, res) => {
     }
   } catch (error) {
     console.log(error.message);
-    
   }
 };
-
 
 const getProductDetailData = async (req, res) => {
   try {
     const { name } = req.body;
     const found = await Course.findOne({ name: name });
-   
 
     res.send({ found });
   } catch (error) {
@@ -318,38 +318,21 @@ const getProductDetailData = async (req, res) => {
 };
 
 
-const getAlreadyOder = async (req, res) => {
-  try {
-    const { user_id, cid } = req.query;
-    // console.log(req.body)
-    console.log(cid)
-    const found = await Booking.findOne({ user_id: user_id, course_id: cid });
-    if (found) {
-      res.send({ success:true, massage:"already purchased" })
-    } else {
-      res.send({ success:false, massage:"not purchased" })
-    }
-  } catch (error) {
-    console.log(error.message);
-  }
-};
 
 const getQuestions = async (req, res) => {
   try {
-    const { courseId } = req.query;   
+    const { courseId } = req.query;
     const found = await Quiz.find({ courseId });
     if (found.length > 0) {
       res.send({ found });
     } else {
-      res.send({ message: 'No exams found for this course' });
+      res.send({ message: "No exams found for this course" });
     }
   } catch (error) {
     console.log(error.message);
-    res.status(500).send({ error: 'Internal server error' });
+    res.status(500).send({ error: "Internal server error" });
   }
 };
-
-
 
 exports.signup = signup;
 exports.login = login;
@@ -365,5 +348,4 @@ exports.verifyPayment = verifyPayment;
 exports.getAllCount = getAllCount;
 exports.getOderDetail = getOderDetail;
 exports.getProductDetailData = getProductDetailData;
-exports.getAlreadyOder=getAlreadyOder;
-exports.getQuestions=getQuestions;
+exports.getQuestions = getQuestions;

@@ -42,21 +42,24 @@ const CourseDetailsScreen = () => {
   const location = useLocation();
   // console.log(location)
   const selectedCourses = location.state?.selectedCourses;
-  const name = selectedCourses.name;
-  const cid = selectedCourses._id;
-  const image = selectedCourses.image;
-  const des = selectedCourses.description;
-  const price = selectedCourses.price;
-  const link = selectedCourses.link;
-  const list = selectedCourses.list;
-  const quizz = selectedCourses.quizz;
-  const course_id = selectedCourses._id;
-  const teachername = selectedCourses.teachername;
-  const teacherid = selectedCourses.teacherid;
+  const name = selectedCourses.found.name;
+  const cid = selectedCourses.found._id;
+  const image = selectedCourses.found.image;
+  const des = selectedCourses.found.description;
+  const price = selectedCourses.found.price;
+  const link = selectedCourses.found.link;
+  const list = selectedCourses.found.list;
+  const quizz = selectedCourses.found.quizz;
+  const course_id = selectedCourses.found._id;
+  const teachername = selectedCourses.found.teachername;
+  const teacherid = selectedCourses.found.teacherid;
   const user_id =localStorage.getItem("uid")
+  const [puchase, setpuchase] = useState('');
+  console.log(puchase)
 
 
-const config = {
+
+  const config = {
   headers: {
     Authorization: `${localStorage.getItem("usertoken")}`,
   },
@@ -68,7 +71,7 @@ const config = {
 
 
 
-const [puchase, setpuchase] = useState('');
+
 // const [purchased, setPurchased] = useState(false);
 
 //  console.log(puchase)
@@ -80,9 +83,7 @@ const [puchase, setpuchase] = useState('');
 useEffect(() => {
   async function fetchData() {
     try {
-
-  const response = await axios.get("/api/alreadyoder",config);
-         setpuchase(response.data);
+         setpuchase(selectedCourses.success);
         //  setPurchased(true);
       // console.log(response.data)
     } catch (error) {
@@ -114,7 +115,7 @@ useEffect(() => {
             {/* <LearnCourse /> */}
 
          <Box>
-            {puchase.success && quizz=="added"   ? (
+            {puchase && quizz=="added"   ? (
         <CourseContent list={list} course_id={course_id} />
         // <CourseDetails />
       ) : (
@@ -125,7 +126,7 @@ useEffect(() => {
             {/* <CourseContent /> */}
           </Box>
           <Box>
-          {puchase.success  ? (
+          {puchase  ? (
         <CourseDetails list={list} />
         // <CourseDetails />
       ) : (
