@@ -9,7 +9,7 @@ import NotFound from "./component/NotFound";
 import TeacherRouter from "./Route/TeacherRouter"; 
 import { BounceLoader } from "react-spinners";
 import Exam from "./Route/ExamRouter"
-
+import FullScreen from "./Pages/User/components/CourseDetails/FullScreen";
 function App() {
 
   const Usertoken=localStorage.getItem("usertoken");
@@ -21,6 +21,7 @@ function App() {
           <Routes>
           
           <Route path="/" element={ !Usertoken ? <Home /> :<Navigate to="/user/home"/>} />
+          <Route path="/full-screen-video" element={<FullScreen/>}></Route>
             <Route path="/admin/*" element={<AdminRouter />} />
             <Route path="/user/*" element={<UserRouter />} />
             <Route path="/teacher/*" element={<TeacherRouter />} />

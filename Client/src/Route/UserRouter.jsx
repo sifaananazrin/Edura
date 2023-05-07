@@ -43,10 +43,10 @@ function UserRouter() {
               <Route path="/oders" element={< OrderViewPage/>}></Route>
               
               <Route path="/profile" element={<Profile/>}></Route>
-               
+              
               <Route path="/home" element={ <HomeScreen /> } />
               <Route path={"/course-details"} element={  <CourseDetailsScreen />}  />
-              {/* <Route path={"/exam"} element={  <QuestionPage />}  /> */}
+             
               <Route
                 path={"/currently-featured"}
                 element={ <FeaturedCoursesScreen />}
@@ -57,7 +57,8 @@ function UserRouter() {
             </Routes>
           </Layout>
           </ThemeProvider>
-
+          
+            
         
       );
 }

@@ -2,11 +2,9 @@ const express = require('express');
 const { 
     signup,
     login,
-    //  verifyTocken,
      getUser,
      refreshToken,
      PostOtp,
-    //  logout,
      getAllCourse,
      confirmOrder,
      verifyPayment,
@@ -15,7 +13,6 @@ const {
      getAllCount,
      getOderDetail,
      getProductDetailData,
-    //  getAlreadyOder,
      getQuestions
      } = require('../Controllers/User-controller');
      const validateUserToken = require("../Middleware/userToken")

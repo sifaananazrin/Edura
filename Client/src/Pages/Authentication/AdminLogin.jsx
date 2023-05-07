@@ -2,7 +2,6 @@ import React from 'react';
 import axios from '../../api/axios';
 import requests from '../../api/request';
 import { Formik, Form } from 'formik';
-// import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { boxStyles,buttonStyle, divstyle,TextFieldColor } from './AdminStyle';

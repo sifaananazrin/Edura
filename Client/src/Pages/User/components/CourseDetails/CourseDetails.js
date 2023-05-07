@@ -9,7 +9,7 @@ import Radio from '@mui/material/Radio'
 import Collapse from '@mui/material/Collapse'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import YouTube from 'react-youtube';
-
+import { useNavigate } from "react-router-dom";
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 
@@ -18,7 +18,7 @@ import styles from './styles'
 const CourseDetails = ({list }) => {
 
   console.log(list)
-
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false)
   const [trailerUrl, setTrailerUrl] = useState("");
 
@@ -28,8 +28,8 @@ const CourseDetails = ({list }) => {
 
   const handleClick2 = (item) => {
     setTrailerUrl(item.list);
-    console.log(item.list)
-    // console.log(link)
+    // console.log(item.list)
+    navigate('/full-screen-video', { state: { trailerUrl: item.list } });
   };
 
   const opts = {
@@ -83,14 +83,14 @@ const CourseDetails = ({list }) => {
   ))}
 </Collapse>
 
-<Box sx={styles.videoContainer}>
+{/* <Box sx={styles.videoContainer}>
     {trailerUrl && (
       <YouTube
         videoId={typeof trailerUrl === "string" ? trailerUrl.replace("https://youtu.be/", "") : ""}
         opts={opts}
       />
     )}
-  </Box>
+  </Box> */}
         {/* <Divider sx={{ m: 0.5, borderColor: '#673F86', mt: '24px' }} />
         <Typography sx={{ ...styles.title, mt: '24px' }}>section 2</Typography>
         <Box sx={styles.titleLesson}>
