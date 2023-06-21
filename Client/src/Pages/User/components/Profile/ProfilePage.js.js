@@ -15,6 +15,7 @@ const ProfilePage = () => {
 
   const user = localStorage.getItem('user');
   const email = localStorage.getItem('email');
+  const phone = localStorage.getItem('phone');
 
   return (
     <Box sx={{ flexGrow: 1, m: 3 }}>
@@ -51,7 +52,7 @@ const ProfilePage = () => {
                   <strong>Email:</strong> {email}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Phone:</strong> 123-456-7890
+                  <strong>Phone:</strong> {phone}
                 </Typography>
                 <Typography variant="body1">
                   {/* <strong>Address:</strong> 123 Main St, Anytown USA */}

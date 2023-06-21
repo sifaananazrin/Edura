@@ -50,7 +50,7 @@ function OTP() {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
-        height: "100vh",
+        height: "70vh",
         margin: 0,
         padding: 0,
       }}

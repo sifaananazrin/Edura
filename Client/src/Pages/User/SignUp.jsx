@@ -18,10 +18,15 @@ import {
 import { Link } from "react-router-dom";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
   email: Yup.string().email("Invalid email address").required("Required"),
+  phone: Yup.string()
+    .matches(
+      /^[0-9]{10}$/, 
+      "Invalid phone number. Please enter a 10-digit number."
+    )
+    .required("Required"),
   password: Yup.string().required("Required"),
   cPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
@@ -46,6 +51,7 @@ const SignUp = () => {
     initialValues: {
       name: "",
       email: "",
+      phone: "",
       password: "",
       cPassword: "",
     },
@@ -116,6 +122,17 @@ const SignUp = () => {
               onChange={formik.handleChange}
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
+            />
+             <FormLabel sx={{ mt: 2 }}>phone</FormLabel>
+            <TextField
+              fullWidth
+              margin="normal"
+              variant="standard"
+              name="phone"
+              value={formik.values.phone}
+              onChange={formik.handleChange}
+              error={formik.touched.phone && Boolean(formik.errors.phone)}
+              helperText={formik.touched.phone && formik.errors.phone}
             />
             <FormLabel sx={{ mt: 2 }}>Password</FormLabel>
             <TextField
