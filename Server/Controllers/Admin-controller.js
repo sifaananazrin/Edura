@@ -184,7 +184,7 @@ const getEditCategory = async (req, res) => {
 const postEditCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.params.id);
+   
     const categoriesData = await Categories.updateOne({ _id: id }, {
       name: req.body.name,
       description: req.body.description,

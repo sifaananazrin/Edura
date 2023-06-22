@@ -207,19 +207,16 @@ const getEditExam = async (req, res) => {
 
 const EditExam = async (req, res) => {
   try {
-    console.log("hloooooooo")
+   
     const { id } = req.params;
-    console.log(id);
-    console.log(req.body);
-
+   
     const updatedQuiz = await Quiz.findByIdAndUpdate(id, { ...req.body });
-    console.log(updatedQuiz);
-
+  
     res.status(200).send({ message: "updated" });
 
     // Create new exam if it doesn't exist
   } catch (error) {
-    console.log(error);
+    
     return res.status(500).json({ message: "Unable to add exam" });
   }
 };

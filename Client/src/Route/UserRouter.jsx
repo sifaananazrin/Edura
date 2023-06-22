@@ -16,7 +16,7 @@ import { ThemeProvider } from '@mui/material'
  import SuccessPage from '../Pages/User/components/Success/SuccessPage';
  import PrivateRoutes from '../Helpers/PrivateRoutesUser';
  import NotFound from "../component/NotFound";
-
+import EditProfile from "../Pages/User/components/Profile/EditProfile";
  import PaymentFailer from '../Pages/User/components/Payment/PaymentFailure';
 //  import QuestionPage from '../Pages/User/QuestionPage';
 //  import Result from "../Pages/User/Result";
@@ -43,6 +43,7 @@ function UserRouter() {
               <Route path="/oders" element={< OrderViewPage/>}></Route>
               
               <Route path="/profile" element={<Profile/>}></Route>
+              <Route path="/edit-profile" element={<EditProfile/>}></Route>
               
               <Route path="/home" element={ <HomeScreen /> } />
               <Route path={"/course-details"} element={  <CourseDetailsScreen />}  />

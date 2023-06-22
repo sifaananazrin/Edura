@@ -13,7 +13,8 @@ const {
      getAllCount,
      getOderDetail,
      getProductDetailData,
-     getQuestions
+     getQuestions,
+     updateUser
      } = require('../Controllers/User-controller');
      const validateUserToken = require("../Middleware/userToken")
 const router = express.Router();
@@ -34,6 +35,7 @@ router.get("/product/:id", validateUserToken,getProductDetail);
 router.get("/totalcounts",validateUserToken, getAllCount);
 router.get("/oderhistory", validateUserToken,getOderDetail);
 router.get("/productData", validateUserToken,getProductDetailData);
+router.put("/editProfile/:id",updateUser);
 // router.get("/alreadyoder", validateUserToken,getAlreadyOder);
 router.get("/exam",getQuestions);
 

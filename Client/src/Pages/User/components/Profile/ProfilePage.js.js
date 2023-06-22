@@ -10,61 +10,48 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
-
-  const user = localStorage.getItem('user');
-  const email = localStorage.getItem('email');
-  const phone = localStorage.getItem('phone');
-
+  const navigate = useNavigate();
+  const user = localStorage.getItem("user");
+  const email = localStorage.getItem("email");
+  const phone = localStorage.getItem("phone");
+  const avatar = user.slice(0, 1);
+  const handleEditProfile = () => {
+    // Add your navigation logic here
+    navigate("/user/edit-profile");
+  };
   return (
-    <Box sx={{ flexGrow: 1, m: 3 }}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={4}>
-          {/* <Card>
-            <CardHeader
-              avatar={<Avatar>JD</Avatar>}
-              title="John Doe"
-              subheader="johndoe@example.com"
-            />
-            <CardContent>
-              <Typography variant="body1" color="textSecondary">
-                Some description about the user can be added here.
-              </Typography>
-              <Button variant="contained" sx={{ mt: 2 }}>
-                Edit Profile
-              </Button>
-            </CardContent>
-          </Card> */}
-        </Grid>
-        <Grid item xs={12} sm={8}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5" sx={{ mb: 2 }}>
-                Personal Information
-              </Typography>
-              <Divider />
-              <Box sx={{ mt: 2 }}>
-                <Typography variant="body1">
-                  <strong>Name:</strong> {user}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Email:</strong> {email}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Phone:</strong> {phone}
-                </Typography>
-                <Typography variant="body1">
-                  {/* <strong>Address:</strong> 123 Main St, Anytown USA */}
-                </Typography>
-              </Box>
-              <Button variant="contained" sx={{ mt: 2 }}>
-                Edit Information
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#f5f5f5",
+      }}
+    >
+      <Card sx={{ width: 400 }}>
+        <CardHeader
+          avatar={<Avatar sx={{ width: 80, height: 80, fontSize: 40 }}>{avatar}</Avatar>}
+          title={<Typography variant="h4">{user}</Typography>}
+          subheader={
+            <Typography variant="h6" color="textSecondary">
+              {email}
+            </Typography>
+          }
+        />
+        <CardContent>
+          <Typography variant="body1" color="textSecondary">
+            Phone: {phone}
+          </Typography>
+          <Divider sx={{ my: 2 }} />
+          <Button variant="contained" size="large" fullWidth onClick={handleEditProfile}>
+            Edit Profile
+          </Button>
+        </CardContent>
+      </Card>
     </Box>
   );
 };

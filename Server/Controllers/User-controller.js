@@ -337,6 +337,18 @@ const getQuestions = async (req, res) => {
   }
 };
 
+const updateUser= async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findByIdAndUpdate(id, { ...req.body });
+    return res.status(200).json({ user });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: "Unable To Update By this ID" });
+  }
+};
+
+
 exports.signup = signup;
 exports.login = login;
 exports.verifyTocken = verifyTocken;
@@ -352,3 +364,4 @@ exports.getAllCount = getAllCount;
 exports.getOderDetail = getOderDetail;
 exports.getProductDetailData = getProductDetailData;
 exports.getQuestions = getQuestions;
+exports.updateUser = updateUser;
