@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "../../../../api/axios";
+
 import {
   Avatar,
   Box,
@@ -7,7 +9,6 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  Grid,
   Table,
   TableBody,
   TableCell,
@@ -16,12 +17,35 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 const EditPage = () => {
-  const user = localStorage.getItem("user");
-  const email = localStorage.getItem("email");
-  const phone = localStorage.getItem("phone");
+  const navigate = useNavigate();
+  const [user, setUser] = useState(localStorage.getItem("user"));
+  const [userId, setUserId] = useState(localStorage.getItem("uid"));
+  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [phone, setPhone] = useState(localStorage.getItem("phone"));
   const avatar = user.slice(0, 1);
+
+  const handleSaveChanges = () => {
+    const updatedData = {
+      user: user,
+      email: email,
+      phone: phone,
+      
+    };
+
+    axios
+      .put(`/api/editProfile/${userId}`, updatedData)
+      .then((response) => {
+        // Handle the successful response from the backend
+        console.log(response.data);
+        navigate("/user/profile");
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error(error);
+      });
+  };
 
   return (
     <Box
@@ -35,7 +59,9 @@ const EditPage = () => {
     >
       <Card sx={{ width: 400 }}>
         <CardHeader
-          avatar={<Avatar sx={{ width: 80, height: 80, fontSize: 40 }}>{avatar}</Avatar>}
+          avatar={
+            <Avatar sx={{ width: 80, height: 80, fontSize: 40 }}>{avatar}</Avatar>
+          }
           title={<Typography variant="h4">{user}</Typography>}
           subheader={
             <Typography variant="h6" color="textSecondary">
@@ -53,7 +79,8 @@ const EditPage = () => {
                     <TextField
                       variant="outlined"
                       fullWidth
-                      defaultValue={user}
+                      value={user}
+                      onChange={(e) => setUser(e.target.value)}
                       sx={{ mb: 2 }}
                     />
                   </TableCell>
@@ -64,7 +91,8 @@ const EditPage = () => {
                     <TextField
                       variant="outlined"
                       fullWidth
-                      defaultValue={email}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       sx={{ mb: 2 }}
                     />
                   </TableCell>
@@ -75,7 +103,8 @@ const EditPage = () => {
                     <TextField
                       variant="outlined"
                       fullWidth
-                      defaultValue={phone}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                       sx={{ mb: 2 }}
                     />
                   </TableCell>
@@ -84,7 +113,12 @@ const EditPage = () => {
             </Table>
           </TableContainer>
           <Divider sx={{ my: 2 }} />
-          <Button variant="contained" size="large" fullWidth>
+          <Button
+            variant="contained"
+            size="large"
+            fullWidth
+            onClick={handleSaveChanges}
+          >
             Save Changes
           </Button>
         </CardContent>

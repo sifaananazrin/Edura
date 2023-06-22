@@ -12,12 +12,17 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+
 const ProfilePage = () => {
   const navigate = useNavigate();
+
   const user = localStorage.getItem("user");
   const email = localStorage.getItem("email");
   const phone = localStorage.getItem("phone");
   const avatar = user.slice(0, 1);
+
+
+
   const handleEditProfile = () => {
     // Add your navigation logic here
     navigate("/user/edit-profile");
