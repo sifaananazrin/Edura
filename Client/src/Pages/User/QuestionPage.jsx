@@ -44,68 +44,7 @@ const Box = ({ current, next }) => {
       next(current + 1);
     }
   };
-//   return (
-//     <>
-//       {quizzes && (
-//         <div className="w-[40%] border shadow-lg rounded-md overflow-hidden">
-//           <div className="p-2 text-3xl">
-//             {current + 1} {quizzes[current]?.question}
-//           </div>
-//           <div className="grid grid-cols-2 mt-3">
-//             <div
-//               className={`p-2 border ${
-//                 ans === "a" ? "bg-blue-400 text-white" : ""
-//               } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
-//               onClick={() => setAns("a")}
-//             >
-//               {quizzes[current]?.a}
-//             </div>
-//             <div
-//               className={`p-2 border ${
-//                 ans === "b" ? "bg-blue-400 text-white" : ""
-//               } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
-//               onClick={() => setAns("b")}
-//             >
-//               {quizzes[current]?.b}
-//             </div>
-//             <div
-//               className={`p-2 border ${
-//                 ans === "c" ? "bg-blue-400 text-white" : ""
-//               } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
-//               onClick={() => setAns("c")}
-//             >
-//               {quizzes[current]?.c}
-//             </div>
-//             <div
-//               className={`p-2 border ${
-//                 ans === "d" ? "bg-blue-400 text-white" : ""
-//               } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
-//               onClick={() => setAns("d")}
-//             >
-//               {quizzes[current]?.d}
-//             </div>
-//           </div>
-//           <div className="flex justify-between">
-//   <div className="cursor-pointer h-[30px] px-3 bg-orange-500 text-white py-2" onClick={() => setAns("")}>
-//     Reset
-//   </div>
-//   <div className="cursor-pointer h-[30px] px-3 bg-green-500 text-white py-2" onClick={saveHandler}>
-//     Save &amp; Next
-//   </div>
-//   <div className="cursor-pointer h-[30px] px-3 bg-red-500 text-white py-2" onClick={() => {
-//     setQuizzCount(quizzes.length);
-//     setExit(true);
-//   }}>
-//     Exit
-//   </div>
-// </div>
 
-//         </div>
-//       )}
-//     </>
-//   );
-// };
-// ==========
 return (
   <>
     {quizzes && (

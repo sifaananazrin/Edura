@@ -12,7 +12,7 @@ import styles from './styles'
 import { Link } from 'react-router-dom';
 
 const pages = [
-  { title: 'Home', arrow: false ,link: '/user/oders'},
+  { title: 'Home', arrow: false ,link: '/user/home'},
   // { title: 'About', arrow: false },
   { title: 'My Course', arrow: true, link: '/user/oders' },
   // { title: 'Logout', arrow: false },
