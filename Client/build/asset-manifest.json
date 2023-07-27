@@ -1,11 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.2b14761a.css",
-    "main.js": "/static/js/main.cf745429.js",
+    "main.css": "/static/css/main.79b90bb4.css",
+    "main.js": "/static/js/main.f17c96ed.js",
     "static/media/Group.png": "/static/media/Group.f78e289961b6940756ca.png",
     "static/media/become.png": "/static/media/become.3ab3bee81c24c0f2390b.png",
     "static/media/banner_photo.png": "/static/media/banner_photo.8af78e3ec852713f700b.png",
-    "static/media/card_title_img.png": "/static/media/card_title_img.af0dff64db82bc3ffac0.png",
     "static/media/images.png": "/static/media/images.93ec8f4fdfcad61a2150.png",
     "static/media/logo-mobile.svg": "/static/media/logo-mobile.fcab788281def59fe59009e54887cd5a.svg",
     "static/media/logo.svg": "/static/media/logo.4ef666771ec1b0d9fdf788d068d4d448.svg",
@@ -27,14 +26,13 @@
     "static/media/chevron-down-white.svg": "/static/media/chevron-down-white.66da980d2a1c36a4ee3ca572148b1427.svg",
     "static/media/chevron-down.svg": "/static/media/chevron-down.05b37f6b490c9dee06237ca3459f8c0a.svg",
     "static/media/become_an_instructor.svg": "/static/media/become_an_instructor.e791def726c7b015109fa01a32c8e029.svg",
-    "static/media/arrow_down.svg": "/static/media/arrow_down.6350307ee711199a5de2ef5f31438f93.svg",
     "static/media/close.svg": "/static/media/close.4ab55052efb270c7a2cd703de7f17b4d.svg",
     "static/media/benefits_bg_1.svg": "/static/media/benefits_bg_1.005188354849d61c3256c40b5e80cbd9.svg",
-    "main.2b14761a.css.map": "/static/css/main.2b14761a.css.map",
-    "main.cf745429.js.map": "/static/js/main.cf745429.js.map"
+    "main.79b90bb4.css.map": "/static/css/main.79b90bb4.css.map",
+    "main.f17c96ed.js.map": "/static/js/main.f17c96ed.js.map"
   },
   "entrypoints": [
-    "static/css/main.2b14761a.css",
-    "static/js/main.cf745429.js"
+    "static/css/main.79b90bb4.css",
+    "static/js/main.f17c96ed.js"
   ]
 }
