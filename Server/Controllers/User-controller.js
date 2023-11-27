@@ -197,15 +197,33 @@ const PostOtp = async (req, res) => {
 };
 
 const getAllCourse = async (req, res) => {
+  const page = parseInt(req.query.page || 1);
+  const size = 3;
+  const perPage = parseInt(size);
+
   try {
-    const course = await Course.find({ status: "Approve" }).select(
-      "-link -list"
-    );
-    res.send({ success: true, course });
+    // Calculate the start index based on the current page and number of courses per page
+    const startIndex = (page - 1) * perPage;
+    const courses = await Course.find({ status: "Approve" })
+      .select("-link -list")
+      .skip(startIndex)
+      .limit(perPage)
+      .exec();
+
+    const totalCourses = await Course.countDocuments({ status: "Approve" });
+
+    res.json({
+      success: true,
+      courses: courses,
+      totalPages: Math.ceil(totalCourses / perPage),
+      perPage: perPage,
+    });
   } catch (error) {
-    res.send({ success: false, message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
 
 const confirmOrder = async (req, res) => {
   const { name, totalAmount, uid, image, teachername, link } = req.body;

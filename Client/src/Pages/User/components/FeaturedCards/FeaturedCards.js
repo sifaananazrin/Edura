@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
@@ -8,43 +8,46 @@ import Grid from "@mui/material/Grid";
 import axios from "../../../../api/axios";
 import { config } from "../../../../Helpers/axiosUserEndpoints";
 import Spinner from "../../../../component/Spinner";
-// import photo_card from "../../../../assets/photo_card.png";
 import plus from "../../../../assets/plus.svg";
 import Wrapper from "../Wrapper";
 import styles from "./styles";
+import Pagination from "../../../../component/Pagination";
 
 const FeaturedCards = () => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const [selectedCourses, setSelectedCourses] = useState(null);
+  const [page, setPage] = useState(1);
+  const [perPage] = useState(3); // Adjusted perPage to 3 for demonstration
+  const [totalPages, setTotalPages] = useState(1);
 
   const user_id = localStorage.getItem("uid");
 
-  useEffect(() => {
-    async function fetchCourses() {
-      try {
-        setLoading(true);
-        const response = await axios.get("/api/course", config);
-        setCourses(response.data.course);
-        setLoading(false);
-        setError(null);
-        // console.log(response.data.course);
-      } catch (err) {
-        console.error(err);
-        // window.location= "/user/login"
-        localStorage.removeItem("usertoken");
-        localStorage.removeItem("uid");
-        return;
-      }
+  const fetchCourses = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/api/course?page=${page}&size=${perPage}`, config);
+
+      console.log("Backend Response:", response.data);
+
+      const totalCourses = response.data?.totalPages || 1;
+      const fetchedCourses = response.data?.courses || [];
+
+      console.log("Fetched Courses:", fetchedCourses);
+
+      setCourses(fetchedCourses);
+      setTotalPages(totalCourses);
+      setLoading(false);
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError("Error loading courses");
+      setLoading(false);
     }
+  };
 
-    fetchCourses();
-  }, []);
-
-  const CouresDetails = async (id) => {
+  const CourseDetails = async (id) => {
     try {
       setLoading(true);
       const response = await axios.get(`/api/product/${id}`, {
@@ -52,28 +55,30 @@ const FeaturedCards = () => {
         params: { user_id: user_id },
       });
       setLoading(false);
-      setSelectedCourses(response.data.found);
       navigate("/user/course-details", {
         state: { selectedCourses: response.data },
       });
     } catch (error) {
-      localStorage.removeItem("usertoken");
-      localStorage.removeItem("uid");
-      console.log(error);
+      console.error(error);
+      setError("Error loading course details");
+      setLoading(false);
     }
   };
 
-  // if (error) {
+  useEffect(() => {
+    fetchCourses();
+  }, [page, perPage]);
 
-  //   localStorage.removeItem("usertoken")
-  //         localStorage.removeItem("uid");// Navigate to the login page if there's an error
-  //   return null; // Return null to prevent rendering the component
-  // }
+  useEffect(() => {
+    console.log("Courses State:", courses);
+  }, [courses]);
 
   return (
     <>
       {loading ? (
         <Spinner loading={loading} />
+      ) : error ? (
+        <div>{error}</div>
       ) : (
         <Box>
           <Wrapper>
@@ -83,51 +88,60 @@ const FeaturedCards = () => {
               columnSpacing={3}
               columns={{ xs: 4, sm: 8, md: 12 }}
             >
-              {courses.map((course, index) => {
-                return (
-                  <Grid item xs={4} sm={4} md={4} key={index}>
-                    <Card sx={styles.card}>
-                      <Box sx={styles.blockPhoto}>
+            {Array.isArray(courses) && courses.map((course, index) => (
+                <Grid item xs={4} sm={4} md={4} key={index}>
+                  <Card sx={styles.card}>
+                    <Box sx={styles.blockPhoto}>
+                      <Box
+                        component="div"
+                        sx={{
+                          width: "100%",
+                          height: "0",
+                          paddingBottom: "56.25%",
+                          position: "relative",
+                          background:
+                            course.image && course.image.length > 0
+                              ? `url(${course.image[0].url}) no-repeat center center`
+                              : undefined,
+                          backgroundSize: "cover",
+                        }}
+                      />
+                      <Box sx={styles.language}>{course.name}</Box>
+                    </Box>
+                    <Box sx={{ textAlign: "center", m: "24px 0" }}>
+                      {course.title}
+                    </Box>
+                    <Divider sx={styles.divider} />
+                    <Box sx={styles.footerCard}>
+                      <Box sx={styles.price}>Rs{course.price}</Box>
+                      <Link sx={styles.link}>
                         <Box
-                          component="div"
-                          sx={{
-                            width: "100%",
-                            height: "0",
-                            paddingBottom: "56.25%", // 16:9 aspect ratio
-                            position: "relative",
-                            background:
-                              course.image && course.image.length > 0
-                                ? `url(${course.image[0].url}) no-repeat center center`
-                                : undefined,
-                            backgroundSize: "cover", // or 'contain'
-                          }}
-                        />
-
-                        <Box sx={styles.language}>{course.name}</Box>
-                      </Box>
-                      <Box sx={{ textAlign: "center", m: "24px 0" }}>
-                        {course.title}
-                      </Box>
-                      <Divider sx={styles.divider} />
-                      <Box sx={styles.footerCard}>
-                        <Box sx={styles.price}>Rs{course.price}</Box>
-                        <Link sx={styles.link}>
-                          <Box
-                            onClick={() => CouresDetails(course._id)}
-                            component="span"
-                            sx={{ mr: "5px" }}
-                          >
-                            enroll now
-                          </Box>
-                          <Box component="img" src={plus} />
-                        </Link>
-                      </Box>
-                    </Card>
-                  </Grid>
-                );
-              })}
+                          onClick={() => CourseDetails(course._id)}
+                          component="span"
+                          sx={{ mr: "5px" }}
+                        >
+                          enroll now
+                        </Box>
+                        <Box component="img" src={plus} />
+                      </Link>
+                    </Box>
+                  </Card>
+                </Grid>
+              ))}
             </Grid>
           </Wrapper>
+
+          <Box mt={2} display="flex" justifyContent="center">
+            <Pagination
+              totalItems={totalPages * perPage}
+              itemsPerPage={perPage}
+              currentPage={page}
+              onPageChange={(event, newPage) => {
+                setPage(newPage);
+                fetchCourses(); // Trigger fetchCourses on page change
+              }}
+            />
+          </Box>
         </Box>
       )}
     </>

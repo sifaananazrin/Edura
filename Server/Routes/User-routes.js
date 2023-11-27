@@ -27,7 +27,7 @@ router.post("/login",login)
 // router.get("/user",verifyTocken,getUser)
 // router.get("/refresh",refreshToken,verifyTocken,getUser)
 router.post("/verify-otp",PostOtp)
-router.get("/course",validateUserToken,getAllCourse)
+router.get("/course",getAllCourse)
 router.post('/orderConfirmed',validateUserToken,confirmOrder);
 router.post('/verifyPayment',validateUserToken,verifyPayment);
 router.get('/paymentFail',validateUserToken,paymentFailure);
