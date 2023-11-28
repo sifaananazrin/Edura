@@ -1,6 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const router = require("./Routes/User-routes");
+const userRouter = require("./Routes/User-routes");
 const teacherRoutes = require('./Routes/Teacher-routes');
 const admin = require("./Routes/Admin-router");
 const cookieParser = require('cookie-parser');
@@ -14,7 +14,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
-app.use('/api', router);
+app.use('/api', userRouter);
 app.use('/teacher', teacherRoutes);
 app.use('/admin', admin);
 

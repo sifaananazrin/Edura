@@ -19,7 +19,7 @@ const FeaturedCards = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
-  const [perPage] = useState(3); // Adjusted perPage to 3 for demonstration
+  const [perPage] = useState(3); 
   const [totalPages, setTotalPages] = useState(1);
 
   const user_id = localStorage.getItem("uid");

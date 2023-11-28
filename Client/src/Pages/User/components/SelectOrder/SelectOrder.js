@@ -1,14 +1,11 @@
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import Rating from "@mui/material/Rating";
-import React, { useState, useEffect } from "react";
-
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./styles";
 import axios from "../../../../api/axios";
-
 import { config } from "../../../../Helpers/axiosUserEndpoints";
 import Spinner from "../../../../component/Spinner";
 
@@ -18,19 +15,19 @@ const SelectOrder = () => {
   const [selectedCourses, setSelectedCourses] = useState(null);
   const navigate = useNavigate();
   const user_id = localStorage.getItem("uid");
+
   useEffect(() => {
     async function fetchCourses() {
       try {
         setLoading(true);
-        const response = await axios.get("/api/course", config);
-        setCourses(response.data.course);
+        const response = await axios.get("/api/Courses", config);
+        console.log("Courses from response:", response.data.courses);
+        setCourses(response.data.courses);
+        console.log("Courses after setting:", courses);
         setLoading(false);
-        // window.location.reload(); 
-        // console.log(response);
       } catch (error) {
-        localStorage.removeItem("usertoken");
-        localStorage.removeItem("uid");
-        console.error(error);
+        console.error("Error fetching courses:", error);
+        setLoading(false);
       }
     }
 
@@ -52,7 +49,7 @@ const SelectOrder = () => {
     } catch (error) {
       localStorage.removeItem("usertoken");
       localStorage.removeItem("uid");
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -66,8 +63,8 @@ const SelectOrder = () => {
             sx={{ ...styles.title, display: "flex", alignItems: "center" }}
           ></Typography>
           <Box sx={styles.wrapperCard}>
-            {courses.map((course, index) => {
-              return (
+            {Array.isArray(courses) && courses.length > 0 ? (
+              courses.map((course, index) => (
                 <Card
                   sx={{
                     ...styles.card,
@@ -131,22 +128,20 @@ const SelectOrder = () => {
                           marginLeft: "auto",
                         }}
                       >
-                        {/* <Link to="/user/course-details"> */}
                         <ArrowCircleRightIcon
                           onClick={() => CouresDetails(course._id)}
                           sx={styles.iconRightArrow}
                         />
-                        {/* </Link> */}
                       </Box>
                     </Box>
                   </Box>
                 </Card>
-              );
-            })}
+              ))
+            ) : (
+              <Typography variant="subtitle1">No courses available.</Typography>
+            )}
           </Box>
         </Box>
-
-       
       )}
     </>
   );

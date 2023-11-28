@@ -12,8 +12,8 @@ const PaginationComponent = ({ totalItems, itemsPerPage, currentPage, onPageChan
         page={currentPage}
         onChange={onPageChange}
         color="primary"
-        shape="rounded" // Use rounded shape
-        size="large" // Use a larger size
+        shape="rounded" 
+        size="large" 
         showFirstButton
         showLastButton
       />

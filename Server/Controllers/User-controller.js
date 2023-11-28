@@ -367,6 +367,23 @@ const updateUser= async (req, res, next) => {
 };
 
 
+const getCourses = async (req, res) => {
+  try {
+    const courses = await Course.find({ status: "Approve" })
+      .select("-link -list")
+      .exec();
+
+    res.json({
+      success: true,
+      courses: courses,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+
 exports.signup = signup;
 exports.login = login;
 exports.verifyTocken = verifyTocken;
@@ -383,3 +400,4 @@ exports.getOderDetail = getOderDetail;
 exports.getProductDetailData = getProductDetailData;
 exports.getQuestions = getQuestions;
 exports.updateUser = updateUser;
+exports.getCourses=getCourses
