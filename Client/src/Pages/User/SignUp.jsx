@@ -3,7 +3,7 @@ import axios from "../../api/axios";
 import requests from "../../api/request";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Spinner from "../../../src/component/Pagination";
+import Spinner from "../../../src/component/Spinner";
 import { useNavigate } from "react-router-dom";
 import {
   FormControl,
