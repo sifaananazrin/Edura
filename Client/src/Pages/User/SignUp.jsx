@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-
 import axios from "../../api/axios";
 import requests from "../../api/request";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Spinner from "../../../src/component/Pagination"; 
-
+import Spinner from "../../../src/component/Pagination";
+import { useNavigate } from "react-router-dom";
 import {
   FormControl,
   FormGroup,
@@ -18,16 +17,13 @@ import {
   Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
   email: Yup.string().email("Invalid email address").required("Required"),
   phone: Yup.string()
-    .matches(
-      /^[0-9]{10}$/, 
-      "Invalid phone number. Please enter a 10-digit number."
-    )
+    .matches(/^[0-9]{10}$/, "Invalid phone number. Please enter a 10-digit number.")
     .required("Required"),
   password: Yup.string().required("Required"),
   cPassword: Yup.string()
@@ -36,12 +32,10 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignUp = () => {
-  // const history = useNavigation();
-
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -66,20 +60,19 @@ const SignUp = () => {
         const response = await axios.post(requests.Signup, values);
         console.log(response);
         if (response.data.user) {
-          window.location = "/user/login";
+          navigate("/user/login");
         } else if (response.data.email) {
-          window.location = "/user/otp";
+          navigate("/user/otp");
         }
       } catch (error) {
         console.error(error);
         if (error.response) {
           console.log("Response Data:", error.response.data);
         }
+      } finally {
         setLoading(false);
       }
-      
     },
-    
   });
 
   return (
@@ -88,14 +81,14 @@ const SignUp = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh", 
-        backgroundColor: "#f4f4f4", 
+        height: "100vh",
+        backgroundColor: "#f4f4f4",
       }}
     >
       <FormControl component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
-            padding={4} 
+            padding={4}
             width={400}
             margin="auto"
             borderRadius={10}
@@ -128,7 +121,7 @@ const SignUp = () => {
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
             />
-             <FormLabel sx={{ mt: 2 }}>phone</FormLabel>
+            <FormLabel sx={{ mt: 2 }}>phone</FormLabel>
             <TextField
               fullWidth
               margin="normal"
@@ -191,6 +184,8 @@ const SignUp = () => {
                 ),
               }}
             />
+
+            {loading && <Spinner />} {/* Display the Spinner when loading is true */}
 
             <Button
               sx={{
