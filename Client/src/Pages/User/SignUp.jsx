@@ -71,7 +71,12 @@ const SignUp = () => {
   });
 
   return (
-
+    <Box
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
+    height="100vh" // You can adjust the height as needed
+  >
       <FormControl component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
@@ -195,6 +200,7 @@ const SignUp = () => {
           </Box>
         </FormGroup>
       </FormControl>
+      </Box>
     
   );
 };
