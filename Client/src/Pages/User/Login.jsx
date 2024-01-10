@@ -1,4 +1,3 @@
-
 import {
   formStyles,
   formControlStyles,
@@ -7,10 +6,10 @@ import {
 } from "./LoginStyle";
 import React from "react";
 import axios from "../../api/axios";
-import request from "../../api/request"
-import { toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
-  
+import request from "../../api/request";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   Button,
   FormControl,
@@ -19,14 +18,13 @@ import {
   InputAdornment,
   TextField,
   Typography,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
 
 const labelStyle = { mt: 1, mb: 1 };
 
@@ -49,23 +47,19 @@ function Login() {
         const response = await axios.post(request.login, values);
         if (response.data.message === "Login successful") {
           window.location = "/user/home";
-          localStorage.setItem("usertoken",response.data.token)
-          localStorage.setItem("user",response.data.name)
-          localStorage.setItem("email",response.data.email)
-          localStorage.setItem("phone",response.data.phone)
-          localStorage.setItem("uid",response.data.uid)
+          localStorage.setItem("usertoken", response.data.token);
+          localStorage.setItem("user", response.data.name);
+          localStorage.setItem("email", response.data.email);
+          localStorage.setItem("phone", response.data.phone);
+          localStorage.setItem("uid", response.data.uid);
         } else {
           toast.error(response.data.message);
         }
-        
       } catch (error) {
         console.error(error);
         toast.error("An error occurred, please try again later.");
       }
     },
-    
-    
-    
   });
 
   const handleClickShowPassword = () => {
@@ -76,12 +70,13 @@ function Login() {
     event.preventDefault();
   };
   return (
-
-    <div
-      style={formStyles}
-    >
-       {/* <ToastContainer /> */}
-      <FormControl  sx={formControlStyles}  component="form" onSubmit={formik.handleSubmit}>
+    <div style={formStyles}>
+      {/* <ToastContainer /> */}
+      <FormControl
+        sx={formControlStyles}
+        component="form"
+        onSubmit={formik.handleSubmit}
+      >
         <FormGroup>
           <Box
             padding={6}
@@ -133,9 +128,7 @@ function Login() {
               name="password"
               value={formik.values.password}
               onChange={formik.handleChange}
-              error={
-                formik.touched.password && Boolean(formik.errors.password)
-              }
+              error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
               InputProps={{
                 endAdornment: (
@@ -152,24 +145,22 @@ function Login() {
             />
 
             <Button
-  sx={buttonStyles}
-  type='submit'
-  fullWidth
-  variant='contained'
->
-  Sign In
-</Button>
-<p style={{ textAlign: 'center', marginTop: '10px' }}>
-  {"Don't have an account yet? "}
-  <Link to="/user/signup">SignUp</Link>
-</p>
+              sx={buttonStyles}
+              type="submit"
+              fullWidth
+              variant="contained"
+            >
+              SIGN IN
+            </Button>
+            <p style={{ textAlign: "center", marginTop: "10px" }}>
+              {"Don't have an account yet? "}
+              <Link to="/user/signup">SignUp</Link>
+            </p>
           </Box>
-          </FormGroup>
-          </FormControl>
-          </div>
-          
-)
-          }
+        </FormGroup>
+      </FormControl>
+    </div>
+  );
+}
 
-          export default Login
-
+export default Login;

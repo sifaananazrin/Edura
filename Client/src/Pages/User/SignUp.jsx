@@ -4,6 +4,8 @@ import axios from "../../api/axios";
 import requests from "../../api/request";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Spinner from "../../../src/component/Pagination"; 
+
 import {
   FormControl,
   FormGroup,
@@ -38,6 +40,8 @@ const SignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -58,6 +62,7 @@ const SignUp = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
+        setLoading(true);
         const response = await axios.post(requests.Signup, values);
         console.log(response);
         if (response.data.user) {
@@ -67,8 +72,14 @@ const SignUp = () => {
         }
       } catch (error) {
         console.error(error);
+        if (error.response) {
+          console.log("Response Data:", error.response.data);
+        }
+        setLoading(false);
       }
+      
     },
+    
   });
 
   return (
@@ -77,27 +88,21 @@ const SignUp = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "100vh", 
+        backgroundColor: "#f4f4f4", 
       }}
     >
       <FormControl component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
-            padding={6}
-            display={"flex"}
-            justifyContent={"center"}
-            flexDirection="column"
+            padding={4} 
             width={400}
             margin="auto"
-            alignContent={"center"}
-            sx={{
-              border: "1px solid #ccc",
-              borderRadius: 10,
-              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-              bgcolor: "#fff",
-            }}
+            borderRadius={10}
+            boxShadow="0 2px 4px rgba(0,0,0,0.2)"
+            bgcolor="#fff"
           >
-            <Typography variant="h4" textAlign={"center"} sx={{ mb: 4 }}>
+            <Typography variant="h4" textAlign="center" sx={{ mb: 4 }}>
               Sign up
             </Typography>
             <FormLabel sx={{ mt: 2 }}>Name</FormLabel>
@@ -201,7 +206,7 @@ const SignUp = () => {
               fullWidth
               variant="contained"
             >
-              SignUp
+              SIGN UP
             </Button>
             <p style={{ textAlign: "center", marginTop: "10px" }}>
               {"Don't have an account yet? "}

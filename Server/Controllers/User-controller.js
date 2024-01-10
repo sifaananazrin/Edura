@@ -134,12 +134,76 @@ const mailTransporter = nodemailer.createTransport({
 
 const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 
+// const signup = async (req, res) => {
+//   name = req.body.name;
+//   email = req.body.email;
+//   phone = req.body.phone;
+//   password = req.body.password;
+//   cPassword = req.body.cPassword;
+
+//   console.log(name);
+
+//   try {
+//     const user = await User.findOne({ email: email });
+//     if (user) {
+//       res.send({ user: true });
+//       return;
+//       // break;
+//     }
+
+//     //   const OTP = ${Math.floor(1000 + Math.random() * 9000)};
+//     const mailDetails = {
+//       from: "Shifananazrin15@gmail.com",
+//       to: email,
+//       subject: "Learning ACCOUNT REGISTRATION",
+//       html: `<p>YOUR OTP FOR REGISTERING IN Leaning platform ${OTP}</p>`,
+//     };
+
+//     if (password == cPassword) {
+//       await mailTransporter.sendMail(mailDetails);
+//       console.log("Email Sent Successfully");
+//       res.send({ email: true });
+//     }
+//   } catch (err) {
+//     console.log("Error Occurs: ", err);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// };
+
+
+
+// const PostOtp = async (req, res) => {
+//   const { otp } = req.body;
+
+//   console.log(req.body);
+//   console.log(OTP);
+//   PostOtp;
+
+//   if (OTP == otp) {
+//     const salt = bcrypt.genSaltSync(10);
+//     const hashPassword = bcrypt.hashSync(password, salt);
+//     const user = new User({
+//       name: name,
+//       email: email,
+//       phone: phone,
+//       password: hashPassword,
+//     });
+
+//     user.save().then(() => {
+//       res.send({ success: true });
+//     });
+//   } else {
+//     console.log("otp error");
+//     res.send({ OTP: "OTP ERROR" });
+//   }
+// };
+
 const signup = async (req, res) => {
-  name = req.body.name;
-  email = req.body.email;
-  phone = req.body.phone;
-  password = req.body.password;
-  cPassword = req.body.cPassword;
+  const name = req.body.name;
+  const email = req.body.email;
+  const phone = req.body.phone;
+  const password = req.body.password;
+  const cPassword = req.body.cPassword;
 
   console.log(name);
 
@@ -148,34 +212,32 @@ const signup = async (req, res) => {
     if (user) {
       res.send({ user: true });
       return;
-      // break;
     }
 
-    //   const OTP = ${Math.floor(1000 + Math.random() * 9000)};
+    const OTP = Math.floor(1000 + Math.random() * 9000);
     const mailDetails = {
       from: "Shifananazrin15@gmail.com",
       to: email,
       subject: "Learning ACCOUNT REGISTRATION",
-      html: `<p>YOUR OTP FOR REGISTERING IN Leaning platform ${OTP}</p>`,
+      html: `<p>YOUR OTP FOR REGISTERING IN Learning platform ${OTP}</p>`,
     };
 
     if (password == cPassword) {
+      // Assuming mailTransporter is defined somewhere in your code
       await mailTransporter.sendMail(mailDetails);
       console.log("Email Sent Successfully");
-      res.send({ email: true });
+      res.send({ email: true, OTP: OTP }); // Sending OTP to the client
+    } else {
+      res.send({ passwordMismatch: true });
     }
   } catch (err) {
-    console.log("Error Occurs: ", err);
+    console.error("Error Occurs: ", err);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
 const PostOtp = async (req, res) => {
-  const { otp } = req.body;
-
-  console.log(req.body);
-  console.log(OTP);
-  PostOtp;
+  const { otp, name, email, phone, password } = req.body;
 
   if (OTP == otp) {
     const salt = bcrypt.genSaltSync(10);
@@ -187,15 +249,18 @@ const PostOtp = async (req, res) => {
       password: hashPassword,
     });
 
-    user.save().then(() => {
+    try {
+      await user.save();
       res.send({ success: true });
-    });
+    } catch (error) {
+      console.error("Error saving user: ", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   } else {
     console.log("otp error");
-    res.send({ OTP: "OTP ERROR" });
+    res.send({ OTPMismatch: true });
   }
 };
-
 const getAllCourse = async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const size = 3;
