@@ -11,10 +11,9 @@ function Spinner(props) {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
       }}
     >
-      {loading && <BounceLoader color={' #9a0eea'} loading={loading} size={150} />}
+      {loading && <BounceLoader color={' #9a0eea'} loading={loading} size={50} />}
     </div>
   );
 }
