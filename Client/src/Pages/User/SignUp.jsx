@@ -71,15 +71,7 @@ const SignUp = () => {
   });
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#f4f4f4",
-      }}
-    >
+
       <FormControl component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
@@ -203,7 +195,7 @@ const SignUp = () => {
           </Box>
         </FormGroup>
       </FormControl>
-    </div>
+    
   );
 };
 
