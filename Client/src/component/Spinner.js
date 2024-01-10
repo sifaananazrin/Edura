@@ -5,13 +5,7 @@ function Spinner(props) {
   const { loading } = props;
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <div>
       {loading && <BounceLoader color={' #9a0eea'} loading={loading} size={50} />}
     </div>
   );
