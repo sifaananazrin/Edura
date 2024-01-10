@@ -3,7 +3,6 @@ import axios from "../../api/axios";
 import requests from "../../api/request";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// import Spinner from "../../../src/component/Spinner"
 import { useNavigate } from "react-router-dom";
 import {
   FormControl,
@@ -67,7 +66,7 @@ const SignUp = () => {
         if (error.response) {
           console.log("Response Data:", error.response.data);
         }
-      } 
+      }
     },
   });
 
@@ -180,7 +179,6 @@ const SignUp = () => {
                 ),
               }}
             />
-
 
             <Button
               sx={{
