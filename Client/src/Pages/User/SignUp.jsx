@@ -3,8 +3,9 @@ import axios from "../../api/axios";
 import requests from "../../api/request";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Spinner from "../../../src/component/Spinner"
 import { useNavigate } from "react-router-dom";
+import { BarLoader } from "react-spinners"; // Import BarLoader from react-spinners
+
 import {
   FormControl,
   FormGroup,
@@ -57,6 +58,7 @@ const SignUp = () => {
     onSubmit: async (values) => {
       try {
         setLoading(true);
+
         const response = await axios.post(requests.Signup, values);
         console.log(response);
         if (response.data.user) {
@@ -185,7 +187,10 @@ const SignUp = () => {
               }}
             />
 
-            {loading && <Spinner />} {/* Display the Spinner when loading is true */}
+            {loading && <BarLoader
+              color="#673F86" // Customize the loader color
+              loading={loading} // Display the loader when loading is true
+            />} {/* Display the Spinner when loading is true */}
 
             <Button
               sx={{
