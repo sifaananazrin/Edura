@@ -35,7 +35,6 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -56,7 +55,6 @@ const SignUp = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        setLoading(true);
         const response = await axios.post(requests.Signup, values);
         console.log(response);
         if (response.data.user) {
@@ -69,9 +67,7 @@ const SignUp = () => {
         if (error.response) {
           console.log("Response Data:", error.response.data);
         }
-      } finally {
-        setLoading(false);
-      }
+      } 
     },
   });
 
@@ -185,7 +181,6 @@ const SignUp = () => {
               }}
             />
 
-            {/* {loading && <Spinner />} Display the Spinner when loading is true */}
 
             <Button
               sx={{
