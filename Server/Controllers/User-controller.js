@@ -2,11 +2,12 @@ const User = require("../model/User");
 const bcrypt = require("bcryptjs");
 const instance = require("../Middleware/razorpay");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
 const Course = require("../model/Course");
 const Booking = require("../model/Booking");
 const Teacher = require("../model/Teacher");
 const Quiz = require("../model/Quiz");
+const nodemailer = require('nodemailer');
+
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -124,6 +125,9 @@ const refreshToken = (req, res, next) => {
 
 var email;
 
+
+
+const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
 const mailTransporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -131,72 +135,6 @@ const mailTransporter = nodemailer.createTransport({
     pass: "ynudgxldjsercxjs",
   },
 });
-
-const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
-
-// const signup = async (req, res) => {
-//   name = req.body.name;
-//   email = req.body.email;
-//   phone = req.body.phone;
-//   password = req.body.password;
-//   cPassword = req.body.cPassword;
-
-//   console.log(name);
-
-//   try {
-//     const user = await User.findOne({ email: email });
-//     if (user) {
-//       res.send({ user: true });
-//       return;
-//       // break;
-//     }
-
-//     //   const OTP = ${Math.floor(1000 + Math.random() * 9000)};
-//     const mailDetails = {
-//       from: "Shifananazrin15@gmail.com",
-//       to: email,
-//       subject: "Learning ACCOUNT REGISTRATION",
-//       html: `<p>YOUR OTP FOR REGISTERING IN Leaning platform ${OTP}</p>`,
-//     };
-
-//     if (password == cPassword) {
-//       await mailTransporter.sendMail(mailDetails);
-//       console.log("Email Sent Successfully");
-//       res.send({ email: true });
-//     }
-//   } catch (err) {
-//     console.log("Error Occurs: ", err);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// };
-
-
-
-// const PostOtp = async (req, res) => {
-//   const { otp } = req.body;
-
-//   console.log(req.body);
-//   console.log(OTP);
-//   PostOtp;
-
-//   if (OTP == otp) {
-//     const salt = bcrypt.genSaltSync(10);
-//     const hashPassword = bcrypt.hashSync(password, salt);
-//     const user = new User({
-//       name: name,
-//       email: email,
-//       phone: phone,
-//       password: hashPassword,
-//     });
-
-//     user.save().then(() => {
-//       res.send({ success: true });
-//     });
-//   } else {
-//     console.log("otp error");
-//     res.send({ OTP: "OTP ERROR" });
-//   }
-// };
 
 const signup = async (req, res) => {
   const name = req.body.name;
@@ -211,30 +149,32 @@ const signup = async (req, res) => {
     const user = await User.findOne({ email: email });
     if (user) {
       res.send({ user: true });
-      return;
-    }
-
-    const OTP = Math.floor(1000 + Math.random() * 9000);
-    const mailDetails = {
-      from: "Shifananazrin15@gmail.com",
-      to: email,
-      subject: "Learning ACCOUNT REGISTRATION",
-      html: `<p>YOUR OTP FOR REGISTERING IN Learning platform ${OTP}</p>`,
-    };
-
-    if (password == cPassword) {
-      // Assuming mailTransporter is defined somewhere in your code
-      await mailTransporter.sendMail(mailDetails);
-      console.log("Email Sent Successfully");
-      res.send({ email: true, OTP: OTP }); // Sending OTP to the client
     } else {
-      res.send({ passwordMismatch: true });
+      const OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
+      const mailDetails = {
+        from: "Shifananazrin15@gmail.com",
+        to: email,
+        subject: "Learning ACCOUNT REGISTRATION",
+        html: `<p>YOUR OTP FOR REGISTERING IN Learning platform ${OTP}</p>`,
+      };
+
+      if (password == cPassword) {
+        await mailTransporter.sendMail(mailDetails);
+        console.log("Email Sent Successfully");
+        res.send({ email: true });
+      } else {
+        res.send({ passwordMatch: false });
+      }
     }
   } catch (err) {
-    console.error("Error Occurs: ", err);
+    console.log("Error Occurs: ", err);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
+
+
 
 const PostOtp = async (req, res) => {
   const { otp, name, email, phone, password } = req.body;
