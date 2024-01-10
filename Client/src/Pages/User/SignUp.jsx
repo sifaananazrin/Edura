@@ -4,6 +4,7 @@ import requests from "../../api/request";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { PropagateLoader } from "react-spinners";
 import {
   FormControl,
   FormGroup,
@@ -22,7 +23,10 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
   email: Yup.string().email("Invalid email address").required("Required"),
   phone: Yup.string()
-    .matches(/^[0-9]{10}$/, "Invalid phone number. Please enter a 10-digit number.")
+    .matches(
+      /^[0-9]{10}$/,
+      "Invalid phone number. Please enter a 10-digit number."
+    )
     .required("Required"),
   password: Yup.string().required("Required"),
   cPassword: Yup.string()
@@ -34,6 +38,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -57,6 +62,7 @@ const SignUp = () => {
         const response = await axios.post(requests.Signup, values);
         console.log(response);
         if (response.data.user) {
+          setLoading(true);
           navigate("/user/login");
         } else if (response.data.email) {
           navigate("/user/otp");
@@ -66,17 +72,19 @@ const SignUp = () => {
         if (error.response) {
           console.log("Response Data:", error.response.data);
         }
+      } finally {
+        setLoading(false); // Set loading to false when the request is completed (either success or failure)
       }
     },
   });
 
   return (
     <Box
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-    height="100vh" // You can adjust the height as needed
-  >
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      height="100vh" // You can adjust the height as needed
+    >
       <FormControl component="form" onSubmit={formik.handleSubmit}>
         <FormGroup>
           <Box
@@ -190,8 +198,9 @@ const SignUp = () => {
               type="submit"
               fullWidth
               variant="contained"
+              disabled={loading}
             >
-              SIGN UP
+              {loading ? <PropagateLoader color="#fff" size={10} /> : "SIGN UP"}
             </Button>
             <p style={{ textAlign: "center", marginTop: "10px" }}>
               {"Don't have an account yet? "}
@@ -200,8 +209,7 @@ const SignUp = () => {
           </Box>
         </FormGroup>
       </FormControl>
-      </Box>
-    
+    </Box>
   );
 };
 
